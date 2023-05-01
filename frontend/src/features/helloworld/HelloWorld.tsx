@@ -11,9 +11,12 @@ export function HelloWorld() {
       setHello(h);
     };
     getHelloText();
-  }, [])
+  }, []);
 
-  return (<div>
-    <p>TEXT: {hello && hello?.message}</p>
-    <p>LANG: {hello && hello?.lang}</p></div>);
+  return (
+    <div>
+      <p>TEXT: {hello && hello?.message}</p>
+      <p>LANG: {hello && hello?.lang}</p>
+    </div>
+  );
 }

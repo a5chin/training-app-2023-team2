@@ -4,7 +4,7 @@
 
 - React
 - ~~Redux~~ は廃止
-    - `useContext` 使えば良いかなというお気持ち
+  - `useContext` 使えば良いかなというお気持ち
 - ChakuraUI
 
 ## 参考リンク
