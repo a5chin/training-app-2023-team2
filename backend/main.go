@@ -7,7 +7,7 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"log"
 	"myapp/config"
-	controller2 "myapp/controller"
+	"myapp/controller"
 	"myapp/docs"
 	"myapp/entity"
 	"myapp/infrastructure/driver"
@@ -28,9 +28,9 @@ func main() {
 	helloWorldUseCase := usecase.NewHelloWorldUseCase(helloWorldRepo)
 	userUseCase := usecase.NewUserUseCase(userRepo)
 
-	postController := controller2.NewPostController(postUseCase)
-	helloWorldController := controller2.NewHelloWorldController(helloWorldUseCase)
-	_ = controller2.NewUserController(userUseCase)
+	postController := controller.NewPostController(postUseCase)
+	helloWorldController := controller.NewHelloWorldController(helloWorldUseCase)
+	_ = controller.NewUserController(userUseCase)
 
 	// Setup webserver
 	app := gin.Default()
