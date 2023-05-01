@@ -13,5 +13,25 @@ module.exports = {
     plugins: ['react-refresh'],
     rules: {
         'react-refresh/only-export-components': 'warn',
+        'import/extensions': [
+            // importのときに以下の拡張子を記述しなくてもエラーにしない
+            'error',
+            {
+                js: 'never',
+                jsx: 'never',
+                ts: 'never',
+                tsx: 'never',
+            },
+        ],
+        'import/prefer-default-export': 'off',
+        'import/no-unresolved': 'off',
+        'react/jsx-uses-react': 'off',
+        'react/react-in-jsx-scope': 'off',
+        'react/jsx-filename-extension': [
+            'error',
+            {
+                extensions: ['.jsx', '.tsx'],
+            },
+        ],
     },
 };
