@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "lint": "npx eslint --fix ./src && npx prettier --write './**/*.{json,ts,js,cjs,tsx,jsx}'",
+    "lint": "npx eslint --fix ./src && npx prettier --write './**/*'",
     "preview": "vite preview",
     "format": "npx prettier --write .",
     "prepare": "cd .. && husky install frontend/.husky"
