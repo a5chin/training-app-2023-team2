@@ -1,8 +1,7 @@
-import { Hello } from '../models';
+import { API_ENDPOINT_PATH } from "@/config";
+import { Hello } from "../types";
 
-const API_ENDPOINT_PATH =
-  import.meta.env.VITE_API_ENDPOINT_PATH ?? '';
-
+// TODO: react-query を使うかどうか検討する
 export const getHello = async () => {
   const response = await fetch(`${API_ENDPOINT_PATH}/hello`);
   return await response.json() as Hello;
