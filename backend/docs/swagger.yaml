@@ -1,4 +1,11 @@
 definitions:
+  controller.GetPostsResponse:
+    properties:
+      posts:
+        items:
+          $ref: '#/definitions/entity.Post'
+        type: array
+    type: object
   entity.ErrorResponse:
     properties:
       message:
@@ -18,6 +25,15 @@ definitions:
       id:
         type: integer
       title:
+        type: string
+      user:
+        $ref: '#/definitions/entity.User'
+    type: object
+  entity.User:
+    properties:
+      id:
+        type: integer
+      name:
         type: string
     type: object
 info:
@@ -66,9 +82,7 @@ paths:
         "200":
           description: OK
           schema:
-            items:
-              $ref: '#/definitions/entity.Post'
-            type: array
+            $ref: '#/definitions/controller.GetPostsResponse'
         "400":
           description: Bad Request
           schema:

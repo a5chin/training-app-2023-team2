@@ -7,25 +7,30 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"log"
 	"myapp/config"
-	"myapp/controller"
+	controller2 "myapp/controller"
 	"myapp/docs"
-	"myapp/driver"
 	"myapp/entity"
-	"myapp/middleware"
-	"myapp/repository"
+	"myapp/infrastructure/driver"
+	"myapp/infrastructure/middleware"
+	"myapp/infrastructure/persistence"
+	"myapp/usecase"
 	"net/http"
 )
 
 func main() {
 	// Dependency Injection
 	db := driver.NewDB()
-	postRepo := repository.NewPostRepository()
-	helloWorldRepo := repository.NewHelloWorldRepository()
-	userRepo := repository.NewUserRepository()
+	postRepo := persistence.NewPostPersistence()
+	helloWorldRepo := persistence.NewHelloWorldPersistence()
+	userRepo := persistence.NewUserPersistence()
 
-	postController := controller.NewPostController(postRepo)
-	helloWorldController := controller.NewHelloWorldController(helloWorldRepo)
-	_ = controller.NewUserController(userRepo)
+	postUseCase := usecase.NewPostUseCase(postRepo)
+	helloWorldUseCase := usecase.NewHelloWorldUseCase(helloWorldRepo)
+	userUseCase := usecase.NewUserUseCase(userRepo)
+
+	postController := controller2.NewPostController(postUseCase)
+	helloWorldController := controller2.NewHelloWorldController(helloWorldUseCase)
+	_ = controller2.NewUserController(userUseCase)
 
 	// Setup webserver
 	app := gin.Default()

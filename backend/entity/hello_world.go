@@ -1,6 +1,6 @@
 package entity
 
 type HelloWorld struct {
-	Lang    string `json:"lang,omitempty"`
-	Message string `json:"message,omitempty"`
+	Lang    string `json:"lang"`
+	Message string `json:"message"`
 }

@@ -82,10 +82,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/entity.Post"
-                            }
+                            "$ref": "#/definitions/controller.GetPostsResponse"
                         }
                     },
                     "400": {
@@ -105,6 +102,17 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "controller.GetPostsResponse": {
+            "type": "object",
+            "properties": {
+                "posts": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/entity.Post"
+                    }
+                }
+            }
+        },
         "entity.ErrorResponse": {
             "type": "object",
             "properties": {
@@ -134,6 +142,20 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "title": {
+                    "type": "string"
+                },
+                "user": {
+                    "$ref": "#/definitions/entity.User"
+                }
+            }
+        },
+        "entity.User": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
                     "type": "string"
                 }
             }

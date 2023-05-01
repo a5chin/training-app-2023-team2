@@ -12,31 +12,31 @@ import (
 	gomock "github.com/golang/mock/gomock"
 )
 
-// MockHelloWorldRepo is a mock of HelloWorldRepo interface.
-type MockHelloWorldRepo struct {
+// MockHelloWorldUseCase is a mock of HelloWorldUseCase interface.
+type MockHelloWorldUseCase struct {
 	ctrl     *gomock.Controller
-	recorder *MockHelloWorldRepoMockRecorder
+	recorder *MockHelloWorldUseCaseMockRecorder
 }
 
-// MockHelloWorldRepoMockRecorder is the mock recorder for MockHelloWorldRepo.
-type MockHelloWorldRepoMockRecorder struct {
-	mock *MockHelloWorldRepo
+// MockHelloWorldUseCaseMockRecorder is the mock recorder for MockHelloWorldUseCase.
+type MockHelloWorldUseCaseMockRecorder struct {
+	mock *MockHelloWorldUseCase
 }
 
-// NewMockHelloWorldRepo creates a new mock instance.
-func NewMockHelloWorldRepo(ctrl *gomock.Controller) *MockHelloWorldRepo {
-	mock := &MockHelloWorldRepo{ctrl: ctrl}
-	mock.recorder = &MockHelloWorldRepoMockRecorder{mock}
+// NewMockHelloWorldUseCase creates a new mock instance.
+func NewMockHelloWorldUseCase(ctrl *gomock.Controller) *MockHelloWorldUseCase {
+	mock := &MockHelloWorldUseCase{ctrl: ctrl}
+	mock.recorder = &MockHelloWorldUseCaseMockRecorder{mock}
 	return mock
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
-func (m *MockHelloWorldRepo) EXPECT() *MockHelloWorldRepoMockRecorder {
+func (m *MockHelloWorldUseCase) EXPECT() *MockHelloWorldUseCaseMockRecorder {
 	return m.recorder
 }
 
 // GetHelloWorld mocks base method.
-func (m *MockHelloWorldRepo) GetHelloWorld(ctx context.Context, lang string) (*entity.HelloWorld, error) {
+func (m *MockHelloWorldUseCase) GetHelloWorld(ctx context.Context, lang string) (*entity.HelloWorld, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetHelloWorld", ctx, lang)
 	ret0, _ := ret[0].(*entity.HelloWorld)
@@ -45,36 +45,36 @@ func (m *MockHelloWorldRepo) GetHelloWorld(ctx context.Context, lang string) (*e
 }
 
 // GetHelloWorld indicates an expected call of GetHelloWorld.
-func (mr *MockHelloWorldRepoMockRecorder) GetHelloWorld(ctx, lang interface{}) *gomock.Call {
+func (mr *MockHelloWorldUseCaseMockRecorder) GetHelloWorld(ctx, lang interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetHelloWorld", reflect.TypeOf((*MockHelloWorldRepo)(nil).GetHelloWorld), ctx, lang)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetHelloWorld", reflect.TypeOf((*MockHelloWorldUseCase)(nil).GetHelloWorld), ctx, lang)
 }
 
-// MockPostRepo is a mock of PostRepo interface.
-type MockPostRepo struct {
+// MockPostUseCase is a mock of PostUseCase interface.
+type MockPostUseCase struct {
 	ctrl     *gomock.Controller
-	recorder *MockPostRepoMockRecorder
+	recorder *MockPostUseCaseMockRecorder
 }
 
-// MockPostRepoMockRecorder is the mock recorder for MockPostRepo.
-type MockPostRepoMockRecorder struct {
-	mock *MockPostRepo
+// MockPostUseCaseMockRecorder is the mock recorder for MockPostUseCase.
+type MockPostUseCaseMockRecorder struct {
+	mock *MockPostUseCase
 }
 
-// NewMockPostRepo creates a new mock instance.
-func NewMockPostRepo(ctrl *gomock.Controller) *MockPostRepo {
-	mock := &MockPostRepo{ctrl: ctrl}
-	mock.recorder = &MockPostRepoMockRecorder{mock}
+// NewMockPostUseCase creates a new mock instance.
+func NewMockPostUseCase(ctrl *gomock.Controller) *MockPostUseCase {
+	mock := &MockPostUseCase{ctrl: ctrl}
+	mock.recorder = &MockPostUseCaseMockRecorder{mock}
 	return mock
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
-func (m *MockPostRepo) EXPECT() *MockPostRepoMockRecorder {
+func (m *MockPostUseCase) EXPECT() *MockPostUseCaseMockRecorder {
 	return m.recorder
 }
 
 // GetPosts mocks base method.
-func (m *MockPostRepo) GetPosts(ctx context.Context, limit, offset *int) ([]*entity.Post, error) {
+func (m *MockPostUseCase) GetPosts(ctx context.Context, limit, offset *int) ([]*entity.Post, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetPosts", ctx, limit, offset)
 	ret0, _ := ret[0].([]*entity.Post)
@@ -83,30 +83,30 @@ func (m *MockPostRepo) GetPosts(ctx context.Context, limit, offset *int) ([]*ent
 }
 
 // GetPosts indicates an expected call of GetPosts.
-func (mr *MockPostRepoMockRecorder) GetPosts(ctx, limit, offset interface{}) *gomock.Call {
+func (mr *MockPostUseCaseMockRecorder) GetPosts(ctx, limit, offset interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPosts", reflect.TypeOf((*MockPostRepo)(nil).GetPosts), ctx, limit, offset)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPosts", reflect.TypeOf((*MockPostUseCase)(nil).GetPosts), ctx, limit, offset)
 }
 
-// MockUserRepo is a mock of UserRepo interface.
-type MockUserRepo struct {
+// MockUserUseCase is a mock of UserUseCase interface.
+type MockUserUseCase struct {
 	ctrl     *gomock.Controller
-	recorder *MockUserRepoMockRecorder
+	recorder *MockUserUseCaseMockRecorder
 }
 
-// MockUserRepoMockRecorder is the mock recorder for MockUserRepo.
-type MockUserRepoMockRecorder struct {
-	mock *MockUserRepo
+// MockUserUseCaseMockRecorder is the mock recorder for MockUserUseCase.
+type MockUserUseCaseMockRecorder struct {
+	mock *MockUserUseCase
 }
 
-// NewMockUserRepo creates a new mock instance.
-func NewMockUserRepo(ctrl *gomock.Controller) *MockUserRepo {
-	mock := &MockUserRepo{ctrl: ctrl}
-	mock.recorder = &MockUserRepoMockRecorder{mock}
+// NewMockUserUseCase creates a new mock instance.
+func NewMockUserUseCase(ctrl *gomock.Controller) *MockUserUseCase {
+	mock := &MockUserUseCase{ctrl: ctrl}
+	mock.recorder = &MockUserUseCaseMockRecorder{mock}
 	return mock
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
-func (m *MockUserRepo) EXPECT() *MockUserRepoMockRecorder {
+func (m *MockUserUseCase) EXPECT() *MockUserUseCaseMockRecorder {
 	return m.recorder
 }

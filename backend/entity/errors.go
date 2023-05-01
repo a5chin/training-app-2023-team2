@@ -5,12 +5,12 @@ type Error struct {
 	Message string
 }
 
-func (e Error) Error() string {
-	return e.Message
+type ErrorResponse struct {
+	Message string `json:"message"`
 }
 
-type ErrorResponse struct {
-	Message string `json:"message,omitempty"`
+func (e Error) Error() string {
+	return e.Message
 }
 
 func WrapError(code int, err error) *Error {

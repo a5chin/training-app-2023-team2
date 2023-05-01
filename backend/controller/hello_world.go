@@ -8,11 +8,11 @@ import (
 )
 
 type HelloWorldController struct {
-	HelloWorldRepo
+	HelloWorldUseCase
 }
 
-func NewHelloWorldController(repo HelloWorldRepo) *HelloWorldController {
-	return &HelloWorldController{repo}
+func NewHelloWorldController(u HelloWorldUseCase) *HelloWorldController {
+	return &HelloWorldController{u}
 }
 
 // GetHelloWorld godoc
@@ -30,7 +30,7 @@ func (c HelloWorldController) GetHelloWorld(ctx *gin.Context) (interface{}, erro
 	if len(lang) != 2 {
 		return nil, entity.WrapError(http.StatusBadRequest, fmt.Errorf("invalid lang parameter: %s", lang))
 	}
-	helloWorld, err := c.HelloWorldRepo.GetHelloWorld(ctx, lang)
+	helloWorld, err := c.HelloWorldUseCase.GetHelloWorld(ctx, lang)
 	if err != nil {
 		return nil, err
 	}

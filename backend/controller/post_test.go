@@ -88,23 +88,23 @@ func TestPostController_GetPosts(t *testing.T) {
 			req, _ := http.NewRequest("GET", path, nil)
 			ginCtx.Request = req
 			// mock作成
-			postRepo := getMockPostRepo(t)
+			useCase := getMockPostUseCase(t)
 			if test.err != nil {
 				// mockのメソッドをspyしておく
-				postRepo.EXPECT().
+				useCase.EXPECT().
 					GetPosts(gomock.Any(), length, offset).
 					Return(nil, test.err).AnyTimes()
-				postCtrl := NewPostController(postRepo)
+				postCtrl := NewPostController(useCase)
 				_, err := postCtrl.GetPosts(ginCtx)
 				assert.Error(t, err)
 			} else {
-				postRepo.EXPECT().
+				useCase.EXPECT().
 					GetPosts(gomock.Any(), length, offset).
 					Return(expected, nil).AnyTimes()
-				postCtrl := NewPostController(postRepo)
+				postCtrl := NewPostController(useCase)
 				posts, err := postCtrl.GetPosts(ginCtx)
 				assert.NoError(t, err)
-				assert.Equal(t, expected, posts)
+				assert.Equal(t, GetPostsResponse{Posts: expected}, posts)
 			}
 		})
 	}

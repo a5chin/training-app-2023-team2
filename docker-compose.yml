@@ -35,7 +35,7 @@ services:
       retries: 10
     platform: linux/x86_64
     volumes:
-      - ./docker/mysql:/var/lib/mysql
+      - /var/lib/mysql
       - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf
       - ./mysql/sql:/docker-entrypoint-initdb.d
     ports:

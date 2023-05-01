@@ -3,7 +3,7 @@ package middleware
 import (
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
-	"myapp/driver"
+	"myapp/infrastructure/driver"
 	"net/http"
 )
 

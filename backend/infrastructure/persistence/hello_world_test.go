@@ -1,17 +1,17 @@
-package repository
+package persistence
 
 import (
 	"context"
 	"errors"
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/stretchr/testify/assert"
-	"myapp/driver"
 	"myapp/entity"
+	"myapp/infrastructure/driver"
 	"regexp"
 	"testing"
 )
 
-func TestHelloWorldRepository_GetHelloWorld(t *testing.T) {
+func TestHelloWorldPersistence_GetHelloWorld(t *testing.T) {
 	tests := []struct {
 		name     string
 		wantErr  bool
@@ -38,7 +38,7 @@ func TestHelloWorldRepository_GetHelloWorld(t *testing.T) {
 			assert.NoError(t, err)
 			gormDB, err := NewMockGormDB(db)
 			assert.NoError(t, err)
-			repo := NewHelloWorldRepository()
+			persistence := NewHelloWorldPersistence()
 			ctx := context.WithValue(context.Background(), driver.TxKey, gormDB)
 			mock.MatchExpectationsInOrder(false)
 
@@ -46,13 +46,13 @@ func TestHelloWorldRepository_GetHelloWorld(t *testing.T) {
 				WithArgs(sqlmock.AnyArg())
 			if test.wantErr {
 				query.WillReturnError(errors.New("error"))
-				_, err := repo.GetHelloWorld(ctx, test.expected.Lang)
+				_, err := persistence.GetHelloWorld(ctx, test.expected.Lang)
 				assert.Error(t, err)
 			} else {
 				returnRow := sqlmock.NewRows([]string{"lang"})
 				returnRow.AddRow(test.expected.Lang)
 				query.WillReturnRows(returnRow)
-				actual, err := repo.GetHelloWorld(ctx, test.expected.Lang)
+				actual, err := persistence.GetHelloWorld(ctx, test.expected.Lang)
 				assert.NoError(t, err)
 				assert.Equal(t, test.expected, actual)
 				assert.NoError(t, mock.ExpectationsWereMet())

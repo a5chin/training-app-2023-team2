@@ -30,18 +30,18 @@ func TestHelloWorldController_GetHelloWorld(t *testing.T) {
 			ginCtx, _ := gin.CreateTestContext(httptest.NewRecorder())
 			req, _ := http.NewRequest("GET", fmt.Sprintf("/?lang=%s", test.lang), nil)
 			ginCtx.Request = req
-			repo := getMockHelloWorld(t)
+			useCase := getMockHelloWorldUseCase(t)
 			if test.err {
-				repo.EXPECT().GetHelloWorld(gomock.Any(), gomock.Any()).Return(nil, errors.New("error")).AnyTimes()
-				ctrl := NewHelloWorldController(repo)
+				useCase.EXPECT().GetHelloWorld(gomock.Any(), gomock.Any()).Return(nil, errors.New("error")).AnyTimes()
+				ctrl := NewHelloWorldController(useCase)
 				_, err := ctrl.GetHelloWorld(ginCtx)
 				assert.Error(t, err)
 			} else {
-				repo.EXPECT().GetHelloWorld(gomock.Any(), gomock.Any()).Return(&entity.HelloWorld{
+				useCase.EXPECT().GetHelloWorld(gomock.Any(), gomock.Any()).Return(&entity.HelloWorld{
 					Lang:    test.lang,
 					Message: test.message,
 				}, nil).AnyTimes()
-				ctrl := NewHelloWorldController(repo)
+				ctrl := NewHelloWorldController(useCase)
 				msg, err := ctrl.GetHelloWorld(ginCtx)
 				if test.validateError {
 					assert.Error(t, err)

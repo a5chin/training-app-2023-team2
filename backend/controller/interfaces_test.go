@@ -5,20 +5,20 @@ import (
 	"testing"
 )
 
-func getMockPostRepo(t *testing.T) *MockPostRepo {
+func getMockPostUseCase(t *testing.T) *MockPostUseCase {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
-	return NewMockPostRepo(ctrl)
+	return NewMockPostUseCase(ctrl)
 }
 
-func getMockUserRepo(t *testing.T) *MockPostRepo {
+func getMockUserUseCase(t *testing.T) *MockPostUseCase {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
-	return NewMockPostRepo(ctrl)
+	return NewMockPostUseCase(ctrl)
 }
 
-func getMockHelloWorld(t *testing.T) *MockHelloWorldRepo {
+func getMockHelloWorldUseCase(t *testing.T) *MockHelloWorldUseCase {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
-	return NewMockHelloWorldRepo(ctrl)
+	return NewMockHelloWorldUseCase(ctrl)
 }

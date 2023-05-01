@@ -1,17 +1,17 @@
-package repository
+package persistence
 
 import (
 	"context"
 	"errors"
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/stretchr/testify/assert"
-	"myapp/driver"
 	"myapp/entity"
+	"myapp/infrastructure/driver"
 	"regexp"
 	"testing"
 )
 
-func TestPostRepository_GetPosts(t *testing.T) {
+func TestPostPersistence_GetPosts(t *testing.T) {
 	stubPosts := []*entity.Post{
 		{
 			ID:    1,
@@ -51,14 +51,14 @@ func TestPostRepository_GetPosts(t *testing.T) {
 			assert.NoError(t, err)
 			gormDB, err := NewMockGormDB(db)
 			assert.NoError(t, err)
-			repo := NewPostRepository()
+			persistence := NewPostPersistence()
 			ctx := context.WithValue(context.Background(), driver.TxKey, gormDB)
 			mock.MatchExpectationsInOrder(false)
 
 			query := mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `posts` WHERE `posts`.`deleted_at` IS NULL"))
 			if test.wantErr {
 				query.WillReturnError(errors.New("error"))
-				_, err := repo.GetPosts(ctx, nil, nil)
+				_, err := persistence.GetPosts(ctx, nil, nil)
 				assert.Error(t, err)
 			} else {
 				returnRow := sqlmock.NewRows([]string{"id", "title", "body"})
@@ -66,7 +66,7 @@ func TestPostRepository_GetPosts(t *testing.T) {
 					returnRow.AddRow(p.ID, p.Title, p.Body)
 					query.WillReturnRows(returnRow)
 				}
-				actual, err := repo.GetPosts(ctx, nil, nil)
+				actual, err := persistence.GetPosts(ctx, nil, nil)
 				assert.NoError(t, err)
 				assert.Equal(t, test.expected, actual)
 				assert.NoError(t, mock.ExpectationsWereMet())

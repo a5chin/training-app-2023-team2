@@ -1,20 +1,20 @@
-package repository
+package persistence
 
 import (
 	"context"
 	"gorm.io/gorm"
-	"myapp/driver"
 	"myapp/entity"
-	"myapp/repository/model"
+	"myapp/infrastructure/driver"
+	"myapp/infrastructure/persistence/model"
 )
 
-type PostRepository struct{}
+type PostPersistence struct{}
 
-func NewPostRepository() *PostRepository {
-	return &PostRepository{}
+func NewPostPersistence() *PostPersistence {
+	return &PostPersistence{}
 }
 
-func (r PostRepository) GetPosts(
+func (p PostPersistence) GetPosts(
 	ctx context.Context,
 	limit *int,
 	offset *int,
@@ -27,7 +27,7 @@ func (r PostRepository) GetPosts(
 	if offset != nil {
 		db = db.Offset(*offset)
 	}
-	if err := db.Order("posts.created_at DESC").Find(&records).Error; err != nil {
+	if err := db.Preload("User").Order("posts.id DESC").Find(&records).Error; err != nil {
 		return nil, err
 	}
 	var posts []*entity.Post
