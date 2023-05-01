@@ -1,15 +1,19 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
-import { useAppDispatch, useAppSelector } from '../../shared/hooks';
 import { APIService } from '../../shared/services';
+import { Hello } from '../../shared/models';
 
 export function HelloWorld() {
-  const { hello } = useAppSelector((state) => state.hello);
-  const dispatch = useAppDispatch();
-
+  const [hello, setHello] = useState<Hello>();
   useEffect(() => {
-    dispatch(APIService.getHello());
-  }, [dispatch]);
+    const getHelloText = async () => {
+      const h = await APIService.getHello();
+      setHello(h);
+    };
+    getHelloText();
+  }, [])
 
-  return <div>{hello?.message}</div>;
+  return (<div>
+    <p>TEXT: {hello && hello?.message}</p>
+    <p>LANG: {hello && hello?.lang}</p></div>);
 }
