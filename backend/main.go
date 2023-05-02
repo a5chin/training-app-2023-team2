@@ -42,6 +42,7 @@ func main() {
 	})
 	app.GET("/hello", handleResponse(helloWorldController.GetHelloWorld))
 	app.GET("/posts", handleResponse(postController.GetPosts))
+	app.GET("/posts/:id", handleResponse(postController.GetPostByID))
 
 	runApp(app, config.Port)
 }
