@@ -1,14 +1,23 @@
 import { Box, Flex, Icon, Text } from '@chakra-ui/react';
-import { Posts as PostsType } from '../types';
+import { usePosts } from '../api/getPosts';
+import { Post as PostType } from '../types';
 
-function Post() {
+type PostProps = {
+  post: PostType;
+};
+
+function Post({ post }: PostProps) {
+  const { title, body, user } = post;
+
   return (
     <Flex direction="row">
       <Flex direction="column">
         <Icon />
       </Flex>
       <Flex direction="row">
-        <Text>This is a first tweet.</Text>
+        <Text>{title}</Text>
+        <Text>{body}</Text>
+        <Text>written by {user.name}</Text>
         <Flex direction="column">
           <Box>Comment</Box>
           <Box>Like</Box>
@@ -20,39 +29,19 @@ function Post() {
 }
 
 export function Posts() {
-  // const { posts, isLoading, isError } = usePosts();
-  const posts: PostsType = [
-    {
-      id: 1,
-      title: 'Post1',
-      body: 'This is post 1.',
-      user: {
-        id: 1,
-        name: 'user1',
-      },
-    },
-    {
-      id: 2,
-      title: 'Post2',
-      body: 'This is post 2.',
-      user: {
-        id: 2,
-        name: 'user2',
-      },
-    },
-  ];
+  const { posts } = usePosts();
 
-  const postElements = posts.map((post) => <Post key={post.id} />);
+  console.log(`posts in PostsPage: ${JSON.stringify(posts)}`);
 
   return (
     <Flex direction="row" w="full">
       {/* Tweets */}
-      <Flex direction="column" fontSize="md" bg="blue">
-        {postElements}
+      <Flex flexGrow={2} direction="column" fontSize="md" bg="blue">
+        {posts && posts?.map((post) => <Post key={post.id} post={post} />)}
       </Flex>
 
       {/* Sub information */}
-      <Flex direction="column" bg="green">
+      <Flex flexGrow={1} direction="column" bg="green">
         <Box>Ranking</Box>
         <Box>Recommendation</Box>
       </Flex>

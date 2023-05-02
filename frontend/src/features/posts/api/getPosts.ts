@@ -2,7 +2,11 @@ import useSWR, { Fetcher } from 'swr';
 import { axios } from '@/lib/axios';
 import { Posts } from '../types';
 
-const fetcher: Fetcher<Posts> = () =>
+type PostsResponseType = {
+  posts: Posts;
+};
+
+const fetcher: Fetcher<PostsResponseType> = () =>
   axios.get('/posts').then((res) => res.data);
 
 export const usePosts = () => {
@@ -10,7 +14,7 @@ export const usePosts = () => {
   const { data, error, isLoading } = useSWR('/posts', fetcher);
 
   return {
-    posts: data,
+    posts: data?.posts,
     isLoading,
     isError: error,
   };
