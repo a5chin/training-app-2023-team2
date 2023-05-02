@@ -53,10 +53,12 @@ func runApp(app *gin.Engine, port int) {
 	docs.SwaggerInfo.Host = fmt.Sprintf("localhost:%d", port)
 	docs.SwaggerInfo.BasePath = "/"
 	docs.SwaggerInfo.Schemes = []string{"http"}
+
 	app.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	app.Run(fmt.Sprintf("%s:%d", config.HostName, config.Port))
+
 	log.Println(fmt.Sprintf("http://localhost:%d", port))
 	log.Println(fmt.Sprintf("http://localhost:%d/swagger/index.html", port))
-	app.Run(fmt.Sprintf("%s:%d", config.HostName, config.Port))
 }
 
 func handleResponse(f func(ctx *gin.Context) (interface{}, error)) gin.HandlerFunc {
