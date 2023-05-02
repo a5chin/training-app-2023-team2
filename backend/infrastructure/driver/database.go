@@ -1,18 +1,16 @@
-package external
+package driver
 
 import (
 	"fmt"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
-	"myapp/internal/config"
+	"myapp/config"
 	"os"
 )
 
-var DB *gorm.DB
+const TxKey = "transactionObject"
 
-// Database Setup
-// !!! You have to call this function after config setup
-func SetupDB() {
+func NewDB() *gorm.DB {
 	host := config.DBHostName
 	port := config.DBPort
 	dbname := config.DBName
@@ -22,5 +20,6 @@ func SetupDB() {
 		fmt.Println(err)
 		os.Exit(1)
 	}
-	DB = db
+	db = db.Debug()
+	return db
 }
