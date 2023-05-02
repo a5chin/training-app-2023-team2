@@ -49,6 +49,7 @@ func (p PostPersistence) GetPostByID(
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, entity.WrapError(http.StatusNotFound, err)
 		}
+		return nil, err
 	}
 
 	return record.ToEntity(), nil

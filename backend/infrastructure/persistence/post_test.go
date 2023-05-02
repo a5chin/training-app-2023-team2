@@ -74,3 +74,65 @@ func TestPostPersistence_GetPosts(t *testing.T) {
 		})
 	}
 }
+
+func TestPostPersistence_GetPostByID(t *testing.T) {
+	stubPosts := []*entity.Post{
+		{
+			ID:    1,
+			Title: "a",
+			Body:  "a",
+		},
+		{
+			ID:    2,
+			Title: "b",
+			Body:  "b",
+		},
+		{
+			ID:    3,
+			Title: "c",
+			Body:  "c",
+		},
+	}
+	tests := []struct {
+		name     string
+		wantErr  bool
+		expected *entity.Post
+	}{
+		{
+			name:     "should not throw an error",
+			wantErr:  false,
+			expected: stubPosts[0],
+		},
+		{
+			name:     "should not throw an error",
+			wantErr:  true,
+			expected: stubPosts[0],
+		},
+	}
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			db, mock, err := sqlmock.New()
+			assert.NoError(t, err)
+			gormDB, err := NewMockGormDB(db)
+			assert.NoError(t, err)
+			persistence := NewPostPersistence()
+			ctx := context.WithValue(context.Background(), driver.TxKey, gormDB)
+			mock.MatchExpectationsInOrder(false)
+
+			query := mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `posts` WHERE `posts`.`id` = ? AND `posts`.`deleted_at` IS NULL ORDER BY `posts`.`id` LIMIT 1"))
+			if test.wantErr {
+				query.WillReturnError(errors.New("error"))
+				_, err := persistence.GetPostByID(ctx, 1)
+				assert.Error(t, err)
+			} else {
+				returnRow := sqlmock.NewRows([]string{"id", "title", "body"})
+				returnRow.AddRow(stubPosts[0].ID, stubPosts[0].Title, stubPosts[0].Body)
+				query.WillReturnRows(returnRow)
+				actual, err := persistence.GetPostByID(ctx, 1)
+				assert.NoError(t, err)
+				assert.Equal(t, test.expected, actual)
+				assert.NoError(t, mock.ExpectationsWereMet())
+			}
+		})
+	}
+}
