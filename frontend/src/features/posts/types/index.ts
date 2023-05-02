@@ -1,9 +1,9 @@
 import { User } from '@/features/users';
 
 export type Post = {
-  body: string;
   id: number;
   title: string;
+  body: string;
   user: User;
 };
 
