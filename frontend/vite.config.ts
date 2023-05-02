@@ -1,5 +1,6 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
+import { defineConfig } from 'vite'; // eslint-disable-line import/no-extraneous-dependencies
+import react from '@vitejs/plugin-react'; // eslint-disable-line import/no-extraneous-dependencies
+import tsconfigPaths from 'vite-tsconfig-paths'; // eslint-disable-line import/no-extraneous-dependencies
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -11,5 +12,5 @@ export default defineConfig({
     //   "/api": "http://localhost:9000",
     // },
   },
-  plugins: [react()],
+  plugins: [react(), tsconfigPaths()],
 });

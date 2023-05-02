@@ -1,22 +1,23 @@
 import { useEffect, useState } from 'react';
 
-import { APIService } from '../../shared/services';
-import { Hello } from '../../shared/models';
+import { Box } from '@chakra-ui/react';
+import { getHello } from '../api/getHello';
+import { Hello } from '../types';
 
 export function HelloWorld() {
   const [hello, setHello] = useState<Hello>();
   useEffect(() => {
     const getHelloText = async () => {
-      const h = await APIService.getHello();
+      const h = await getHello();
       setHello(h);
     };
     getHelloText();
   }, []);
 
   return (
-    <div>
+    <Box bg="blue">
       <p>TEXT: {hello && hello?.message}</p>
       <p>LANG: {hello && hello?.lang}</p>
-    </div>
+    </Box>
   );
 }
