@@ -1,0 +1,97 @@
+definitions:
+  controller.GetPostsResponse:
+    properties:
+      posts:
+        items:
+          $ref: '#/definitions/entity.Post'
+        type: array
+    type: object
+  entity.ErrorResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  entity.HelloWorld:
+    properties:
+      lang:
+        type: string
+      message:
+        type: string
+    type: object
+  entity.Post:
+    properties:
+      body:
+        type: string
+      id:
+        type: integer
+      title:
+        type: string
+      user:
+        $ref: '#/definitions/entity.User'
+    type: object
+  entity.User:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /hello:
+    get:
+      consumes:
+      - application/json
+      description: get helloWorld message
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.HelloWorld'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/entity.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/entity.ErrorResponse'
+      summary: get helloWorld message
+      tags:
+      - HelloWorld
+  /posts:
+    get:
+      consumes:
+      - application/json
+      description: get posts
+      parameters:
+      - description: limit
+        in: query
+        name: limit
+        type: string
+      - description: offset
+        in: query
+        name: offset
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.GetPostsResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/entity.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/entity.ErrorResponse'
+      summary: get posts
+      tags:
+      - Post
+swagger: "2.0"
