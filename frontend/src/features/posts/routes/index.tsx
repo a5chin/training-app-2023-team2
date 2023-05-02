@@ -6,6 +6,7 @@ export function PostsRoutes() {
   return (
     <Routes>
       <Route path="" element={<Posts />} />
+      {/* <Route path=":id" element={<Post />} /> */}
       <Route path="*" element={<Navigate to="." />} />
     </Routes>
   );
