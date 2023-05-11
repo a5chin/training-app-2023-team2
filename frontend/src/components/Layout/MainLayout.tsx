@@ -13,17 +13,25 @@ export function MainLayout({ children }: MainLayoutProps) {
   // - SubInformationを渡す
   return (
     <Flex direction="row" w="100vw" h="100vh">
-      <Flex as="header" direction="column" bg="red" flexGrow={1}>
+      <Flex
+        as="header"
+        direction="row"
+        bg="red"
+        flexGrow={1}
+        justifyContent="right"
+        p={1}
+      >
         <Box>
-          <Icon as={AiFillHome} />
-          Home
-        </Box>
-        <Box>
-          <Icon as={AiOutlineUser} />
-          Profile
+          <Box>
+            <Icon as={AiFillHome} />
+            Home
+          </Box>
+          <Box>
+            <Icon as={AiOutlineUser} />
+            Profile
+          </Box>
         </Box>
       </Flex>
-
       <Box as="main" h="full" flexGrow={2} flexShrink={0}>
         {children}
       </Box>

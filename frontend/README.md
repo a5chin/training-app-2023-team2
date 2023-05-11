@@ -12,3 +12,4 @@
 - [React Documentation](https://ja.legacy.reactjs.org/docs/getting-started.html)
 - [ChakuraUI](https://chakra-ui.com/)
 - [Bulletproof React](https://github.com/alan2207/bulletproof-react)
+- [Default Theme - Chakra UI(Spacing のデフォルト単位について)](https://chakra-ui.com/docs/styled-system/theme#spacing)
