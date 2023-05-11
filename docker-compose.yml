@@ -45,3 +45,13 @@ services:
     environment:
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
       - MYSQL_DATABASE=training
+  mock-api:
+    image: stoplight/prism
+    container_name: "mock-api"
+    ports:
+      - "0.0.0.0:4010:4010"
+    platform: linux/amd64
+    command: mock -h 0.0.0.0 /swagger.yaml
+    volumes:
+      - ./backend/docs/swagger.yaml:/swagger.yaml
+
