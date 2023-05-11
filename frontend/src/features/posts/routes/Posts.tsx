@@ -1,4 +1,5 @@
-import { Box, Flex, Icon, Text } from '@chakra-ui/react';
+import { Box, Flex, Text, HStack } from '@chakra-ui/react';
+import { AiOutlineHeart, AiOutlineComment } from 'react-icons/ai';
 import { usePosts } from '../api/getPosts';
 import { Post as PostType } from '../types';
 
@@ -10,21 +11,24 @@ function Post({ post }: PostProps) {
   const { title, body, user } = post;
 
   return (
-    <Flex direction="row">
-      <Flex direction="column">
-        <Icon />
-      </Flex>
-      <Flex direction="row">
-        <Text>{title}</Text>
-        <Text>{body}</Text>
-        <Text>written by {user.name}</Text>
+    <Box borderColor="black" borderWidth="1px">
+      <Flex direction="row" px="19px">
+        {/* <Flex direction="column">
+          <Icon />
+        </Flex> */}
         <Flex direction="column">
-          <Box>Comment</Box>
-          <Box>Like</Box>
-          <Box>Share</Box>
+          <HStack>
+            <Text>{title}</Text>
+            <Text>written by {user.name}</Text>
+          </HStack>
+          <Text>{body}</Text>
+          <HStack>
+            <AiOutlineComment />
+            <AiOutlineHeart />
+          </HStack>
         </Flex>
       </Flex>
-    </Flex>
+    </Box>
   );
 }
 
