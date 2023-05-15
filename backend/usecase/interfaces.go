@@ -19,4 +19,7 @@ type PostRepo interface {
 	) (*entity.Post, error)
 }
 
-type UserRepo interface{}
+type UserRepo interface {
+	GetUserToken(ctx context.Context, email, password string) (string, error)
+	CreateUserToken(ctx context.Context, name, email, password string) (string, error)
+}

@@ -125,3 +125,33 @@ func NewMockUserRepo(ctrl *gomock.Controller) *MockUserRepo {
 func (m *MockUserRepo) EXPECT() *MockUserRepoMockRecorder {
 	return m.recorder
 }
+
+// CreateUserToken mocks base method.
+func (m *MockUserRepo) CreateUserToken(ctx context.Context, name, email, password string) (string, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreateUserToken", ctx, name, email, password)
+	ret0, _ := ret[0].(string)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// CreateUserToken indicates an expected call of CreateUserToken.
+func (mr *MockUserRepoMockRecorder) CreateUserToken(ctx, name, email, password interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateUserToken", reflect.TypeOf((*MockUserRepo)(nil).CreateUserToken), ctx, name, email, password)
+}
+
+// GetUserToken mocks base method.
+func (m *MockUserRepo) GetUserToken(ctx context.Context, email, password string) (string, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetUserToken", ctx, email, password)
+	ret0, _ := ret[0].(string)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetUserToken indicates an expected call of GetUserToken.
+func (mr *MockUserRepoMockRecorder) GetUserToken(ctx, email, password interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserToken", reflect.TypeOf((*MockUserRepo)(nil).GetUserToken), ctx, email, password)
+}

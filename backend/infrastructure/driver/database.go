@@ -9,6 +9,7 @@ import (
 )
 
 const TxKey = "transactionObject"
+const ErrDuplicateEntryNumber = 1062
 
 func NewDB() *gorm.DB {
 	host := config.DBHostName

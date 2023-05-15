@@ -16,4 +16,7 @@ type PostUseCase interface {
 	GetPostByID(ctx context.Context, id int) (*entity.Post, error)
 }
 
-type UserUseCase interface{}
+type UserUseCase interface {
+	SignInUser(ctx context.Context, email, password string) (string, error)
+	SignUpUser(ctx context.Context, name, email, password string) (string, error)
+}

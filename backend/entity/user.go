@@ -1,6 +1,10 @@
 package entity
 
+const ContextAuthUserKey = "authUser"
+const AuthCookieKey = "authorization"
+
 type User struct {
-	ID   uint   `json:"id"`
-	Name string `json:"name"`
+	ID    string `json:"id"`
+	Email string `json:"email"`
+	Name  string `json:"name"`
 }

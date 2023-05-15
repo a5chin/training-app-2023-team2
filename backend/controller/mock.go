@@ -125,3 +125,33 @@ func NewMockUserUseCase(ctrl *gomock.Controller) *MockUserUseCase {
 func (m *MockUserUseCase) EXPECT() *MockUserUseCaseMockRecorder {
 	return m.recorder
 }
+
+// SignInUser mocks base method.
+func (m *MockUserUseCase) SignInUser(ctx context.Context, email, password string) (string, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "SignInUser", ctx, email, password)
+	ret0, _ := ret[0].(string)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// SignInUser indicates an expected call of SignInUser.
+func (mr *MockUserUseCaseMockRecorder) SignInUser(ctx, email, password interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SignInUser", reflect.TypeOf((*MockUserUseCase)(nil).SignInUser), ctx, email, password)
+}
+
+// SignUpUser mocks base method.
+func (m *MockUserUseCase) SignUpUser(ctx context.Context, name, email, password string) (string, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "SignUpUser", ctx, name, email, password)
+	ret0, _ := ret[0].(string)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// SignUpUser indicates an expected call of SignUpUser.
+func (mr *MockUserUseCaseMockRecorder) SignUpUser(ctx, name, email, password interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SignUpUser", reflect.TypeOf((*MockUserUseCase)(nil).SignUpUser), ctx, name, email, password)
+}
