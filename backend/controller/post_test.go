@@ -178,7 +178,6 @@ func TestPostController_GetPostByID(t *testing.T) {
 					Value: "1",
 				},
 			}
-			log.Print(",,,,,,,,,,,,,,,,,,,,,,,,,,,", ginCtx.Params)
 
 			// mock作成
 			useCase := getMockPostUseCase(t)
