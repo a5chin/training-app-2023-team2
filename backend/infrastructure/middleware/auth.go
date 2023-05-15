@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/gin-gonic/gin"
 	"myapp/entity"
+	"net/http"
 )
 
 type UserRepo interface {
@@ -12,15 +13,17 @@ type UserRepo interface {
 
 func Authentication(userRepo UserRepo) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		token, err := ctx.Cookie(entity.AuthCookieKey)
-		if err != nil {
-			return
+		if ctx.Request.Method != http.MethodGet {
+			token, err := ctx.Cookie(entity.AuthCookieKey)
+			if err != nil {
+				return
+			}
+			user, err := userRepo.GetUserFromToken(ctx, token)
+			if err != nil {
+				return
+			}
+			ctx.Set(entity.ContextAuthUserKey, user)
 		}
-		user, err := userRepo.GetUserFromToken(ctx, token)
-		if err != nil {
-			return
-		}
-		ctx.Set(entity.ContextAuthUserKey, user)
 		ctx.Next()
 	}
 }
