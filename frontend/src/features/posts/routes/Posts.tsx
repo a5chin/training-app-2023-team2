@@ -12,7 +12,7 @@ function Post({ post }: PostProps) {
 
   return (
     <Box borderColor="black" borderWidth="1px">
-      <Flex direction="row" px="19px">
+      <Flex direction="row" px="19px" py="5px">
         {/* <Flex direction="column">
           <Icon />
         </Flex> */}
@@ -23,8 +23,12 @@ function Post({ post }: PostProps) {
           </HStack>
           <Text>{body}</Text>
           <HStack>
-            <AiOutlineComment />
-            <AiOutlineHeart />
+            <button type="button">
+              <AiOutlineComment />
+            </button>
+            <button type="button">
+              <AiOutlineHeart />
+            </button>
           </HStack>
         </Flex>
       </Flex>
@@ -35,7 +39,7 @@ function Post({ post }: PostProps) {
 export function Posts() {
   const { posts } = usePosts();
 
-  console.log(`posts in PostsPage: ${JSON.stringify(posts)}`);
+  // console.log(`posts in PostsPage: ${JSON.stringify(posts)}`);
 
   return (
     <Flex direction="row" w="full">
