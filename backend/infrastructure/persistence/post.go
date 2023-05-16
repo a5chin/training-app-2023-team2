@@ -3,17 +3,38 @@ package persistence
 import (
 	"context"
 	"errors"
-	"net/http"
 	"gorm.io/gorm"
 	"myapp/entity"
 	"myapp/infrastructure/driver"
 	"myapp/infrastructure/persistence/model"
+	"net/http"
 )
 
 type PostPersistence struct{}
 
 func NewPostPersistence() *PostPersistence {
 	return &PostPersistence{}
+}
+
+func (p PostPersistence) CreatePost(
+	ctx context.Context,
+	uid string,
+	body string,
+) error {
+	if err := db.Create(
+		&model.Post{
+			ID:     model.GenerateID.String(),
+			Body:   body,
+			UserID: uid,
+		},
+	).Error; err != nil {
+		var mysqlErr *mysql.MySQLError
+		if errors.As(err, &mysqlErr) && mysqlErr.Number == driver.ErrDuplicateEntryNumber {
+			return nil, entity.WrapError(http.StatusConflict, err)
+		}
+		return err
+	}
+	return nil
 }
 
 func (p PostPersistence) GetPosts(
