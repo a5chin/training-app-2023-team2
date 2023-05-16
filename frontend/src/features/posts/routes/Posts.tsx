@@ -1,5 +1,6 @@
-import { Box, Flex, Text, HStack } from '@chakra-ui/react';
-import { AiOutlineHeart, AiOutlineComment } from 'react-icons/ai';
+import { Box, IconButton, Flex, Text, HStack } from '@chakra-ui/react';
+import { AiOutlineHeart, AiFillHeart, AiOutlineComment } from 'react-icons/ai';
+import { useState } from 'react';
 import { usePosts } from '../api/getPosts';
 import { Post as PostType } from '../types';
 
@@ -7,12 +8,72 @@ type PostProps = {
   post: PostType;
 };
 
+type ColorProps = {
+  baseColor: string;
+  selectedColor: string;
+};
+
+function CustomCommentButton({ baseColor, selectedColor }: ColorProps) {
+  const [color, setColor] = useState<string>(baseColor);
+
+  return (
+    <IconButton
+      bg="inherit"
+      size="sm"
+      aria-label="comment-button"
+      icon={
+        <div>
+          <AiOutlineComment
+            onMouseOver={() => setColor(selectedColor)}
+            onMouseOut={() => setColor(baseColor)}
+            style={{ color }}
+          />
+        </div>
+      }
+      _focus={{ bg: 'inherit' }}
+      _hover={{ bg: 'inherit' }}
+    />
+  );
+}
+
+function CustomGoodButton({ baseColor, selectedColor }: ColorProps) {
+  const [color, setColor] = useState<string>(baseColor);
+  const [isLiked, setIsLiked] = useState<boolean>(false);
+
+  return (
+    <IconButton
+      bg="inherit"
+      size="sm"
+      aria-label="good-button"
+      icon={
+        <div>
+          {isLiked ? (
+            <AiFillHeart style={{ color }} />
+          ) : (
+            <AiOutlineHeart
+              onMouseOver={() => setColor(selectedColor)}
+              onMouseOut={() => setColor(baseColor)}
+              style={{ color }}
+            />
+          )}
+        </div>
+      }
+      _focus={{ bg: 'inherit' }}
+      _hover={{ bg: 'inherit' }}
+      onClick={() => {
+        setIsLiked(!isLiked);
+        setColor(selectedColor);
+      }}
+    />
+  );
+}
+
 function Post({ post }: PostProps) {
   const { title, body, user } = post;
 
   return (
     <Box borderColor="black" borderWidth="1px">
-      <Flex direction="row" px="19px" py="5px">
+      <Flex direction="row" px="19px">
         {/* <Flex direction="column">
           <Icon />
         </Flex> */}
@@ -23,12 +84,8 @@ function Post({ post }: PostProps) {
           </HStack>
           <Text>{body}</Text>
           <HStack>
-            <button type="button">
-              <AiOutlineComment />
-            </button>
-            <button type="button">
-              <AiOutlineHeart />
-            </button>
+            <CustomCommentButton baseColor="black" selectedColor="red" />
+            <CustomGoodButton baseColor="black" selectedColor="pink" />
           </HStack>
         </Flex>
       </Flex>
