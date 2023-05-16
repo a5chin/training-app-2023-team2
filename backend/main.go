@@ -19,10 +19,13 @@ import (
 
 func main() {
 	// Dependency Injection
-	db := driver.NewDB()
+	conf := config.Load()
+	db := driver.NewDB(conf)
+	tokenDriver := driver.NewTokenDriver(conf)
+
 	postRepo := persistence.NewPostPersistence()
 	helloWorldRepo := persistence.NewHelloWorldPersistence()
-	userRepo := persistence.NewUserPersistence()
+	userRepo := persistence.NewUserPersistence(tokenDriver)
 
 	postUseCase := usecase.NewPostUseCase(postRepo)
 	helloWorldUseCase := usecase.NewHelloWorldUseCase(helloWorldRepo)
@@ -30,36 +33,53 @@ func main() {
 
 	postController := controller.NewPostController(postUseCase)
 	helloWorldController := controller.NewHelloWorldController(helloWorldUseCase)
-	_ = controller.NewUserController(userUseCase)
+	userController := controller.NewUserController(userUseCase)
+	favoriteController := controller.NewFavoriteController()
 
 	// Setup webserver
 	app := gin.Default()
 	app.Use(middleware.Transaction(db))
-	app.Use(middleware.Cors())
+	app.Use(middleware.Cors(conf))
 
 	app.GET("/", func(ctx *gin.Context) {
 		ctx.String(http.StatusOK, "It works")
 	})
-	app.GET("/hello", handleResponse(helloWorldController.GetHelloWorld))
-	app.GET("/posts", handleResponse(postController.GetPosts))
-	app.GET("/posts/:id", handleResponse(postController.GetPostByID))
 
-	runApp(app, config.Port)
+	api := app.Group("/api/v1")
+
+	api.GET("/hello", handleResponse(helloWorldController.GetHelloWorld))
+	postRouter := api.Group("/posts")
+	postRouter.Use(middleware.Authentication(userRepo))
+	postRouter.GET("/", handleResponse(postController.GetPosts))
+	postRouter.POST("/", handleResponse(postController.CreatePost))
+	postRouter.GET("/:postId", handleResponse(postController.GetPostByID))
+	postRouter.DELETE("/:postId", handleResponse(postController.DeletePost))
+	postRouter.GET("/:postId/replies", handleResponse(postController.GetReplies))
+	postRouter.POST("/:postId/replies", handleResponse(postController.CreateReply))
+
+	postRouter.POST("/:postId/favorites", handleResponse(favoriteController.CreateFavorite))
+	postRouter.DELETE("/:postId/favorites/:favoriteId", handleResponse(favoriteController.DeleteFavorite))
+
+	api.GET("/users/me", handleResponse(userController.GetMe))
+	api.POST("/sign_up", handleResponse(userController.SignUp))
+	api.POST("/sign_in", handleResponse(userController.SignIn))
+
+	runApp(app, conf)
 }
 
-func runApp(app *gin.Engine, port int) {
+func runApp(app *gin.Engine, conf *config.Config) {
 	docs.SwaggerInfo.Title = "training-app-2023-team2"
 	docs.SwaggerInfo.Description = "training-app-2023-team2"
 	docs.SwaggerInfo.Version = "1.0"
-	docs.SwaggerInfo.Host = fmt.Sprintf("localhost:%d", port)
-	docs.SwaggerInfo.BasePath = "/"
+	docs.SwaggerInfo.Host = fmt.Sprintf("localhost:%d", conf.Port)
+	docs.SwaggerInfo.BasePath = "/api/v1"
 	docs.SwaggerInfo.Schemes = []string{"http"}
 
 	app.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-	app.Run(fmt.Sprintf("%s:%d", config.HostName, config.Port))
+	app.Run(fmt.Sprintf("%s:%d", conf.Hostname, conf.Port))
 
-	log.Println(fmt.Sprintf("http://localhost:%d", port))
-	log.Println(fmt.Sprintf("http://localhost:%d/swagger/index.html", port))
+	log.Println(fmt.Sprintf("http://localhost:%d", conf.Port))
+	log.Println(fmt.Sprintf("http://localhost:%d/swagger/index.html", conf.Port))
 }
 
 func handleResponse(f func(ctx *gin.Context) (interface{}, error)) gin.HandlerFunc {

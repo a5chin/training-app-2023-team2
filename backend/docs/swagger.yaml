@@ -6,6 +6,22 @@ definitions:
           $ref: '#/definitions/entity.Post'
         type: array
     type: object
+  controller.SignInRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+  controller.SignUpRequest:
+    properties:
+      email:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+    type: object
   entity.ErrorResponse:
     properties:
       message:
@@ -23,16 +39,18 @@ definitions:
       body:
         type: string
       id:
-        type: integer
-      title:
         type: string
+      parent:
+        $ref: '#/definitions/entity.Post'
       user:
         $ref: '#/definitions/entity.User'
     type: object
   entity.User:
     properties:
+      email:
+        type: string
       id:
-        type: integer
+        type: string
       name:
         type: string
     type: object
@@ -66,7 +84,6 @@ paths:
     get:
       consumes:
       - application/json
-      description: get posts
       parameters:
       - description: limit
         in: query
@@ -91,20 +108,73 @@ paths:
           description: Not Found
           schema:
             $ref: '#/definitions/entity.ErrorResponse'
-      summary: get posts
+      summary: 投稿一覧取得API
       tags:
       - Post
-  /posts/{id}:
+    post:
+      consumes:
+      - multipart/form-data
+      parameters:
+      - description: 画像ファイル
+        in: formData
+        name: file
+        required: true
+        type: file
+      - in: formData
+        name: content
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/entity.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/entity.ErrorResponse'
+      summary: 投稿作成API
+      tags:
+      - Post
+  /posts/{postId}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 投稿ID
+        in: path
+        name: postId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: NoContent
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/entity.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/entity.ErrorResponse'
+      summary: 投稿削除API
+      tags:
+      - Post
     get:
       consumes:
       - application/json
       description: get post by id
       parameters:
-      - description: Post ID
+      - description: 投稿ID
         in: path
-        name: id
+        name: postId
         required: true
-        type: integer
+        type: string
       produces:
       - application/json
       responses:
@@ -124,7 +194,217 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/entity.ErrorResponse'
-      summary: get post by id
+      summary: 投稿取得API
+      tags:
+      - Post
+  /posts/{postId}/favorites:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 投稿ID
+        in: path
+        name: postId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/entity.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/entity.ErrorResponse'
+      summary: いいね作成API
+      tags:
+      - Favorite
+  /posts/{postId}/favorites/{favoriteId}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 投稿ID
+        in: path
+        name: postId
+        required: true
+        type: string
+      - description: いいねID
+        in: path
+        name: favoriteId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/entity.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/entity.ErrorResponse'
+      summary: いいね削除API
+      tags:
+      - Favorite
+  /posts/{postId}/replies:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 投稿ID
+        in: path
+        name: postId
+        required: true
+        type: string
+      - description: limit
+        in: query
+        name: limit
+        type: string
+      - description: offset
+        in: query
+        name: offset
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.GetPostsResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/entity.ErrorResponse'
+      summary: リプライ一覧取得API
+      tags:
+      - Post
+    post:
+      consumes:
+      - multipart/form-data
+      parameters:
+      - description: 投稿ID
+        in: path
+        name: postId
+        required: true
+        type: string
+      - description: 画像ファイル
+        in: formData
+        name: file
+        required: true
+        type: file
+      - in: formData
+        name: content
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/entity.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/entity.ErrorResponse'
+      summary: リプライ作成API
+      tags:
+      - Post
+  /sign_in:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: ユーザーログインリクエスト
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/controller.SignInRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/entity.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/entity.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/entity.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/entity.ErrorResponse'
+      summary: ユーザーログインAPI
+      tags:
+      - Post
+  /sign_up:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: ユーザー登録リクエスト
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/controller.SignUpRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/entity.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/entity.ErrorResponse'
+      summary: ユーザー登録API
+      tags:
+      - Post
+  /users/me:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.User'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/entity.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/entity.ErrorResponse'
+      summary: ログインユーザー取得API
       tags:
       - Post
 swagger: "2.0"

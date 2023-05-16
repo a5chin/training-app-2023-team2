@@ -125,3 +125,48 @@ func NewMockUserRepo(ctrl *gomock.Controller) *MockUserRepo {
 func (m *MockUserRepo) EXPECT() *MockUserRepoMockRecorder {
 	return m.recorder
 }
+
+// CreateUser mocks base method.
+func (m *MockUserRepo) CreateUser(ctx context.Context, name, email, password string) (*entity.User, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreateUser", ctx, name, email, password)
+	ret0, _ := ret[0].(*entity.User)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// CreateUser indicates an expected call of CreateUser.
+func (mr *MockUserRepoMockRecorder) CreateUser(ctx, name, email, password interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateUser", reflect.TypeOf((*MockUserRepo)(nil).CreateUser), ctx, name, email, password)
+}
+
+// GetUserFromEmail mocks base method.
+func (m *MockUserRepo) GetUserFromEmail(ctx context.Context, email, password string) (*entity.User, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetUserFromEmail", ctx, email, password)
+	ret0, _ := ret[0].(*entity.User)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetUserFromEmail indicates an expected call of GetUserFromEmail.
+func (mr *MockUserRepoMockRecorder) GetUserFromEmail(ctx, email, password interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserFromEmail", reflect.TypeOf((*MockUserRepo)(nil).GetUserFromEmail), ctx, email, password)
+}
+
+// TokenizeUser mocks base method.
+func (m *MockUserRepo) TokenizeUser(user *entity.User) (string, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "TokenizeUser", user)
+	ret0, _ := ret[0].(string)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// TokenizeUser indicates an expected call of TokenizeUser.
+func (mr *MockUserRepoMockRecorder) TokenizeUser(user interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "TokenizeUser", reflect.TypeOf((*MockUserRepo)(nil).TokenizeUser), user)
+}

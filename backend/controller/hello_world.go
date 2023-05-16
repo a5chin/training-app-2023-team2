@@ -16,15 +16,15 @@ func NewHelloWorldController(u HelloWorldUseCase) *HelloWorldController {
 }
 
 // GetHelloWorld godoc
-// @Summary		get helloWorld message
-// @Description	get helloWorld message
-// @Tags			HelloWorld
-// @Accept			json
-// @Produce		json
-// @Success		200	{object}	entity.HelloWorld
-// @Failure		400	{object}	entity.ErrorResponse
-// @Failure		404	{object}	entity.ErrorResponse
-// @Router			/hello [get]
+//	@Summary		get helloWorld message
+//	@Description	get helloWorld message
+//	@Tags			HelloWorld
+//	@Accept			json
+//	@Produce		json
+//	@Success		200	{object}	entity.HelloWorld
+//	@Failure		400	{object}	entity.ErrorResponse
+//	@Failure		404	{object}	entity.ErrorResponse
+//	@Router			/hello [get]
 func (c HelloWorldController) GetHelloWorld(ctx *gin.Context) (interface{}, error) {
 	lang := ctx.DefaultQuery("lang", "ja")
 	if len(lang) != 2 {
