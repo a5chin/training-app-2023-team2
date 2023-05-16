@@ -16,3 +16,7 @@ func NewPostUseCase(repo PostRepo) *PostUseCase {
 func (u PostUseCase) GetPosts(ctx context.Context, limit *int, offset *int) ([]*entity.Post, error) {
 	return u.PostRepo.GetPosts(ctx, limit, offset)
 }
+
+func (u PostUseCase) GetPostByID(ctx context.Context, id int) (*entity.Post, error) {
+	return u.PostRepo.GetPostByID(ctx, id)
+}

@@ -13,6 +13,10 @@ type HelloWorldRepo interface {
 
 type PostRepo interface {
 	GetPosts(ctx context.Context, limit *int, offset *int) ([]*entity.Post, error)
+	GetPostByID(
+		ctx context.Context,
+		id int,
+	) (*entity.Post, error)
 }
 
 type UserRepo interface{}

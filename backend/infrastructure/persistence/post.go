@@ -2,6 +2,8 @@ package persistence
 
 import (
 	"context"
+	"errors"
+	"net/http"
 	"gorm.io/gorm"
 	"myapp/entity"
 	"myapp/infrastructure/driver"
@@ -35,4 +37,20 @@ func (p PostPersistence) GetPosts(
 		posts = append(posts, record.ToEntity())
 	}
 	return posts, nil
+}
+
+func (p PostPersistence) GetPostByID(
+	ctx context.Context,
+	id int,
+) (*entity.Post, error) {
+	var record *model.Post
+	db, _ := ctx.Value(driver.TxKey).(*gorm.DB)
+	if err := db.Preload("User").First(&record, id).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, entity.WrapError(http.StatusNotFound, err)
+		}
+		return nil, err
+	}
+
+	return record.ToEntity(), nil
 }

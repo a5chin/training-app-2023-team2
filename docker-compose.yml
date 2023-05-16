@@ -1,7 +1,7 @@
 version: '3.9'
 services:
   backend:
-    build: 
+    build:
       context: ./docker
       dockerfile: backend.Dockerfile
     ports:
@@ -26,7 +26,7 @@ services:
     environment:
       TZ: Asia/Tokyo
   db:
-    build: 
+    build:
       context: ./docker
       dockerfile: mysql.Dockerfile
     healthcheck:
