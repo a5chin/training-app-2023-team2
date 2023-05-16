@@ -17,6 +17,11 @@ type PostRepo interface {
 		ctx context.Context,
 		id int,
 	) (*entity.Post, error)
+	CreatePost(
+		ctx context.Context,
+		uid string,
+		body string,
+	) error 
 }
 
 type UserRepo interface {
