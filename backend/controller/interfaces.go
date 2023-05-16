@@ -14,6 +14,11 @@ type HelloWorldUseCase interface {
 type PostUseCase interface {
 	GetPosts(ctx context.Context, limit *int, offset *int) ([]*entity.Post, error)
 	GetPostByID(ctx context.Context, id int) (*entity.Post, error)
+	CreatePost(
+		ctx context.Context,
+		uid string,
+		body string,
+	) error
 }
 
 type UserUseCase interface {

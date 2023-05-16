@@ -2,7 +2,6 @@ package controller
 
 import (
 	"errors"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"myapp/entity"
 	"net/http"
@@ -80,7 +79,7 @@ func (c PostController) GetPostByID(ctx *gin.Context) (interface{}, error) {
 }
 
 type CreatePostRequest struct {
-	Content string `json:"content"`
+	Content string `form:"content"`
 }
 
 // CreatePost godoc
@@ -90,16 +89,26 @@ type CreatePostRequest struct {
 //	@Tags		Post
 //	@Accept		mpfd
 //	@Produce	json
-//	@Param		file	formData	file				true	"画像ファイル"
+//	@Param		file	formData	file				false	"画像ファイル"
 //	@Param		request	formData	CreatePostRequest	true	"投稿作成リクエスト"
 //	@Success	200		"OK"
 //	@Failure	400		{object}	entity.ErrorResponse
 //	@Failure	401		{object}	entity.ErrorResponse
 //	@Router		/posts [post]
 func (c PostController) CreatePost(ctx *gin.Context) (interface{}, error) {
-	a, err := ctx.FormFile("file")
-	fmt.Println(a.Filename)
-	return nil, err
+	var req *CreatePostRequest
+	if err :=ctx.Bind(&req); err != nil{
+		return nil, entity.WrapError(http.StatusBadRequest,err)
+	}
+	_user, err :=ctx.Get(entity.ContextAuthUserKey)
+	if err != nil{
+		return nil, entity.WrapError(http.StatusUnauthorized,err)
+	}
+	user, ok := _user.(*entity.User)
+	if !ok{
+		return nil, entity.WrapError(http.StatusUnauthorized,err)
+	}
+	return nil, c.PostUseCase.CreatePost(ctx,user.ID,req.Content)
 }
 
 // DeletePost godoc

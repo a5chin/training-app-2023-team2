@@ -114,8 +114,7 @@ const docTemplate = `{
                         "type": "file",
                         "description": "画像ファイル",
                         "name": "file",
-                        "in": "formData",
-                        "required": true
+                        "in": "formData"
                     },
                     {
                         "type": "string",

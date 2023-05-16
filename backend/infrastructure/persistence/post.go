@@ -5,6 +5,7 @@ import (
 	"errors"
 	"gorm.io/gorm"
 	"myapp/entity"
+	"github.com/go-sql-driver/mysql"
 	"myapp/infrastructure/driver"
 	"myapp/infrastructure/persistence/model"
 	"net/http"
@@ -21,16 +22,17 @@ func (p PostPersistence) CreatePost(
 	uid string,
 	body string,
 ) error {
+	db, _ := ctx.Value(driver.TxKey).(*gorm.DB)
 	if err := db.Create(
 		&model.Post{
-			ID:     model.GenerateID.String(),
+			ID:     model.GenerateID().String(),
 			Body:   body,
 			UserID: uid,
 		},
 	).Error; err != nil {
 		var mysqlErr *mysql.MySQLError
 		if errors.As(err, &mysqlErr) && mysqlErr.Number == driver.ErrDuplicateEntryNumber {
-			return nil, entity.WrapError(http.StatusConflict, err)
+			return entity.WrapError(http.StatusConflict, err)
 		}
 		return err
 	}
