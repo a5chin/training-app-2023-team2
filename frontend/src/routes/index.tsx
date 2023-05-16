@@ -1,6 +1,5 @@
-import { useRoutes, RouteObject, Outlet } from 'react-router-dom';
+import { useRoutes, RouteObject, Outlet, Navigate } from 'react-router-dom';
 
-import { HelloWorld } from '@/features/helloworld';
 import { PostsRoutes } from '@/features/posts';
 import { MainLayout } from '@/components/Layout/MainLayout';
 
@@ -17,7 +16,10 @@ export function AppRoutes() {
     path: '/',
     element: <App />,
     children: [
-      { path: '/', element: <HelloWorld /> },
+      {
+        path: '/',
+        element: <Navigate to="/posts" />,
+      },
       { path: '/posts', element: <PostsRoutes /> },
     ],
   };

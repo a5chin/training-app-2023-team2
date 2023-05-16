@@ -1,7 +1,7 @@
 version: '3.9'
 services:
   backend:
-    build: 
+    build:
       context: ./docker
       dockerfile: backend.Dockerfile
     ports:
@@ -25,10 +25,8 @@ services:
     command: "bash -c 'npm i && npm run dev'"
     environment:
       TZ: Asia/Tokyo
-    env_file:
-      - ./frontend/.env
   db:
-    build: 
+    build:
       context: ./docker
       dockerfile: mysql.Dockerfile
     healthcheck:

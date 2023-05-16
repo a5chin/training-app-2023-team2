@@ -73,6 +73,21 @@ func (m *MockPostRepo) EXPECT() *MockPostRepoMockRecorder {
 	return m.recorder
 }
 
+// GetPostByID mocks base method.
+func (m *MockPostRepo) GetPostByID(ctx context.Context, id int) (*entity.Post, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetPostByID", ctx, id)
+	ret0, _ := ret[0].(*entity.Post)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetPostByID indicates an expected call of GetPostByID.
+func (mr *MockPostRepoMockRecorder) GetPostByID(ctx, id interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPostByID", reflect.TypeOf((*MockPostRepo)(nil).GetPostByID), ctx, id)
+}
+
 // GetPosts mocks base method.
 func (m *MockPostRepo) GetPosts(ctx context.Context, limit, offset *int) ([]*entity.Post, error) {
 	m.ctrl.T.Helper()
