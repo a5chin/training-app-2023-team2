@@ -11,10 +11,10 @@ import (
 const TxKey = "transactionObject"
 const ErrDuplicateEntryNumber = 1062
 
-func NewDB() *gorm.DB {
-	host := config.DBHostName
-	port := config.DBPort
-	dbname := config.DBName
+func NewDB(conf *config.Config) *gorm.DB {
+	host := conf.Database.Hostname
+	port := conf.Database.Port
+	dbname := conf.Database.Name
 	dsn := fmt.Sprintf("root@tcp(%s:%d)/%s?charset=utf8mb4&parseTime=True&loc=Local", host, port, dbname)
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {

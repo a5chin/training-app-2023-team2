@@ -1,0 +1,12 @@
+hostname: "127.0.0.1"
+port: 9000
+database:
+  hostname: "db"
+  port: 3306
+  name: "training"
+cors:
+  allow:
+    origin: "http://localhost:3000"
+jwt:
+  secret: "hmacSampleSecret"
+  issuer: "issuer"

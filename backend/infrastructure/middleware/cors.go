@@ -3,12 +3,12 @@ package middleware
 import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-	myConfig "myapp/config"
+	"myapp/config"
 )
 
-func Cors() gin.HandlerFunc {
-	config := cors.DefaultConfig()
-	config.AllowOrigins = []string{myConfig.CorsAllowOrigin}
-	config.AllowCredentials = true
-	return cors.New(config)
+func Cors(conf *config.Config) gin.HandlerFunc {
+	cdc := cors.DefaultConfig()
+	cdc.AllowOrigins = []string{conf.Cors.Allow.Origin}
+	cdc.AllowCredentials = true
+	return cors.New(cdc)
 }

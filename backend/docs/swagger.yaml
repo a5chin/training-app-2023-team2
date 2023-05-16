@@ -335,6 +335,8 @@ paths:
       responses:
         "200":
           description: OK
+          schema:
+            $ref: '#/definitions/entity.User'
         "400":
           description: Bad Request
           schema:
@@ -370,6 +372,8 @@ paths:
       responses:
         "200":
           description: OK
+          schema:
+            $ref: '#/definitions/entity.User'
         "400":
           description: Bad Request
           schema:

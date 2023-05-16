@@ -16,10 +16,12 @@ func Authentication(userRepo UserRepo) gin.HandlerFunc {
 		if ctx.Request.Method != http.MethodGet {
 			token, err := ctx.Cookie(entity.AuthCookieKey)
 			if err != nil {
+				ctx.AbortWithError(http.StatusUnauthorized, err)
 				return
 			}
 			user, err := userRepo.GetUserFromToken(ctx, token)
 			if err != nil {
+				ctx.AbortWithError(http.StatusUnauthorized, err)
 				return
 			}
 			ctx.Set(entity.ContextAuthUserKey, user)

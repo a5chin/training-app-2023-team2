@@ -20,6 +20,7 @@ type PostRepo interface {
 }
 
 type UserRepo interface {
-	GetUserToken(ctx context.Context, email, password string) (string, error)
-	CreateUserToken(ctx context.Context, name, email, password string) (string, error)
+	CreateUser(ctx context.Context, name, email, password string) (*entity.User, error)
+	GetUserFromEmail(ctx context.Context, email, password string) (*entity.User, error)
+	TokenizeUser(user *entity.User) (string, error)
 }

@@ -17,6 +17,6 @@ type PostUseCase interface {
 }
 
 type UserUseCase interface {
-	SignInUser(ctx context.Context, email, password string) (string, error)
-	SignUpUser(ctx context.Context, name, email, password string) (string, error)
+	SignInUser(ctx context.Context, email, password string) (*entity.User, string, error)
+	SignUpUser(ctx context.Context, name, email, password string) (*entity.User, string, error)
 }

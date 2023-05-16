@@ -127,12 +127,13 @@ func (m *MockUserUseCase) EXPECT() *MockUserUseCaseMockRecorder {
 }
 
 // SignInUser mocks base method.
-func (m *MockUserUseCase) SignInUser(ctx context.Context, email, password string) (string, error) {
+func (m *MockUserUseCase) SignInUser(ctx context.Context, email, password string) (*entity.User, string, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "SignInUser", ctx, email, password)
-	ret0, _ := ret[0].(string)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	ret0, _ := ret[0].(*entity.User)
+	ret1, _ := ret[1].(string)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
 }
 
 // SignInUser indicates an expected call of SignInUser.
@@ -142,12 +143,13 @@ func (mr *MockUserUseCaseMockRecorder) SignInUser(ctx, email, password interface
 }
 
 // SignUpUser mocks base method.
-func (m *MockUserUseCase) SignUpUser(ctx context.Context, name, email, password string) (string, error) {
+func (m *MockUserUseCase) SignUpUser(ctx context.Context, name, email, password string) (*entity.User, string, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "SignUpUser", ctx, name, email, password)
-	ret0, _ := ret[0].(string)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	ret0, _ := ret[0].(*entity.User)
+	ret1, _ := ret[1].(string)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
 }
 
 // SignUpUser indicates an expected call of SignUpUser.
