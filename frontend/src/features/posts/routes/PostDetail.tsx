@@ -6,8 +6,6 @@ import { Post } from '../components/Post';
 export function PostDetail() {
   const { postId } = useParams<{ postId: string }>();
   const { post } = usePostDetail(postId ?? '');
-  console.log(postId);
-  console.log(post);
 
   return (
     <Flex direction="row" w="full">

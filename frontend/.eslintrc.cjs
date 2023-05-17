@@ -33,5 +33,8 @@ module.exports = {
         extensions: ['.jsx', '.tsx'],
       },
     ],
+    // 関数の型宣言のパラメータに対して no-unused-vars を適用しないようにする
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': ['error'],
   },
 };
