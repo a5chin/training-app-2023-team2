@@ -3,12 +3,13 @@ package persistence
 import (
 	"context"
 	"errors"
-	"gorm.io/gorm"
 	"myapp/entity"
-	"github.com/go-sql-driver/mysql"
 	"myapp/infrastructure/driver"
 	"myapp/infrastructure/persistence/model"
 	"net/http"
+
+	"github.com/go-sql-driver/mysql"
+	"gorm.io/gorm"
 )
 
 type PostPersistence struct{}
@@ -21,7 +22,6 @@ func (p PostPersistence) CreatePost(
 	ctx context.Context,
 	uid string,
 	body string,
-	
 ) error {
 	db, _ := ctx.Value(driver.TxKey).(*gorm.DB)
 	if err := db.Create(
@@ -35,6 +35,25 @@ func (p PostPersistence) CreatePost(
 		if errors.As(err, &mysqlErr) && mysqlErr.Number == driver.ErrDuplicateEntryNumber {
 			return entity.WrapError(http.StatusConflict, err)
 		}
+		return err
+	}
+	return nil
+}
+
+func (p PostPersistence) DeletePost(
+	ctx context.Context,
+	pid string,
+) error {
+	db, _ := ctx.Value(driver.TxKey).(*gorm.DB)
+	if err := db.Select("id").First(&model.Post{}, pid).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return entity.WrapError(http.StatusNotFound, err)
+		}
+		return err
+	}
+	if err := db.Delete(
+		&model.Post{}, pid,
+	).Error; err != nil {
 		return err
 	}
 	return nil
