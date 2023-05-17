@@ -73,6 +73,20 @@ func (m *MockPostUseCase) EXPECT() *MockPostUseCaseMockRecorder {
 	return m.recorder
 }
 
+// CreatePost mocks base method.
+func (m *MockPostUseCase) CreatePost(ctx context.Context, uid, body string) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreatePost", ctx, uid, body)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// CreatePost indicates an expected call of CreatePost.
+func (mr *MockPostUseCaseMockRecorder) CreatePost(ctx, uid, body interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreatePost", reflect.TypeOf((*MockPostUseCase)(nil).CreatePost), ctx, uid, body)
+}
+
 // GetPostByID mocks base method.
 func (m *MockPostUseCase) GetPostByID(ctx context.Context, id int) (*entity.Post, error) {
 	m.ctrl.T.Helper()
@@ -124,6 +138,21 @@ func NewMockUserUseCase(ctrl *gomock.Controller) *MockUserUseCase {
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockUserUseCase) EXPECT() *MockUserUseCaseMockRecorder {
 	return m.recorder
+}
+
+// GetUserFromToken mocks base method.
+func (m *MockUserUseCase) GetUserFromToken(ctx context.Context, token string) (*entity.User, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetUserFromToken", ctx, token)
+	ret0, _ := ret[0].(*entity.User)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetUserFromToken indicates an expected call of GetUserFromToken.
+func (mr *MockUserUseCaseMockRecorder) GetUserFromToken(ctx, token interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserFromToken", reflect.TypeOf((*MockUserUseCase)(nil).GetUserFromToken), ctx, token)
 }
 
 // SignInUser mocks base method.

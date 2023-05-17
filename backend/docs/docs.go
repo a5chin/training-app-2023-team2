@@ -114,8 +114,7 @@ const docTemplate = `{
                         "type": "file",
                         "description": "画像ファイル",
                         "name": "file",
-                        "in": "formData",
-                        "required": true
+                        "in": "formData"
                     },
                     {
                         "type": "string",
@@ -425,7 +424,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Post"
+                    "User"
                 ],
                 "summary": "ユーザーログインAPI",
                 "parameters": [
@@ -482,7 +481,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Post"
+                    "User"
                 ],
                 "summary": "ユーザー登録API",
                 "parameters": [
@@ -527,7 +526,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Post"
+                    "User"
                 ],
                 "summary": "ログインユーザー取得API",
                 "responses": {

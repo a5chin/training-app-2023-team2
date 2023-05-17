@@ -18,7 +18,7 @@ func NewUserController(u UserUseCase) *UserController {
 //
 //	@Summary	ログインユーザー取得API
 //	@Description
-//	@Tags		Post
+//	@Tags		User
 //	@Accept		json
 //	@Produce	json
 //	@Success	200	{object}	entity.User	"OK"
@@ -26,7 +26,11 @@ func NewUserController(u UserUseCase) *UserController {
 //	@Failure	404	{object}	entity.ErrorResponse
 //	@Router		/users/me [get]
 func (c UserController) GetMe(ctx *gin.Context) (interface{}, error) {
-	return nil, nil
+	token, err := ctx.Cookie(entity.AuthCookieKey)
+	if err != nil {
+		return nil, entity.WrapError(http.StatusUnauthorized, err)
+	}
+	return c.UserUseCase.GetUserFromToken(ctx, token)
 }
 
 type SignUpRequest struct {
@@ -44,7 +48,7 @@ type SignInRequest struct {
 //
 //	@Summary	ユーザー登録API
 //	@Description
-//	@Tags		Post
+//	@Tags		User
 //	@Accept		json
 //	@Param		request	body	SignUpRequest	true	"ユーザー登録リクエスト"
 //	@Produce	json
@@ -70,7 +74,7 @@ func (c UserController) SignUp(ctx *gin.Context) (interface{}, error) {
 //
 //	@Summary	ユーザーログインAPI
 //	@Description
-//	@Tags		Post
+//	@Tags		User
 //	@Accept		json
 //	@Param		request	body	SignInRequest	true	"ユーザーログインリクエスト"
 //	@Produce	json

@@ -102,8 +102,7 @@
                         "type": "file",
                         "description": "画像ファイル",
                         "name": "file",
-                        "in": "formData",
-                        "required": true
+                        "in": "formData"
                     },
                     {
                         "type": "string",
@@ -413,7 +412,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "Post"
+                    "User"
                 ],
                 "summary": "ユーザーログインAPI",
                 "parameters": [
@@ -470,7 +469,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "Post"
+                    "User"
                 ],
                 "summary": "ユーザー登録API",
                 "parameters": [
@@ -515,7 +514,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "Post"
+                    "User"
                 ],
                 "summary": "ログインユーザー取得API",
                 "responses": {

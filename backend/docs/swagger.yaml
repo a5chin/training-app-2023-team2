@@ -118,7 +118,6 @@ paths:
       - description: 画像ファイル
         in: formData
         name: file
-        required: true
         type: file
       - in: formData
         name: content
@@ -355,7 +354,7 @@ paths:
             $ref: '#/definitions/entity.ErrorResponse'
       summary: ユーザーログインAPI
       tags:
-      - Post
+      - User
   /sign_up:
     post:
       consumes:
@@ -384,7 +383,7 @@ paths:
             $ref: '#/definitions/entity.ErrorResponse'
       summary: ユーザー登録API
       tags:
-      - Post
+      - User
   /users/me:
     get:
       consumes:
@@ -406,5 +405,5 @@ paths:
             $ref: '#/definitions/entity.ErrorResponse'
       summary: ログインユーザー取得API
       tags:
-      - Post
+      - User
 swagger: "2.0"
