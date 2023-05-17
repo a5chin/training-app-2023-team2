@@ -14,19 +14,16 @@ import (
 func TestPostPersistence_GetPosts(t *testing.T) {
 	stubPosts := []*entity.Post{
 		{
-			ID:    1,
-			Title: "a",
-			Body:  "a",
+			ID:   "1",
+			Body: "a",
 		},
 		{
-			ID:    2,
-			Title: "b",
-			Body:  "b",
+			ID:   "2",
+			Body: "b",
 		},
 		{
-			ID:    3,
-			Title: "c",
-			Body:  "c",
+			ID:   "3",
+			Body: "c",
 		},
 	}
 	tests := []struct {
@@ -61,9 +58,9 @@ func TestPostPersistence_GetPosts(t *testing.T) {
 				_, err := persistence.GetPosts(ctx, nil, nil)
 				assert.Error(t, err)
 			} else {
-				returnRow := sqlmock.NewRows([]string{"id", "title", "body"})
+				returnRow := sqlmock.NewRows([]string{"id", "body"})
 				for _, p := range stubPosts {
-					returnRow.AddRow(p.ID, p.Title, p.Body)
+					returnRow.AddRow(p.ID, p.Body)
 					query.WillReturnRows(returnRow)
 				}
 				actual, err := persistence.GetPosts(ctx, nil, nil)
@@ -78,19 +75,16 @@ func TestPostPersistence_GetPosts(t *testing.T) {
 func TestPostPersistence_GetPostByID(t *testing.T) {
 	stubPosts := []*entity.Post{
 		{
-			ID:    1,
-			Title: "a",
-			Body:  "a",
+			ID:   "1",
+			Body: "a",
 		},
 		{
-			ID:    2,
-			Title: "b",
-			Body:  "b",
+			ID:   "2",
+			Body: "b",
 		},
 		{
-			ID:    3,
-			Title: "c",
-			Body:  "c",
+			ID:   "3",
+			Body: "c",
 		},
 	}
 	tests := []struct {
@@ -125,8 +119,8 @@ func TestPostPersistence_GetPostByID(t *testing.T) {
 				_, err := persistence.GetPostByID(ctx, 1)
 				assert.Error(t, err)
 			} else {
-				returnRow := sqlmock.NewRows([]string{"id", "title", "body"})
-				returnRow.AddRow(stubPosts[0].ID, stubPosts[0].Title, stubPosts[0].Body)
+				returnRow := sqlmock.NewRows([]string{"id", "body"})
+				returnRow.AddRow(stubPosts[0].ID, stubPosts[0].Body)
 				query.WillReturnRows(returnRow)
 				actual, err := persistence.GetPostByID(ctx, 1)
 				assert.NoError(t, err)
