@@ -20,7 +20,7 @@ export function AppRoutes() {
         path: '/',
         element: <Navigate to="/posts" />,
       },
-      { path: '/posts', element: <PostsRoutes /> },
+      { path: '/posts/*', element: <PostsRoutes /> },
     ],
   };
   const element = useRoutes([routes]);
