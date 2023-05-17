@@ -170,6 +170,21 @@ func (mr *MockUserRepoMockRecorder) GetUserFromEmail(ctx, email, password interf
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserFromEmail", reflect.TypeOf((*MockUserRepo)(nil).GetUserFromEmail), ctx, email, password)
 }
 
+// GetUserFromToken mocks base method.
+func (m *MockUserRepo) GetUserFromToken(ctx context.Context, idToken string) (*entity.User, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetUserFromToken", ctx, idToken)
+	ret0, _ := ret[0].(*entity.User)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetUserFromToken indicates an expected call of GetUserFromToken.
+func (mr *MockUserRepoMockRecorder) GetUserFromToken(ctx, idToken interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserFromToken", reflect.TypeOf((*MockUserRepo)(nil).GetUserFromToken), ctx, idToken)
+}
+
 // TokenizeUser mocks base method.
 func (m *MockUserRepo) TokenizeUser(user *entity.User) (string, error) {
 	m.ctrl.T.Helper()

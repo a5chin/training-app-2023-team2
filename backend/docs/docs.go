@@ -424,7 +424,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Post"
+                    "User"
                 ],
                 "summary": "ユーザーログインAPI",
                 "parameters": [
@@ -481,7 +481,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Post"
+                    "User"
                 ],
                 "summary": "ユーザー登録API",
                 "parameters": [
@@ -526,7 +526,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Post"
+                    "User"
                 ],
                 "summary": "ログインユーザー取得API",
                 "responses": {
