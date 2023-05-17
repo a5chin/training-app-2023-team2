@@ -140,6 +140,21 @@ func (m *MockUserUseCase) EXPECT() *MockUserUseCaseMockRecorder {
 	return m.recorder
 }
 
+// GetUserFromToken mocks base method.
+func (m *MockUserUseCase) GetUserFromToken(ctx context.Context, token string) (*entity.User, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetUserFromToken", ctx, token)
+	ret0, _ := ret[0].(*entity.User)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetUserFromToken indicates an expected call of GetUserFromToken.
+func (mr *MockUserUseCaseMockRecorder) GetUserFromToken(ctx, token interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserFromToken", reflect.TypeOf((*MockUserUseCase)(nil).GetUserFromToken), ctx, token)
+}
+
 // SignInUser mocks base method.
 func (m *MockUserUseCase) SignInUser(ctx context.Context, email, password string) (*entity.User, string, error) {
 	m.ctrl.T.Helper()

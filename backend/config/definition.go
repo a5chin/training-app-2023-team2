@@ -1,7 +1,6 @@
 package config
 
 import (
-	"fmt"
 	"github.com/spf13/viper"
 	"log"
 	"strings"
@@ -56,8 +55,6 @@ func Load() *Config {
 	if err != nil {
 		log.Fatalln(err)
 	}
-
-	fmt.Printf("::::+%v", conf)
 
 	return conf
 }

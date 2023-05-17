@@ -13,19 +13,16 @@ import (
 func TestPostUseCase_GetPosts(t *testing.T) {
 	stubPosts := []*entity.Post{
 		{
-			ID:    1,
-			Title: "a",
-			Body:  "a",
+			ID:   "1",
+			Body: "a",
 		},
 		{
-			ID:    2,
-			Title: "b",
-			Body:  "b",
+			ID:   "2",
+			Body: "b",
 		},
 		{
-			ID:    3,
-			Title: "c",
-			Body:  "c",
+			ID:   "3",
+			Body: "c",
 		},
 	}
 	tests := []struct {
@@ -104,23 +101,19 @@ func TestPostUseCase_GetPosts(t *testing.T) {
 	}
 }
 
-
 func TestPostUseCase_GetPostByID(t *testing.T) {
 	stubPosts := []*entity.Post{
 		{
-			ID:    1,
-			Title: "a",
-			Body:  "a",
+			ID:   "1",
+			Body: "a",
 		},
 		{
-			ID:    2,
-			Title: "b",
-			Body:  "b",
+			ID:   "2",
+			Body: "b",
 		},
 		{
-			ID:    3,
-			Title: "c",
-			Body:  "c",
+			ID:   "3",
+			Body: "c",
 		},
 	}
 	tests := []struct {

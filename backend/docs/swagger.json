@@ -412,7 +412,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "Post"
+                    "User"
                 ],
                 "summary": "ユーザーログインAPI",
                 "parameters": [
@@ -469,7 +469,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "Post"
+                    "User"
                 ],
                 "summary": "ユーザー登録API",
                 "parameters": [
@@ -514,7 +514,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "Post"
+                    "User"
                 ],
                 "summary": "ログインユーザー取得API",
                 "responses": {
