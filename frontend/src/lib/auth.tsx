@@ -7,6 +7,7 @@ import {
   User,
   signup as callSignupApi,
   signin as callSigninApi,
+  fetchMe,
 } from '@/features/auth';
 import { ErrorResponseType } from '@/types';
 import { createCtxWithoutDefaultValue } from './createCtxWithoutDefaultValue';
@@ -23,12 +24,10 @@ const useAuth = (): IAuthContext => {
   const [, , removeCookie] = useCookies(['authorization']);
 
   useEffect(() => {
-    const f = async () => {
+    const fetchAndSetUser = async () => {
       try {
-        // TODO: GET /user/me がまだ完成していないので実行しない
-        console.log('Need to implement GET /users/me');
-        // const userData = await fetchMe();
-        // setUser(userData);
+        const userData = await fetchMe();
+        setUser(userData);
       } catch (e) {
         // ログインしていないケース
         if (isAxiosError<ErrorResponseType>(e)) {
@@ -36,7 +35,9 @@ const useAuth = (): IAuthContext => {
         }
       }
     };
-    f();
+    if (!user) {
+      fetchAndSetUser();
+    }
   }, [user]);
 
   const signup = async (data: SignupDTO) => {
