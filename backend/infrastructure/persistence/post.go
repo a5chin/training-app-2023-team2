@@ -21,6 +21,7 @@ func (p PostPersistence) CreatePost(
 	ctx context.Context,
 	uid string,
 	body string,
+	
 ) error {
 	db, _ := ctx.Value(driver.TxKey).(*gorm.DB)
 	if err := db.Create(
