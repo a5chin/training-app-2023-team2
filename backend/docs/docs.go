@@ -472,6 +472,25 @@ const docTemplate = `{
                 }
             }
         },
+        "/sign_out": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "ユーザーログアウトAPI",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
         "/sign_up": {
             "post": {
                 "consumes": [

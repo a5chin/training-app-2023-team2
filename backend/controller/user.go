@@ -1,9 +1,10 @@
 package controller
 
 import (
-	"github.com/gin-gonic/gin"
 	"myapp/entity"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 type UserController struct {
@@ -96,4 +97,18 @@ func (c UserController) SignIn(ctx *gin.Context) (interface{}, error) {
 	}
 	ctx.SetCookie(entity.AuthCookieKey, token, 3600, "/", "localhost", false, true)
 	return user, nil
+}
+
+// SignOut godoc
+//
+//	@Summary	ユーザーログアウトAPI
+//	@Description
+//	@Tags		User
+//	@Accept		json
+//	@Produce	json
+//	@Success	200		"OK"
+//	@Router		/sign_out [post]
+func (c UserController) SignOut(ctx *gin.Context) (interface{}, error) {
+	ctx.SetCookie(entity.AuthCookieKey, "none", 5, "/", "localhost", false, true)
+	return nil, nil
 }
