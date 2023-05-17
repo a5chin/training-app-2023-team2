@@ -355,6 +355,18 @@ paths:
       summary: ユーザーログインAPI
       tags:
       - User
+  /sign_out:
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: ユーザーログアウトAPI
+      tags:
+      - User
   /sign_up:
     post:
       consumes:

@@ -2,9 +2,6 @@ package main
 
 import (
 	"fmt"
-	"github.com/gin-gonic/gin"
-	swaggerFiles "github.com/swaggo/files"
-	ginSwagger "github.com/swaggo/gin-swagger"
 	"log"
 	"myapp/config"
 	"myapp/controller"
@@ -15,6 +12,10 @@ import (
 	"myapp/infrastructure/persistence"
 	"myapp/usecase"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 func main() {
@@ -63,6 +64,7 @@ func main() {
 	api.GET("/users/me", handleResponse(userController.GetMe))
 	api.POST("/sign_up", handleResponse(userController.SignUp))
 	api.POST("/sign_in", handleResponse(userController.SignIn))
+	api.POST("/sign_out", handleResponse(userController.SignOut))
 
 	runApp(app, conf)
 }
