@@ -15,7 +15,7 @@ type PostRepo interface {
 	GetPosts(ctx context.Context, limit *int, offset *int) ([]*entity.Post, error)
 	GetPostByID(
 		ctx context.Context,
-		id int,
+		pid string,
 	) (*entity.Post, error)
 	CreatePost(
 		ctx context.Context,

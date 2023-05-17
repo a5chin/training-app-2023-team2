@@ -45,14 +45,14 @@ func (p PostPersistence) DeletePost(
 	pid string,
 ) error {
 	db, _ := ctx.Value(driver.TxKey).(*gorm.DB)
-	if err := db.Select("id").First(&model.Post{}, pid).Error; err != nil {
+	if err := db.Select("id").First(&model.Post{}, "id=?", pid).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return entity.WrapError(http.StatusNotFound, err)
 		}
 		return err
 	}
 	if err := db.Delete(
-		&model.Post{}, pid,
+		&model.Post{}, "id=?", pid,
 	).Error; err != nil {
 		return err
 	}
@@ -84,11 +84,11 @@ func (p PostPersistence) GetPosts(
 
 func (p PostPersistence) GetPostByID(
 	ctx context.Context,
-	id int,
+	pid string,
 ) (*entity.Post, error) {
 	var record *model.Post
 	db, _ := ctx.Value(driver.TxKey).(*gorm.DB)
-	if err := db.Preload("User").First(&record, id).Error; err != nil {
+	if err := db.Preload("User").First(&record, pid).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, entity.WrapError(http.StatusNotFound, err)
 		}

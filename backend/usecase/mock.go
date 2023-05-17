@@ -87,6 +87,20 @@ func (mr *MockPostRepoMockRecorder) CreatePost(ctx, uid, body interface{}) *gomo
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreatePost", reflect.TypeOf((*MockPostRepo)(nil).CreatePost), ctx, uid, body)
 }
 
+// DeletePost mocks base method.
+func (m *MockPostRepo) DeletePost(ctx context.Context, pid string) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeletePost", ctx, pid)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// DeletePost indicates an expected call of DeletePost.
+func (mr *MockPostRepoMockRecorder) DeletePost(ctx, pid interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeletePost", reflect.TypeOf((*MockPostRepo)(nil).DeletePost), ctx, pid)
+}
+
 // GetPostByID mocks base method.
 func (m *MockPostRepo) GetPostByID(ctx context.Context, id int) (*entity.Post, error) {
 	m.ctrl.T.Helper()
