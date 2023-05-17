@@ -28,3 +28,10 @@ func (u PostUseCase) CreatePost(
 ) error {
 	return u.PostRepo.CreatePost(ctx, uid, body)
 }
+
+func (u PostUseCase) DeletePost(
+	ctx context.Context,
+	pid string,
+) error {
+	return u.PostRepo.DeletePost(ctx, pid)
+}

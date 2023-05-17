@@ -22,6 +22,10 @@ type PostRepo interface {
 		uid string,
 		body string,
 	) error
+	DeletePost(
+		ctx context.Context,
+		pid string,
+	) error
 }
 
 type UserRepo interface {
