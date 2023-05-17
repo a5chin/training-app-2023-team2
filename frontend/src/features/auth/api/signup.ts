@@ -9,5 +9,9 @@ export type SignupDTO = {
 
 type SignupResponseType = User;
 
-export const signup = (data: SignupDTO): Promise<SignupResponseType> =>
-  axios.post('/sign_up', data);
+export const signup = async (data: SignupDTO): Promise<SignupResponseType> => {
+  const response = await axios.post('/sign_up', data, {
+    withCredentials: true,
+  });
+  return response.data;
+};

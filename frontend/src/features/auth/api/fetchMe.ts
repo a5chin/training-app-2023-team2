@@ -3,5 +3,7 @@ import { User } from '../types';
 
 type FetchMeResponseType = User;
 
-export const fetchMe = (): Promise<FetchMeResponseType> =>
-  axios.get('/users/me');
+export const fetchMe = async (): Promise<FetchMeResponseType> => {
+  const response = await axios.get('/users/me');
+  return response.data;
+};
