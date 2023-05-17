@@ -118,7 +118,6 @@ paths:
       - description: 画像ファイル
         in: formData
         name: file
-        required: true
         type: file
       - in: formData
         name: content
