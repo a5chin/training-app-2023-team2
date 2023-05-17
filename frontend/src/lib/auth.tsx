@@ -64,6 +64,7 @@ const useAuth = (): IAuthContext => {
 
   const signout = () => {
     removeCookie('authorization');
+    setUser(null);
   };
 
   return { signin, signup, signout, currentUser: user };

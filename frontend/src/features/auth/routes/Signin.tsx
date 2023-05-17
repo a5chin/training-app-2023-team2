@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useAuthContext } from '@/lib/auth';
 
 export function Signin() {
-  const { signin, currentUser } = useAuthContext();
+  const { signin, signout, currentUser } = useAuthContext();
 
   useEffect(() => {
     // TODO: ユーザーがログイン済みなら /posts に飛ばす
@@ -23,6 +23,13 @@ export function Signin() {
         }}
       >
         Signin!
+      </Button>
+      <Button
+        onClick={async () => {
+          await signout();
+        }}
+      >
+        Signout!
       </Button>
     </Box>
   );
