@@ -17,6 +17,7 @@ type PostUseCase interface {
 	CreatePost(ctx context.Context, uid, body string) error
 	DeletePost(ctx context.Context, uid, pid string) error
 	CreateReply(ctx context.Context, parentID, uid, body string) error
+	GetReplies(ctx context.Context, pid string, limit, offset *int) ([]*entity.Post, error)
 }
 
 type UserUseCase interface {

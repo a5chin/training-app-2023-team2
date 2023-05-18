@@ -177,5 +177,18 @@ func (c PostController) CreateReply(ctx *gin.Context) (interface{}, error) {
 //	@Failure	404		{object}	entity.ErrorResponse
 //	@Router		/posts/{postId}/replies [get]
 func (c PostController) GetReplies(ctx *gin.Context) (interface{}, error) {
-	return GetPostsResponse{Posts: nil}, nil
+	var query GetPostsQuery
+	err := ctx.ShouldBind(&query)
+	pid := ctx.Param("postId")
+	if err != nil {
+		return nil, entity.WrapError(http.StatusBadRequest, err)
+	}
+	if query.Limit == nil && query.Offset != nil {
+		return nil, entity.WrapError(http.StatusBadRequest, errors.New("can't use offset without limit"))
+	}
+	posts, err := c.PostUseCase.GetReplies(ctx, pid, query.Limit, query.Offset)
+	if err != nil {
+		return nil, err
+	}
+	return GetPostsResponse{Posts: posts}, nil
 }

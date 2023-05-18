@@ -56,7 +56,7 @@ func TestPostPersistence_GetPosts(t *testing.T) {
 			query := mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `posts` WHERE `posts`.`deleted_at` IS NULL"))
 			if test.wantErr {
 				query.WillReturnError(errors.New("error"))
-				_, err := persistence.GetPosts(ctx, nil, nil)
+				_, err := persistence.GetPosts(ctx, nil, nil, nil)
 				assert.Error(t, err)
 			} else {
 				returnRow := sqlmock.NewRows([]string{"id", "body"})
@@ -64,7 +64,7 @@ func TestPostPersistence_GetPosts(t *testing.T) {
 					returnRow.AddRow(p.ID, p.Body)
 					query.WillReturnRows(returnRow)
 				}
-				actual, err := persistence.GetPosts(ctx, nil, nil)
+				actual, err := persistence.GetPosts(ctx, nil, nil, nil)
 				assert.NoError(t, err)
 				assert.Equal(t, test.expected, actual)
 				assert.NoError(t, mock.ExpectationsWereMet())

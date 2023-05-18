@@ -145,6 +145,21 @@ func (mr *MockPostUseCaseMockRecorder) GetPosts(ctx, limit, offset interface{}) 
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPosts", reflect.TypeOf((*MockPostUseCase)(nil).GetPosts), ctx, limit, offset)
 }
 
+// GetReplies mocks base method.
+func (m *MockPostUseCase) GetReplies(ctx context.Context, pid string, limit, offset *int) ([]*entity.Post, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetReplies", ctx, pid, limit, offset)
+	ret0, _ := ret[0].([]*entity.Post)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetReplies indicates an expected call of GetReplies.
+func (mr *MockPostUseCaseMockRecorder) GetReplies(ctx, pid, limit, offset interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetReplies", reflect.TypeOf((*MockPostUseCase)(nil).GetReplies), ctx, pid, limit, offset)
+}
+
 // MockUserUseCase is a mock of UserUseCase interface.
 type MockUserUseCase struct {
 	ctrl     *gomock.Controller

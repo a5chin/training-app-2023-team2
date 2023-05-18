@@ -65,6 +65,7 @@ func (p PostPersistence) DeletePost(
 
 func (p PostPersistence) GetPosts(
 	ctx context.Context,
+	pid *string,
 	limit *int,
 	offset *int,
 ) ([]*entity.Post, error) {
@@ -75,6 +76,9 @@ func (p PostPersistence) GetPosts(
 	}
 	if offset != nil {
 		db = db.Offset(*offset)
+	}
+	if pid != nil {
+		db = db.Where("parent_id = ?", pid)
 	}
 	if err := db.Preload("User").Preload("Parent").Order("posts.id DESC").Find(&records).Error; err != nil {
 		return nil, err
