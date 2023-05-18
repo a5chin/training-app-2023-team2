@@ -12,7 +12,7 @@ export function Signin() {
 
   return (
     <Box>
-      <Box>This is signup page.</Box>
+      <Box>This is signin page.</Box>
       <Box>currentUser: {currentUser ? currentUser.name : 'Not signined'}</Box>
       <Button
         onClick={async () => {
