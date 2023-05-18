@@ -15,7 +15,11 @@ func NewDB(conf *config.Config) *gorm.DB {
 	host := conf.Database.Hostname
 	port := conf.Database.Port
 	dbname := conf.Database.Name
-	dsn := fmt.Sprintf("root@tcp(%s:%d)/%s?charset=utf8mb4&parseTime=True&loc=Local", host, port, dbname)
+	username := conf.Database.Username
+	if conf.Database.Password != "" {
+		username += ":" + conf.Database.Password
+	}
+	dsn := fmt.Sprintf("%s@tcp(%s:%d)/%s?charset=utf8mb4&parseTime=True&loc=Local", username, host, port, dbname)
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		fmt.Println(err)
