@@ -8,13 +8,13 @@ function loggingRequestInterceptor(config: InternalAxiosRequestConfig) {
 }
 
 export const axios = Axios.create({
-  baseURL: API_URL,
+  baseURL: `${API_URL}/api/v1`,
 });
 
 axios.interceptors.request.use(loggingRequestInterceptor);
 axios.interceptors.response.use(
   (response) => {
-    console.log(`success: ${JSON.stringify(response.data)}`);
+    console.log(`success: ${JSON.stringify(response)}`);
     return response;
   },
   (error) => {

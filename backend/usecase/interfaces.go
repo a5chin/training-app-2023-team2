@@ -15,12 +15,23 @@ type PostRepo interface {
 	GetPosts(ctx context.Context, limit *int, offset *int) ([]*entity.Post, error)
 	GetPostByID(
 		ctx context.Context,
-		id int,
+		pid string,
 	) (*entity.Post, error)
+	CreatePost(
+		ctx context.Context,
+		uid string,
+		body string,
+	) error
+	DeletePost(
+		ctx context.Context,
+		uid string,
+		pid string,
+	) error
 }
 
 type UserRepo interface {
 	CreateUser(ctx context.Context, name, email, password string) (*entity.User, error)
 	GetUserFromEmail(ctx context.Context, email, password string) (*entity.User, error)
+	GetUserFromToken(ctx context.Context, idToken string) (*entity.User, error)
 	TokenizeUser(user *entity.User) (string, error)
 }

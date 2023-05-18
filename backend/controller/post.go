@@ -2,11 +2,10 @@ package controller
 
 import (
 	"errors"
-	"fmt"
-	"github.com/gin-gonic/gin"
 	"myapp/entity"
 	"net/http"
-	"strconv"
+
+	"github.com/gin-gonic/gin"
 )
 
 type PostController struct {
@@ -56,6 +55,7 @@ func (c PostController) GetPosts(ctx *gin.Context) (interface{}, error) {
 }
 
 // GetPostByID godoc
+//
 //	@Summary		投稿取得API
 //	@Description	get post by id
 //	@Tags			Post
@@ -70,17 +70,12 @@ func (c PostController) GetPosts(ctx *gin.Context) (interface{}, error) {
 //	@Failure		500	{object}	entity.ErrorResponse
 //	@Router			/posts/{postId} [get]
 func (c PostController) GetPostByID(ctx *gin.Context) (interface{}, error) {
-	strId := ctx.Param("id")
-	id, err := strconv.Atoi(strId)
-	if err != nil {
-		return nil, entity.WrapError(http.StatusBadRequest, err)
-	}
-
-	return c.PostUseCase.GetPostByID(ctx, id)
+	pid := ctx.Param("postId")
+	return c.PostUseCase.GetPostByID(ctx, pid)
 }
 
 type CreatePostRequest struct {
-	Content string `json:"content"`
+	Content string `form:"content"`
 }
 
 // CreatePost godoc
@@ -90,16 +85,26 @@ type CreatePostRequest struct {
 //	@Tags		Post
 //	@Accept		mpfd
 //	@Produce	json
-//	@Param		file	formData	file				true	"画像ファイル"
+//	@Param		file	formData	file				false	"画像ファイル"
 //	@Param		request	formData	CreatePostRequest	true	"投稿作成リクエスト"
 //	@Success	200		"OK"
 //	@Failure	400		{object}	entity.ErrorResponse
 //	@Failure	401		{object}	entity.ErrorResponse
 //	@Router		/posts [post]
 func (c PostController) CreatePost(ctx *gin.Context) (interface{}, error) {
-	a, err := ctx.FormFile("file")
-	fmt.Println(a.Filename)
-	return nil, err
+	var req *CreatePostRequest
+	if err := ctx.Bind(&req); err != nil {
+		return nil, entity.WrapError(http.StatusBadRequest, err)
+	}
+	_user, ok := ctx.Get(entity.ContextAuthUserKey)
+	if !ok {
+		return nil, entity.WrapError(http.StatusUnauthorized, errors.New("empty user"))
+	}
+	user, ok := _user.(*entity.User)
+	if !ok {
+		return nil, entity.WrapError(http.StatusUnauthorized, errors.New("_user is not entity user"))
+	}
+	return nil, c.PostUseCase.CreatePost(ctx, user.ID, req.Content)
 }
 
 // DeletePost godoc
@@ -115,7 +120,16 @@ func (c PostController) CreatePost(ctx *gin.Context) (interface{}, error) {
 //	@Failure	404		{object}	entity.ErrorResponse
 //	@Router		/posts/{postId} [delete]
 func (c PostController) DeletePost(ctx *gin.Context) (interface{}, error) {
-	return nil, nil
+	_user, ok := ctx.Get(entity.ContextAuthUserKey)
+	if !ok {
+		return nil, entity.WrapError(http.StatusUnauthorized, errors.New("empty user"))
+	}
+	user, ok := _user.(*entity.User)
+	if !ok {
+		return nil, entity.WrapError(http.StatusUnauthorized, errors.New("_user is not entity user"))
+	}
+	pid := ctx.Param("postId")
+	return nil, c.PostUseCase.DeletePost(ctx, user.ID, pid)
 }
 
 // CreateReply godoc

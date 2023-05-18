@@ -1,10 +1,10 @@
 package config
 
 import (
-	"fmt"
-	"github.com/spf13/viper"
 	"log"
 	"strings"
+
+	"github.com/spf13/viper"
 )
 
 type Config struct {
@@ -19,6 +19,8 @@ type Database struct {
 	Hostname string `yaml:"hostname"`
 	Port     uint   `yaml:"port"`
 	Name     string `yaml:"name"`
+	Username string `yaml:"username"`
+	Password string `yaml:"password"`
 }
 
 type Cors struct {
@@ -56,8 +58,6 @@ func Load() *Config {
 	if err != nil {
 		log.Fatalln(err)
 	}
-
-	fmt.Printf("::::+%v", conf)
 
 	return conf
 }

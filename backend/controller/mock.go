@@ -73,19 +73,47 @@ func (m *MockPostUseCase) EXPECT() *MockPostUseCaseMockRecorder {
 	return m.recorder
 }
 
-// GetPostByID mocks base method.
-func (m *MockPostUseCase) GetPostByID(ctx context.Context, id int) (*entity.Post, error) {
+// CreatePost mocks base method.
+func (m *MockPostUseCase) CreatePost(ctx context.Context, uid, body string) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetPostByID", ctx, id)
+	ret := m.ctrl.Call(m, "CreatePost", ctx, uid, body)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// CreatePost indicates an expected call of CreatePost.
+func (mr *MockPostUseCaseMockRecorder) CreatePost(ctx, uid, body interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreatePost", reflect.TypeOf((*MockPostUseCase)(nil).CreatePost), ctx, uid, body)
+}
+
+// DeletePost mocks base method.
+func (m *MockPostUseCase) DeletePost(ctx context.Context, pid string) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeletePost", ctx, pid)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// DeletePost indicates an expected call of DeletePost.
+func (mr *MockPostUseCaseMockRecorder) DeletePost(ctx, pid interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeletePost", reflect.TypeOf((*MockPostUseCase)(nil).DeletePost), ctx, pid)
+}
+
+// GetPostByID mocks base method.
+func (m *MockPostUseCase) GetPostByID(ctx context.Context, pid string) (*entity.Post, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetPostByID", ctx, pid)
 	ret0, _ := ret[0].(*entity.Post)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // GetPostByID indicates an expected call of GetPostByID.
-func (mr *MockPostUseCaseMockRecorder) GetPostByID(ctx, id interface{}) *gomock.Call {
+func (mr *MockPostUseCaseMockRecorder) GetPostByID(ctx, pid interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPostByID", reflect.TypeOf((*MockPostUseCase)(nil).GetPostByID), ctx, id)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPostByID", reflect.TypeOf((*MockPostUseCase)(nil).GetPostByID), ctx, pid)
 }
 
 // GetPosts mocks base method.
@@ -124,6 +152,21 @@ func NewMockUserUseCase(ctrl *gomock.Controller) *MockUserUseCase {
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockUserUseCase) EXPECT() *MockUserUseCaseMockRecorder {
 	return m.recorder
+}
+
+// GetUserFromToken mocks base method.
+func (m *MockUserUseCase) GetUserFromToken(ctx context.Context, token string) (*entity.User, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetUserFromToken", ctx, token)
+	ret0, _ := ret[0].(*entity.User)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetUserFromToken indicates an expected call of GetUserFromToken.
+func (mr *MockUserUseCaseMockRecorder) GetUserFromToken(ctx, token interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserFromToken", reflect.TypeOf((*MockUserUseCase)(nil).GetUserFromToken), ctx, token)
 }
 
 // SignInUser mocks base method.

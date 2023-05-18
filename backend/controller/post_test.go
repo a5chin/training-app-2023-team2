@@ -3,7 +3,6 @@ package controller
 import (
 	"errors"
 	"fmt"
-	"log"
 	"github.com/gin-gonic/gin"
 	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/assert"
@@ -16,19 +15,16 @@ import (
 func TestPostController_GetPosts(t *testing.T) {
 	stubPosts := []*entity.Post{
 		{
-			ID:    1,
-			Title: "a",
-			Body:  "a",
+			ID:   "1",
+			Body: "a",
 		},
 		{
-			ID:    2,
-			Title: "b",
-			Body:  "b",
+			ID:   "2",
+			Body: "b",
 		},
 		{
-			ID:    3,
-			Title: "c",
-			Body:  "c",
+			ID:   "3",
+			Body: "c",
 		},
 	}
 	tests := []struct {
@@ -114,19 +110,16 @@ func TestPostController_GetPosts(t *testing.T) {
 func TestPostController_GetPostByID(t *testing.T) {
 	stubPosts := []*entity.Post{
 		{
-			ID:    1,
-			Title: "a",
-			Body:  "a",
+			ID:   "1",
+			Body: "a",
 		},
 		{
-			ID:    2,
-			Title: "b",
-			Body:  "b",
+			ID:   "2",
+			Body: "b",
 		},
 		{
-			ID:    3,
-			Title: "c",
-			Body:  "c",
+			ID:   "3",
+			Body: "c",
 		},
 	}
 	tests := []struct {
@@ -174,7 +167,7 @@ func TestPostController_GetPostByID(t *testing.T) {
 			ginCtx.Request = req
 			ginCtx.Params = []gin.Param{
 				{
-					Key: "id",
+					Key:   "id",
 					Value: "1",
 				},
 			}

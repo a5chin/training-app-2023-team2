@@ -114,8 +114,7 @@ const docTemplate = `{
                         "type": "file",
                         "description": "画像ファイル",
                         "name": "file",
-                        "in": "formData",
-                        "required": true
+                        "in": "formData"
                     },
                     {
                         "type": "string",
@@ -425,7 +424,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Post"
+                    "User"
                 ],
                 "summary": "ユーザーログインAPI",
                 "parameters": [
@@ -473,6 +472,25 @@ const docTemplate = `{
                 }
             }
         },
+        "/sign_out": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "ユーザーログアウトAPI",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
         "/sign_up": {
             "post": {
                 "consumes": [
@@ -482,7 +500,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Post"
+                    "User"
                 ],
                 "summary": "ユーザー登録API",
                 "parameters": [
@@ -527,7 +545,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Post"
+                    "User"
                 ],
                 "summary": "ログインユーザー取得API",
                 "responses": {

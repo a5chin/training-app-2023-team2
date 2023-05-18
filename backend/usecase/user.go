@@ -36,3 +36,7 @@ func (u UserUseCase) SignUpUser(ctx context.Context, name, email, password strin
 	}
 	return user, token, nil
 }
+
+func (u UserUseCase) GetUserFromToken(ctx context.Context, token string) (*entity.User, error) {
+	return u.UserRepo.GetUserFromToken(ctx, token)
+}
