@@ -1,7 +1,6 @@
 import React from 'react';
 import { ChakraProvider } from '@chakra-ui/react';
 import { BrowserRouter } from 'react-router-dom';
-import { CookiesProvider } from 'react-cookie';
 import { AuthProvider } from '@/lib/auth';
 
 type AppProviderProps = {
@@ -11,11 +10,9 @@ type AppProviderProps = {
 export function AppProvider({ children }: AppProviderProps) {
   return (
     <ChakraProvider>
-      <CookiesProvider>
-        <AuthProvider>
-          <BrowserRouter>{children}</BrowserRouter>
-        </AuthProvider>
-      </CookiesProvider>
+      <AuthProvider>
+        <BrowserRouter>{children}</BrowserRouter>
+      </AuthProvider>
     </ChakraProvider>
   );
 }

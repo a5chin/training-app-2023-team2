@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { isAxiosError } from 'axios';
-import { useCookies } from 'react-cookie';
 import {
   SigninDTO,
   SignupDTO,
@@ -8,6 +7,7 @@ import {
   signup as callSignupApi,
   signin as callSigninApi,
   fetchMe,
+  signout as callSignoutApi,
 } from '@/features/auth';
 import { ErrorResponseType } from '@/types';
 import { createCtxWithoutDefaultValue } from './createCtxWithoutDefaultValue';
@@ -21,7 +21,6 @@ type IAuthContext = {
 
 const useAuth = (): IAuthContext => {
   const [user, setUser] = useState<User | null>(null);
-  const [, , removeCookie] = useCookies(['authorization']);
 
   useEffect(() => {
     const fetchAndSetUser = async () => {
@@ -62,9 +61,15 @@ const useAuth = (): IAuthContext => {
     }
   };
 
-  const signout = () => {
-    removeCookie('authorization');
-    setUser(null);
+  const signout = async () => {
+    try {
+      await callSignoutApi();
+      setUser(null);
+    } catch (e) {
+      if (isAxiosError<ErrorResponseType>(e)) {
+        console.error(`error: ${e.response?.data}`);
+      }
+    }
   };
 
   return { signin, signup, signout, currentUser: user };
