@@ -30,7 +30,7 @@ const useAuth = (): IAuthContext => {
       } catch (e) {
         // ログインしていないケース
         if (isAxiosError<ErrorResponseType>(e)) {
-          console.error(`error: ${e.response?.data}`);
+          console.error(`error: ${JSON.stringify(e.response?.data)}`);
         }
       }
     };
@@ -45,7 +45,7 @@ const useAuth = (): IAuthContext => {
       setUser(userData);
     } catch (e) {
       if (isAxiosError<ErrorResponseType>(e)) {
-        console.error(`error: ${e.response?.data}`);
+        console.error(`error: ${JSON.stringify(e.response?.data)}`);
       }
     }
   };
@@ -56,7 +56,7 @@ const useAuth = (): IAuthContext => {
       setUser(userData);
     } catch (e) {
       if (isAxiosError<ErrorResponseType>(e)) {
-        console.error(`error: ${e.response?.data}`);
+        console.error(`error: ${JSON.stringify(e.response?.data)}`);
       }
     }
   };
@@ -67,7 +67,7 @@ const useAuth = (): IAuthContext => {
       setUser(null);
     } catch (e) {
       if (isAxiosError<ErrorResponseType>(e)) {
-        console.error(`error: ${e.response?.data}`);
+        console.error(`error: ${JSON.stringify(e.response?.data)}`);
       }
     }
   };
