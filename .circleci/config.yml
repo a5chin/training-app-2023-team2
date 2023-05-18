@@ -123,15 +123,13 @@ workflows:
           filters:
             branches:
               only:
-                # - main
-                - day5-basic
+                - main
           requires:
             - ecr-push-backend
       - deploy-frontend:
           filters:
             branches:
               only:
-                # - main
-                - day5-basic
+                - main
           requires:
             - build-frontend
