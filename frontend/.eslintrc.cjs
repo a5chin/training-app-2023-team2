@@ -37,6 +37,6 @@ module.exports = {
     "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": ["error"],
     // ChakraUI や React-Hook-Form でSpread演算子使いたい
-    "react/jsx-props-no-spreading": ["custom"]
+    "react/jsx-props-no-spreading": ["error", {custom: "ignore"}]
   },
 };
