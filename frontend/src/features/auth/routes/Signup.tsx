@@ -1,9 +1,9 @@
 import { Box, Button } from '@chakra-ui/react';
 import { useEffect } from 'react';
-import { useAuthContext } from '@/lib/auth';
+import { useAuth } from '@/lib/auth';
 
 export function Signup() {
-  const { signup, currentUser } = useAuthContext();
+  const { signup, currentUser } = useAuth();
 
   useEffect(() => {
     // TODO: ユーザーがログイン済みなら /posts に飛ばす

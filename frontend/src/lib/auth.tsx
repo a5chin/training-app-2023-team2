@@ -19,7 +19,7 @@ type IAuthContext = {
   currentUser: User | null;
 };
 
-const useAuth = (): IAuthContext => {
+const useAuthContext = (): IAuthContext => {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
@@ -75,7 +75,7 @@ const useAuth = (): IAuthContext => {
   return { signin, signup, signout, currentUser: user };
 };
 
-const [useAuthContext, AuthContextProvider] =
+const [useAuth, AuthContextProvider] =
   createCtxWithoutDefaultValue<IAuthContext>();
 
 type AuthProviderProps = {
@@ -83,9 +83,9 @@ type AuthProviderProps = {
 };
 
 function AuthProvider({ children }: AuthProviderProps) {
-  const auth = useAuth();
+  const auth = useAuthContext();
 
   return <AuthContextProvider value={auth}>{children}</AuthContextProvider>;
 }
 
-export { useAuthContext, AuthProvider };
+export { useAuth, AuthProvider };
