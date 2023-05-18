@@ -12,7 +12,7 @@ type HelloWorldRepo interface {
 }
 
 type PostRepo interface {
-	GetPosts(ctx context.Context, limit, offset *int) ([]*entity.Post, error)
+	GetPosts(ctx context.Context, pid *string, limit, offset *int) ([]*entity.Post, error)
 	GetPostByID(ctx context.Context, pid string) (*entity.Post, error)
 	CreatePost(ctx context.Context, parentID *string, uid, body string) error
 	DeletePost(ctx context.Context, uid, pid string) error

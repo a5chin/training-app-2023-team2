@@ -84,14 +84,14 @@ func TestPostUseCase_GetPosts(t *testing.T) {
 			if test.err != nil {
 				// mockのメソッドをspyしておく
 				repo.EXPECT().
-					GetPosts(gomock.Any(), length, offset).
+					GetPosts(gomock.Any(), nil, length, offset).
 					Return(nil, test.err).AnyTimes()
 				useCase := NewPostUseCase(repo)
 				_, err := useCase.GetPosts(ginCtx, length, offset)
 				assert.Error(t, err)
 			} else {
 				repo.EXPECT().
-					GetPosts(gomock.Any(), length, offset).
+					GetPosts(gomock.Any(), nil, length, offset).
 					Return(expected, nil).AnyTimes()
 				postCtrl := NewPostUseCase(repo)
 				posts, err := postCtrl.GetPosts(ginCtx, length, offset)
