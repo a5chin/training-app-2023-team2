@@ -4,7 +4,6 @@ import (
 	"errors"
 	"myapp/entity"
 	"net/http"
-	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -71,13 +70,8 @@ func (c PostController) GetPosts(ctx *gin.Context) (interface{}, error) {
 //	@Failure		500	{object}	entity.ErrorResponse
 //	@Router			/posts/{postId} [get]
 func (c PostController) GetPostByID(ctx *gin.Context) (interface{}, error) {
-	strId := ctx.Param("id")
-	id, err := strconv.Atoi(strId)
-	if err != nil {
-		return nil, entity.WrapError(http.StatusBadRequest, err)
-	}
-
-	return c.PostUseCase.GetPostByID(ctx, id)
+	pid := ctx.Param("postId")
+	return c.PostUseCase.GetPostByID(ctx, pid)
 }
 
 type CreatePostRequest struct {
@@ -126,7 +120,16 @@ func (c PostController) CreatePost(ctx *gin.Context) (interface{}, error) {
 //	@Failure	404		{object}	entity.ErrorResponse
 //	@Router		/posts/{postId} [delete]
 func (c PostController) DeletePost(ctx *gin.Context) (interface{}, error) {
-	return nil, nil
+	_user, ok := ctx.Get(entity.ContextAuthUserKey)
+	if !ok {
+		return nil, entity.WrapError(http.StatusUnauthorized, errors.New("empty user"))
+	}
+	user, ok := _user.(*entity.User)
+	if !ok {
+		return nil, entity.WrapError(http.StatusUnauthorized, errors.New("_user is not entity user"))
+	}
+	pid := ctx.Param("postId")
+	return nil, c.PostUseCase.DeletePost(ctx, user.ID, pid)
 }
 
 // CreateReply godoc

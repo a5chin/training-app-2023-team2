@@ -1,9 +1,10 @@
 package model
 
 import (
-	"github.com/oklog/ulid"
 	"math/rand"
 	"time"
+
+	"github.com/oklog/ulid"
 )
 
 func GenerateID() ulid.ULID {

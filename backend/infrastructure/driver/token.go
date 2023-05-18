@@ -3,10 +3,11 @@ package driver
 import (
 	"encoding/json"
 	"errors"
-	"github.com/golang-jwt/jwt/v5"
 	"myapp/config"
 	"myapp/entity"
 	"time"
+
+	"github.com/golang-jwt/jwt/v5"
 )
 
 type TokenDriver struct {

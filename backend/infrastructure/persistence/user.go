@@ -3,13 +3,14 @@ package persistence
 import (
 	"context"
 	"errors"
-	"github.com/go-sql-driver/mysql"
-	"golang.org/x/crypto/bcrypt"
-	"gorm.io/gorm"
 	"myapp/entity"
 	"myapp/infrastructure/driver"
 	"myapp/infrastructure/persistence/model"
 	"net/http"
+
+	"github.com/go-sql-driver/mysql"
+	"golang.org/x/crypto/bcrypt"
+	"gorm.io/gorm"
 )
 
 type UserPersistence struct {

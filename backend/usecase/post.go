@@ -17,8 +17,8 @@ func (u PostUseCase) GetPosts(ctx context.Context, limit *int, offset *int) ([]*
 	return u.PostRepo.GetPosts(ctx, limit, offset)
 }
 
-func (u PostUseCase) GetPostByID(ctx context.Context, id int) (*entity.Post, error) {
-	return u.PostRepo.GetPostByID(ctx, id)
+func (u PostUseCase) GetPostByID(ctx context.Context, pid string) (*entity.Post, error) {
+	return u.PostRepo.GetPostByID(ctx, pid)
 }
 
 func (u PostUseCase) CreatePost(
@@ -27,4 +27,12 @@ func (u PostUseCase) CreatePost(
 	body string,
 ) error {
 	return u.PostRepo.CreatePost(ctx, uid, body)
+}
+
+func (u PostUseCase) DeletePost(
+	ctx context.Context,
+	uid string,
+	pid string,
+) error {
+	return u.PostRepo.DeletePost(ctx, uid, pid)
 }
