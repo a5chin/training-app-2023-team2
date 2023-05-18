@@ -66,7 +66,7 @@ jobs:
             - "frontend/node_modules"
       - run:
           name: Build
-          command: VITE_API_ENDPOINT_PATH="https://$TEAM-bk.bootcamp3.tracks-shibuya.tokyo" npm run build
+          command: VITE_API_URL="https://$TEAM-bk.bootcamp3.tracks-shibuya.tokyo" npm run build
           working_directory: frontend
       - run:
           name: Prepare for docker build
