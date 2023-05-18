@@ -21,6 +21,7 @@ type PostUseCase interface {
 	) error
 	DeletePost(
 		ctx context.Context,
+		uid string,
 		pid string,
 	) error
 }

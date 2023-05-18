@@ -31,7 +31,8 @@ func (u PostUseCase) CreatePost(
 
 func (u PostUseCase) DeletePost(
 	ctx context.Context,
+	uid string,
 	pid string,
 ) error {
-	return u.PostRepo.DeletePost(ctx, pid)
+	return u.PostRepo.DeletePost(ctx, uid, pid)
 }

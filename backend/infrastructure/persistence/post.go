@@ -42,10 +42,12 @@ func (p PostPersistence) CreatePost(
 
 func (p PostPersistence) DeletePost(
 	ctx context.Context,
+	uid string,
 	pid string,
 ) error {
 	db, _ := ctx.Value(driver.TxKey).(*gorm.DB)
-	if err := db.Select("id").First(&model.Post{}, "id=?", pid).Error; err != nil {
+
+	if err := db.Select("id").Where("user_id = ?", uid).First(&model.Post{}, "id=?", pid).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return entity.WrapError(http.StatusNotFound, err)
 		}

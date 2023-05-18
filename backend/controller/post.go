@@ -120,16 +120,16 @@ func (c PostController) CreatePost(ctx *gin.Context) (interface{}, error) {
 //	@Failure	404		{object}	entity.ErrorResponse
 //	@Router		/posts/{postId} [delete]
 func (c PostController) DeletePost(ctx *gin.Context) (interface{}, error) {
-	// _user, ok := ctx.Get(entity.ContextAuthUserKey)
-	// if !ok {
-	// 	return nil, entity.WrapError(http.StatusUnauthorized, errors.New("empty user"))
-	// }
-	// user, ok := _user.(*entity.User)
-	// if !ok {
-	// 	return nil, entity.WrapError(http.StatusUnauthorized, errors.New("_user is not entity user"))
-	// }
+	_user, ok := ctx.Get(entity.ContextAuthUserKey)
+	if !ok {
+		return nil, entity.WrapError(http.StatusUnauthorized, errors.New("empty user"))
+	}
+	user, ok := _user.(*entity.User)
+	if !ok {
+		return nil, entity.WrapError(http.StatusUnauthorized, errors.New("_user is not entity user"))
+	}
 	pid := ctx.Param("postId")
-	return nil, c.PostUseCase.DeletePost(ctx, pid)
+	return nil, c.PostUseCase.DeletePost(ctx, user.ID, pid)
 }
 
 // CreateReply godoc

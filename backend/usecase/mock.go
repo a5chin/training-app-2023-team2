@@ -102,18 +102,18 @@ func (mr *MockPostRepoMockRecorder) DeletePost(ctx, pid interface{}) *gomock.Cal
 }
 
 // GetPostByID mocks base method.
-func (m *MockPostRepo) GetPostByID(ctx context.Context, id int) (*entity.Post, error) {
+func (m *MockPostRepo) GetPostByID(ctx context.Context, pid string) (*entity.Post, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetPostByID", ctx, id)
+	ret := m.ctrl.Call(m, "GetPostByID", ctx, pid)
 	ret0, _ := ret[0].(*entity.Post)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // GetPostByID indicates an expected call of GetPostByID.
-func (mr *MockPostRepoMockRecorder) GetPostByID(ctx, id interface{}) *gomock.Call {
+func (mr *MockPostRepoMockRecorder) GetPostByID(ctx, pid interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPostByID", reflect.TypeOf((*MockPostRepo)(nil).GetPostByID), ctx, id)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPostByID", reflect.TypeOf((*MockPostRepo)(nil).GetPostByID), ctx, pid)
 }
 
 // GetPosts mocks base method.
