@@ -4,6 +4,8 @@ database:
   hostname: "db"
   port: 3306
   name: "training"
+  username: "root"
+  password: ""
 cors:
   allow:
     origin: "http://localhost:3000"

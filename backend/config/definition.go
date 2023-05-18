@@ -18,6 +18,8 @@ type Database struct {
 	Hostname string `yaml:"hostname"`
 	Port     uint   `yaml:"port"`
 	Name     string `yaml:"name"`
+	Username string `yaml:"username"`
+	Password string `yaml:"password"`
 }
 
 type Cors struct {
