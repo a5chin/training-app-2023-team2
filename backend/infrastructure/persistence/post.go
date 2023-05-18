@@ -20,15 +20,17 @@ func NewPostPersistence() *PostPersistence {
 
 func (p PostPersistence) CreatePost(
 	ctx context.Context,
-	uid string,
+	parentID *string,
+	uid,
 	body string,
 ) error {
 	db, _ := ctx.Value(driver.TxKey).(*gorm.DB)
 	if err := db.Create(
 		&model.Post{
-			ID:     model.GenerateID().String(),
-			Body:   body,
-			UserID: uid,
+			ID:       model.GenerateID().String(),
+			Body:     body,
+			UserID:   uid,
+			ParentID: parentID,
 		},
 	).Error; err != nil {
 		var mysqlErr *mysql.MySQLError
@@ -74,7 +76,7 @@ func (p PostPersistence) GetPosts(
 	if offset != nil {
 		db = db.Offset(*offset)
 	}
-	if err := db.Preload("User").Order("posts.id DESC").Find(&records).Error; err != nil {
+	if err := db.Preload("User").Preload("Parent").Order("posts.id DESC").Find(&records).Error; err != nil {
 		return nil, err
 	}
 	var posts []*entity.Post
@@ -90,7 +92,7 @@ func (p PostPersistence) GetPostByID(
 ) (*entity.Post, error) {
 	var record *model.Post
 	db, _ := ctx.Value(driver.TxKey).(*gorm.DB)
-	if err := db.Preload("User").First(&record, pid).Error; err != nil {
+	if err := db.Preload("User").Preload("Parent").First(&record, "id = ?", pid).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, entity.WrapError(http.StatusNotFound, err)
 		}

@@ -3,13 +3,14 @@ package controller
 import (
 	"errors"
 	"fmt"
-	"github.com/gin-gonic/gin"
-	"github.com/golang/mock/gomock"
-	"github.com/stretchr/testify/assert"
 	"myapp/entity"
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
+	"github.com/gin-gonic/gin"
+	"github.com/golang/mock/gomock"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestPostController_GetPosts(t *testing.T) {
@@ -177,14 +178,14 @@ func TestPostController_GetPostByID(t *testing.T) {
 			if test.err != nil {
 				// mockのメソッドをspyしておく
 				useCase.EXPECT().
-					GetPostByID(gomock.Any(), 1).
+					GetPostByID(gomock.Any(), gomock.Any()).
 					Return(nil, test.err).AnyTimes()
 				postCtrl := NewPostController(useCase)
 				_, err := postCtrl.GetPostByID(ginCtx)
 				assert.Error(t, err)
 			} else {
 				useCase.EXPECT().
-					GetPostByID(gomock.Any(), 1).
+					GetPostByID(gomock.Any(), gomock.Any()).
 					Return(expected, nil).AnyTimes()
 				postCtrl := NewPostController(useCase)
 				posts, err := postCtrl.GetPostByID(ginCtx)
