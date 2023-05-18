@@ -87,18 +87,32 @@ func (mr *MockPostUseCaseMockRecorder) CreatePost(ctx, uid, body interface{}) *g
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreatePost", reflect.TypeOf((*MockPostUseCase)(nil).CreatePost), ctx, uid, body)
 }
 
-// DeletePost mocks base method.
-func (m *MockPostUseCase) DeletePost(ctx context.Context, pid string) error {
+// CreateReply mocks base method.
+func (m *MockPostUseCase) CreateReply(ctx context.Context, parentID, uid, body string) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "DeletePost", ctx, pid)
+	ret := m.ctrl.Call(m, "CreateReply", ctx, parentID, uid, body)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// CreateReply indicates an expected call of CreateReply.
+func (mr *MockPostUseCaseMockRecorder) CreateReply(ctx, parentID, uid, body interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateReply", reflect.TypeOf((*MockPostUseCase)(nil).CreateReply), ctx, parentID, uid, body)
+}
+
+// DeletePost mocks base method.
+func (m *MockPostUseCase) DeletePost(ctx context.Context, uid, pid string) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeletePost", ctx, uid, pid)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // DeletePost indicates an expected call of DeletePost.
-func (mr *MockPostUseCaseMockRecorder) DeletePost(ctx, pid interface{}) *gomock.Call {
+func (mr *MockPostUseCaseMockRecorder) DeletePost(ctx, uid, pid interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeletePost", reflect.TypeOf((*MockPostUseCase)(nil).DeletePost), ctx, pid)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeletePost", reflect.TypeOf((*MockPostUseCase)(nil).DeletePost), ctx, uid, pid)
 }
 
 // GetPostByID mocks base method.

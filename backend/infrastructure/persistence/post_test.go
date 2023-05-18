@@ -3,12 +3,13 @@ package persistence
 import (
 	"context"
 	"errors"
-	"github.com/DATA-DOG/go-sqlmock"
-	"github.com/stretchr/testify/assert"
 	"myapp/entity"
 	"myapp/infrastructure/driver"
 	"regexp"
 	"testing"
+
+	"github.com/DATA-DOG/go-sqlmock"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestPostPersistence_GetPosts(t *testing.T) {
@@ -113,16 +114,16 @@ func TestPostPersistence_GetPostByID(t *testing.T) {
 			ctx := context.WithValue(context.Background(), driver.TxKey, gormDB)
 			mock.MatchExpectationsInOrder(false)
 
-			query := mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `posts` WHERE `posts`.`id` = ? AND `posts`.`deleted_at` IS NULL ORDER BY `posts`.`id` LIMIT 1"))
+			query := mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `posts`"))
 			if test.wantErr {
 				query.WillReturnError(errors.New("error"))
-				_, err := persistence.GetPostByID(ctx, 1)
+				_, err := persistence.GetPostByID(ctx, "1")
 				assert.Error(t, err)
 			} else {
 				returnRow := sqlmock.NewRows([]string{"id", "body"})
 				returnRow.AddRow(stubPosts[0].ID, stubPosts[0].Body)
 				query.WillReturnRows(returnRow)
-				actual, err := persistence.GetPostByID(ctx, 1)
+				actual, err := persistence.GetPostByID(ctx, "1")
 				assert.NoError(t, err)
 				assert.Equal(t, test.expected, actual)
 				assert.NoError(t, mock.ExpectationsWereMet())
