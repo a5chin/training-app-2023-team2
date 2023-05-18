@@ -18,6 +18,9 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
+// @title training-app-2023-team2
+// @description training-app-2023-team2
+// @version 1.0
 func main() {
 	// Dependency Injection
 	conf := config.Load()
@@ -70,9 +73,6 @@ func main() {
 }
 
 func runApp(app *gin.Engine, conf *config.Config) {
-	docs.SwaggerInfo.Title = "training-app-2023-team2"
-	docs.SwaggerInfo.Description = "training-app-2023-team2"
-	docs.SwaggerInfo.Version = "1.0"
 	docs.SwaggerInfo.Host = fmt.Sprintf("localhost:%d", conf.Port)
 	docs.SwaggerInfo.BasePath = "/api/v1"
 	docs.SwaggerInfo.Schemes = []string{"http"}
