@@ -1,7 +1,10 @@
 {
     "swagger": "2.0",
     "info": {
-        "contact": {}
+        "description": "training-app-2023-team2",
+        "title": "training-app-2023-team2",
+        "contact": {},
+        "version": "1.0"
     },
     "paths": {
         "/hello": {
