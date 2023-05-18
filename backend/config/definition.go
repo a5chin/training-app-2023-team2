@@ -8,14 +8,14 @@ import (
 )
 
 type Config struct {
-	Database `yaml:"db"`
+	DB       `yaml:"db"`
 	Cors     `yaml:"cors"`
 	Jwt      `yaml:"jwt"`
 	Port     uint   `yaml:"port"`
 	Hostname string `yaml:"hostname"`
 }
 
-type Database struct {
+type DB struct {
 	Hostname string `yaml:"hostname"`
 	Port     uint   `yaml:"port"`
 	Name     string `yaml:"name"`
@@ -42,8 +42,6 @@ func Load() *Config {
 	v.AddConfigPath("./config")
 	v.AddConfigPath("../config")
 	v.AddConfigPath("../../config")
-	v.AddConfigPath("/myapp/app/config")
-	v.AddConfigPath("/myapp/config")
 
 	v.AutomaticEnv()
 
