@@ -1,8 +1,9 @@
 package model
 
 import (
-	"gorm.io/gorm"
 	"myapp/entity"
+
+	"gorm.io/gorm"
 )
 
 type User struct {

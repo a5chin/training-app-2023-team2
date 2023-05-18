@@ -2,10 +2,11 @@ package driver
 
 import (
 	"fmt"
-	"gorm.io/driver/mysql"
-	"gorm.io/gorm"
 	"myapp/config"
 	"os"
+
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 )
 
 const TxKey = "transactionObject"
