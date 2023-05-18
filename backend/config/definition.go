@@ -42,6 +42,7 @@ func Load() *Config {
 	v.AddConfigPath("./config")
 	v.AddConfigPath("../config")
 	v.AddConfigPath("../../config")
+	v.AddConfigPath("/app/config")
 
 	v.AutomaticEnv()
 
