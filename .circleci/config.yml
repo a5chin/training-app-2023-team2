@@ -30,6 +30,9 @@ jobs:
           paths:
             - "/home/circleci/go/pkg/mod"
       - run:
+          name: "Run test"
+          command: cd backend && go test -v ./...
+      - run:
           name: Build
           command: go build -o myapp
           working_directory: backend
@@ -99,7 +102,10 @@ jobs:
       - aws-s3/sync:
           from: /tmp/output/frontend/dist
           to: 's3://dena-training-2023/$TEAM'
-
+      - run:
+          name: "Invalidate CloudFront Cache"
+          command: |
+            aws cloudfront create-invalidation --distribution-id $AWS_CLOUD_FRONT_DISTRIBUTION_ID --paths "/*"
 workflows:
   build:
     jobs:
