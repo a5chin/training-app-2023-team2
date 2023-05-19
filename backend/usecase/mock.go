@@ -74,31 +74,31 @@ func (m *MockPostRepo) EXPECT() *MockPostRepoMockRecorder {
 }
 
 // CreatePost mocks base method.
-func (m *MockPostRepo) CreatePost(ctx context.Context, uid, body string) error {
+func (m *MockPostRepo) CreatePost(ctx context.Context, parentID *string, uid, body string) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CreatePost", ctx, uid, body)
+	ret := m.ctrl.Call(m, "CreatePost", ctx, parentID, uid, body)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // CreatePost indicates an expected call of CreatePost.
-func (mr *MockPostRepoMockRecorder) CreatePost(ctx, uid, body interface{}) *gomock.Call {
+func (mr *MockPostRepoMockRecorder) CreatePost(ctx, parentID, uid, body interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreatePost", reflect.TypeOf((*MockPostRepo)(nil).CreatePost), ctx, uid, body)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreatePost", reflect.TypeOf((*MockPostRepo)(nil).CreatePost), ctx, parentID, uid, body)
 }
 
 // DeletePost mocks base method.
-func (m *MockPostRepo) DeletePost(ctx context.Context, pid string) error {
+func (m *MockPostRepo) DeletePost(ctx context.Context, uid, pid string) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "DeletePost", ctx, pid)
+	ret := m.ctrl.Call(m, "DeletePost", ctx, uid, pid)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // DeletePost indicates an expected call of DeletePost.
-func (mr *MockPostRepoMockRecorder) DeletePost(ctx, pid interface{}) *gomock.Call {
+func (mr *MockPostRepoMockRecorder) DeletePost(ctx, uid, pid interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeletePost", reflect.TypeOf((*MockPostRepo)(nil).DeletePost), ctx, pid)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeletePost", reflect.TypeOf((*MockPostRepo)(nil).DeletePost), ctx, uid, pid)
 }
 
 // GetPostByID mocks base method.
@@ -117,18 +117,18 @@ func (mr *MockPostRepoMockRecorder) GetPostByID(ctx, pid interface{}) *gomock.Ca
 }
 
 // GetPosts mocks base method.
-func (m *MockPostRepo) GetPosts(ctx context.Context, limit, offset *int) ([]*entity.Post, error) {
+func (m *MockPostRepo) GetPosts(ctx context.Context, pid *string, limit, offset *int) ([]*entity.Post, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetPosts", ctx, limit, offset)
+	ret := m.ctrl.Call(m, "GetPosts", ctx, pid, limit, offset)
 	ret0, _ := ret[0].([]*entity.Post)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // GetPosts indicates an expected call of GetPosts.
-func (mr *MockPostRepoMockRecorder) GetPosts(ctx, limit, offset interface{}) *gomock.Call {
+func (mr *MockPostRepoMockRecorder) GetPosts(ctx, pid, limit, offset interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPosts", reflect.TypeOf((*MockPostRepo)(nil).GetPosts), ctx, limit, offset)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPosts", reflect.TypeOf((*MockPostRepo)(nil).GetPosts), ctx, pid, limit, offset)
 }
 
 // MockUserRepo is a mock of UserRepo interface.

@@ -9,7 +9,7 @@ type PostProps = {
 };
 
 export function Post({ post }: PostProps) {
-  const { id, title, body, user } = post;
+  const { id, body, user } = post;
   const navigate = useNavigate();
 
   return (
@@ -24,8 +24,7 @@ export function Post({ post }: PostProps) {
           </Flex> */}
         <Flex direction="column">
           <HStack>
-            <Text>{title}</Text>
-            <Text>written by {user.name}</Text>
+            <Text>{user?.name}</Text>
           </HStack>
           <Text>{body}</Text>
           <HStack>

@@ -140,14 +140,27 @@ func (c PostController) DeletePost(ctx *gin.Context) (interface{}, error) {
 //	@Accept		mpfd
 //	@Produce	json
 //	@Param		postId	path		string				true	"投稿ID"
-//	@Param		file	formData	file				true	"画像ファイル"
+//	@Param		file	formData	file				false	"画像ファイル"
 //	@Param		request	formData	CreatePostRequest	true	"投稿作成リクエスト"
 //	@Success	200		"OK"
 //	@Failure	400		{object}	entity.ErrorResponse
 //	@Failure	401		{object}	entity.ErrorResponse
 //	@Router		/posts/{postId}/replies [post]
 func (c PostController) CreateReply(ctx *gin.Context) (interface{}, error) {
-	return nil, nil
+	var req *CreatePostRequest
+	if err := ctx.Bind(&req); err != nil {
+		return nil, entity.WrapError(http.StatusBadRequest, err)
+	}
+	pid := ctx.Param("postId")
+	_user, ok := ctx.Get(entity.ContextAuthUserKey)
+	if !ok {
+		return nil, entity.WrapError(http.StatusUnauthorized, errors.New("empty user"))
+	}
+	user, ok := _user.(*entity.User)
+	if !ok {
+		return nil, entity.WrapError(http.StatusUnauthorized, errors.New("_user is not entity user"))
+	}
+	return nil, c.PostUseCase.CreateReply(ctx, pid, user.ID, req.Content)
 }
 
 // GetReplies godoc
@@ -164,5 +177,18 @@ func (c PostController) CreateReply(ctx *gin.Context) (interface{}, error) {
 //	@Failure	404		{object}	entity.ErrorResponse
 //	@Router		/posts/{postId}/replies [get]
 func (c PostController) GetReplies(ctx *gin.Context) (interface{}, error) {
-	return GetPostsResponse{Posts: nil}, nil
+	var query GetPostsQuery
+	err := ctx.ShouldBind(&query)
+	pid := ctx.Param("postId")
+	if err != nil {
+		return nil, entity.WrapError(http.StatusBadRequest, err)
+	}
+	if query.Limit == nil && query.Offset != nil {
+		return nil, entity.WrapError(http.StatusBadRequest, errors.New("can't use offset without limit"))
+	}
+	posts, err := c.PostUseCase.GetReplies(ctx, pid, query.Limit, query.Offset)
+	if err != nil {
+		return nil, err
+	}
+	return GetPostsResponse{Posts: posts}, nil
 }

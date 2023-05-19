@@ -25,8 +25,7 @@ export function PostDetail() {
                 <Flex direction="row" px="19px">
                   <Flex direction="column" flex="auto">
                     <HStack>
-                      <Text>{post.title}</Text>
-                      <Text>written by {post.user.name}</Text>
+                      <Text> {post.user?.name}</Text>
                     </HStack>
                     <Text>{post.body}</Text>
                     <Box

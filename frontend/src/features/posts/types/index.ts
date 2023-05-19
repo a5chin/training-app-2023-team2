@@ -1,10 +1,4 @@
-import { User } from '@/features/users';
+import { Entity_Post as entityPost } from '@/aspida/@types';
 
-export type Post = {
-  id: number;
-  title: string;
-  body: string;
-  user: User;
-};
-
+export type Post = entityPost;
 export type Posts = Post[];
