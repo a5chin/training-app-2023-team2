@@ -1,10 +1,15 @@
 import {
   Box,
+  BoxProps,
   Button,
   Flex,
   HStack,
   Icon,
   IconButton,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
   Stack,
   Text,
   useBreakpointValue,
@@ -14,6 +19,8 @@ import { GiHummingbird } from 'react-icons/gi';
 import { BiPen } from 'react-icons/bi';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '@/lib/auth';
+import { UserIcon } from '@/components/Avatar/BoringAvatar';
 
 function TweetButton() {
   const isLessThanMd = useBreakpointValue({ base: true, md: false });
@@ -47,6 +54,45 @@ function TweetButton() {
   );
 }
 
+function AccountMenu({ ...props }: BoxProps) {
+  const { currentUser } = useAuth();
+
+  return (
+    <Box {...props}>
+      <Menu isLazy>
+        <MenuButton>
+          <HStack spacing={4}>
+            <UserIcon
+              boxSize={8}
+              name={currentUser ? currentUser.name : 'None'}
+              border={2}
+              borderColor="black"
+            />
+            <Text fontSize={{ base: '0', md: '3xl' }} fontWeight="medium">
+              {currentUser ? currentUser.name : 'Not Logged in'}
+            </Text>
+          </HStack>
+        </MenuButton>
+        <MenuList>
+          {/* MenuItems are not rendered unless Menu is open */}
+          {currentUser ? (
+            <>
+              <MenuItem>Profile</MenuItem>
+              <MenuItem>Settings</MenuItem>
+              <MenuItem>Signout</MenuItem>
+            </>
+          ) : (
+            <>
+              <MenuItem>Signup</MenuItem>
+              <MenuItem>Signin</MenuItem>
+            </>
+          )}
+        </MenuList>
+      </Menu>
+    </Box>
+  );
+}
+
 type MainLayoutProps = {
   children: React.ReactNode;
 };
@@ -60,27 +106,31 @@ export function MainLayout({ children }: MainLayoutProps) {
         as="header"
         direction="row-reverse"
         bg="red"
-        flexGrow={1}
+        flexGrow={0}
+        flexShrink={10}
         paddingX={4}
       >
-        <Stack width={{ md: '275px' }}>
-          <Icon boxSize={8} as={GiHummingbird} />
-          <Box>
-            <HStack as={Link} to="/" spacing={4}>
-              <Icon boxSize={8} as={AiFillHome} />
-              <Text fontSize={{ base: '0', md: '3xl' }} fontWeight="medium">
-                Home
-              </Text>
-            </HStack>
-            <HStack as={Link} to="/" spacing={4}>
-              <Icon boxSize={8} as={AiOutlineUser} />
-              <Text fontSize={{ base: '0', md: '3xl' }} fontWeight="medium">
-                Profile
-              </Text>
-            </HStack>
-          </Box>
-          <TweetButton />
-        </Stack>
+        <Flex flexDirection="column" flexBasis={{ md: '275px' }}>
+          <Stack>
+            <Icon boxSize={8} as={GiHummingbird} />
+            <Box>
+              <HStack as={Link} to="/" spacing={4}>
+                <Icon boxSize={8} as={AiFillHome} />
+                <Text fontSize={{ base: '0', md: '3xl' }} fontWeight="medium">
+                  Home
+                </Text>
+              </HStack>
+              <HStack as={Link} to="/" spacing={4}>
+                <Icon boxSize={8} as={AiOutlineUser} />
+                <Text fontSize={{ base: '0', md: '3xl' }} fontWeight="medium">
+                  Profile
+                </Text>
+              </HStack>
+            </Box>
+            <TweetButton />
+          </Stack>
+          <AccountMenu marginTop="auto" />
+        </Flex>
       </Flex>
 
       <Box as="main" h="full" flexGrow={3} flexShrink={0}>
