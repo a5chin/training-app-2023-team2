@@ -125,7 +125,6 @@ workflows:
             branches:
               only:
                 - main
-                - fix/viper_config
           requires:
             - ecr-push-backend
       - deploy-frontend:
