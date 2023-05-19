@@ -1,14 +1,28 @@
 import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
   Box,
   Button,
   FormControl,
   FormErrorMessage,
   FormLabel,
   Input,
+  useDisclosure,
+  Text,
+  Link,
 } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import {
+  Link as ReachLink,
+  useNavigate,
+  useSearchParams,
+} from 'react-router-dom';
 import { useAuth } from '@/lib/auth';
 
 type UserInput = {
@@ -16,21 +30,22 @@ type UserInput = {
   password: string;
 };
 
-export function Signin() {
+function SigninForm() {
   const {
     handleSubmit,
     register,
     formState: { errors, isSubmitting },
   } = useForm<UserInput>({ mode: 'onBlur' });
   const { signin, currentUser } = useAuth();
+  const [searchParams] = useSearchParams();
+  const redirectUrl = searchParams.get('redirect');
   const navigate = useNavigate();
 
   useEffect(() => {
-    // ユーザーがログイン済みなら / に飛ばす
     if (currentUser) {
-      navigate('/');
+      navigate(redirectUrl ? decodeURIComponent(redirectUrl) : '/');
     }
-  }, [currentUser, navigate]);
+  }, [currentUser, navigate, redirectUrl]);
 
   const onSubmit: SubmitHandler<UserInput> = async (userInput) => {
     console.log(`UserInput: ${JSON.stringify(userInput)}`);
@@ -93,10 +108,50 @@ export function Signin() {
           colorScheme="teal"
           isLoading={isSubmitting}
           type="submit"
+          width="full"
         >
           Submit
         </Button>
       </form>
     </Box>
+  );
+}
+
+export function Signin() {
+  const navigate = useNavigate();
+  const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
+
+  useEffect(() => {
+    if (!isOpen) {
+      navigate('/');
+    }
+  }, [isOpen, navigate]);
+
+  return (
+    <Modal isOpen={isOpen} onClose={onClose} closeOnOverlayClick={false}>
+      <ModalOverlay />
+      <ModalContent>
+        <ModalHeader>Signin</ModalHeader>
+        <ModalCloseButton />
+        <ModalBody>
+          <SigninForm />
+        </ModalBody>
+
+        <ModalFooter>
+          <Text>
+            New to here?{' '}
+            <Link
+              fontWeight="bold"
+              textColor="blue.400"
+              as={ReachLink}
+              to="/auth/signup"
+            >
+              Create an account
+            </Link>
+            .
+          </Text>
+        </ModalFooter>
+      </ModalContent>
+    </Modal>
   );
 }
