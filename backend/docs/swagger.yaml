@@ -56,6 +56,9 @@ definitions:
     type: object
 info:
   contact: {}
+  description: training-app-2023-team2
+  title: training-app-2023-team2
+  version: "1.0"
 paths:
   /hello:
     get:
