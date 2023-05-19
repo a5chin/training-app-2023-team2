@@ -39,6 +39,7 @@ jobs:
             mkdir /tmp/output
             backend=/tmp/output/backend
             mkdir $backend
+            cp backend/config/config.yaml $backend/config.yaml
             cp backend/myapp $backend
             cp docker/ci-backend.Dockerfile $backend/Dockerfile
       - persist_to_workspace:
