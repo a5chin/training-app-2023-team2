@@ -14,7 +14,7 @@ import type { Methods as Methods9 } from './users/me';
 const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
   const prefix = (baseURL === undefined ? '' : baseURL).replace(/\/$/, '');
   const PATH0 = '/hello';
-  const PATH1 = '/posts/';
+  const PATH1 = '/posts';
   const PATH2 = '/favorites';
   const PATH3 = '/replies';
   const PATH4 = '/sign_in';
@@ -245,6 +245,30 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
           Methods1['get']['status']
         >(prefix, PATH1, GET, option)
           .json()
+          .then((r) => r.body),
+      post: (option: {
+        body: Methods1['post']['reqBody'];
+        config?: T | undefined;
+      }) =>
+        fetch<void, BasicHeaders, Methods1['post']['status']>(
+          prefix,
+          PATH1,
+          POST,
+          option,
+          'FormData'
+        ).send(),
+      $post: (option: {
+        body: Methods1['post']['reqBody'];
+        config?: T | undefined;
+      }) =>
+        fetch<void, BasicHeaders, Methods1['post']['status']>(
+          prefix,
+          PATH1,
+          POST,
+          option,
+          'FormData'
+        )
+          .send()
           .then((r) => r.body),
       $path: (
         option?:

@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "aspida_build": "rm -rf ./src/aspida && npx openapi2aspida -i ../backend/docs/swagger.json -o ./src/aspida && echo !!!!! /frontend/src/aspida/$api.ts の const PATH1 = '/posts' を const PATH1 = '/posts/' に変更してください !!!!!",
     "lint": "npx eslint --fix ./src && npx prettier --write './**/*'",
     "preview": "vite preview",
     "format": "npx prettier --write .",

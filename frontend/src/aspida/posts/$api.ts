@@ -205,6 +205,30 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
       >(prefix, PATH0, GET, option)
         .json()
         .then((r) => r.body),
+    post: (option: {
+      body: Methods0['post']['reqBody'];
+      config?: T | undefined;
+    }) =>
+      fetch<void, BasicHeaders, Methods0['post']['status']>(
+        prefix,
+        PATH0,
+        POST,
+        option,
+        'FormData'
+      ).send(),
+    $post: (option: {
+      body: Methods0['post']['reqBody'];
+      config?: T | undefined;
+    }) =>
+      fetch<void, BasicHeaders, Methods0['post']['status']>(
+        prefix,
+        PATH0,
+        POST,
+        option,
+        'FormData'
+      )
+        .send()
+        .then((r) => r.body),
     $path: (
       option?:
         | { method?: 'get' | undefined; query: Methods0['get']['query'] }

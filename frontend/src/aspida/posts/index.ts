@@ -1,4 +1,5 @@
 /* eslint-disable */
+import type { ReadStream } from 'fs';
 import type * as Types from '../@types';
 
 export type Methods = {
@@ -15,5 +16,16 @@ export type Methods = {
     status: 200;
     /** OK */
     resBody: Types.Controller_GetPostsResponse;
+  };
+
+  post: {
+    status: 200;
+    reqFormat: FormData;
+
+    reqBody: {
+      /** 画像ファイル */
+      file: File | ReadStream;
+      content: string;
+    };
   };
 };
