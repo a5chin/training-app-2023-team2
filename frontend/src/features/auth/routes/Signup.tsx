@@ -22,7 +22,7 @@ export function Signup() {
     handleSubmit,
     register,
     formState: { errors, isSubmitting },
-  } = useForm<UserInput>();
+  } = useForm<UserInput>({ mode: 'onBlur' });
   const { signup, currentUser } = useAuth();
   const navigate = useNavigate();
 
