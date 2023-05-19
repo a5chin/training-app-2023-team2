@@ -1,14 +1,28 @@
 import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
   Box,
   Button,
   FormControl,
   FormErrorMessage,
   FormLabel,
   Input,
+  useDisclosure,
+  Text,
+  Link,
 } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import {
+  Link as ReachLink,
+  useNavigate,
+  useSearchParams,
+} from 'react-router-dom';
 import { useAuth } from '@/lib/auth';
 import { emailRegexp } from '@/utils';
 
@@ -18,7 +32,7 @@ type SignupFormInput = {
   password: string;
 };
 
-export function Signup() {
+function SignupForm() {
   const {
     handleSubmit,
     register,
@@ -116,10 +130,49 @@ export function Signup() {
           colorScheme="teal"
           isLoading={isSubmitting}
           type="submit"
+          width="full"
         >
           Submit
         </Button>
       </form>
     </Box>
+  );
+}
+
+export function Signup() {
+  const navigate = useNavigate();
+  const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
+
+  useEffect(() => {
+    if (!isOpen) {
+      navigate('/');
+    }
+  }, [isOpen, navigate]);
+
+  return (
+    <Modal isOpen={isOpen} onClose={onClose} closeOnOverlayClick={false}>
+      <ModalOverlay />
+      <ModalContent>
+        <ModalHeader textAlign="center">Signup</ModalHeader>
+        <ModalCloseButton />
+        <ModalBody>
+          <SignupForm />
+        </ModalBody>
+
+        <ModalFooter>
+          <Text>
+            Already have an account?{' '}
+            <Link
+              fontWeight="bold"
+              textColor="blue.400"
+              as={ReachLink}
+              to="/auth/signin"
+            >
+              Login
+            </Link>
+          </Text>
+        </ModalFooter>
+      </ModalContent>
+    </Modal>
   );
 }

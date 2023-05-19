@@ -127,11 +127,12 @@ export function Signin() {
     }
   }, [isOpen, navigate]);
 
+  // TODO: Signin と Signup は Form とテキスト以外は同じなので共通化する。
   return (
     <Modal isOpen={isOpen} onClose={onClose} closeOnOverlayClick={false}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Signin</ModalHeader>
+        <ModalHeader textAlign="center">Signin</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <SigninForm />
@@ -148,7 +149,6 @@ export function Signin() {
             >
               Create an account
             </Link>
-            .
           </Text>
         </ModalFooter>
       </ModalContent>
