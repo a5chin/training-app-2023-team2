@@ -20,6 +20,10 @@ type PostUseCase interface {
 	GetReplies(ctx context.Context, pid string, limit, offset *int) ([]*entity.Post, error)
 }
 
+type FavoriteUseCase interface {
+	CreateFavorite(ctx context.Context, pid, uid string) error
+}
+
 type UserUseCase interface {
 	SignInUser(ctx context.Context, email, password string) (*entity.User, string, error)
 	SignUpUser(ctx context.Context, name, email, password string) (*entity.User, string, error)
