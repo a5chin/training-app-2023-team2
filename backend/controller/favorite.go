@@ -12,10 +12,6 @@ type FavoriteController struct {
 	FavoriteUseCase
 }
 
-type CreateFavoriteRequest struct {
-	Favorite entity.Favorite `json:"posts"`
-}
-
 func NewFavoriteController(u FavoriteUseCase) *FavoriteController {
 	return &FavoriteController{u}
 }
