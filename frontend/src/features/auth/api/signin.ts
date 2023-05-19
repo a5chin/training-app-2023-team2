@@ -1,5 +1,5 @@
 import { axios } from '@/lib/axios';
-import { User } from '../types';
+import { Entity_User as User } from '@/aspida/@types';
 
 export type SigninDTO = {
   email: string;
