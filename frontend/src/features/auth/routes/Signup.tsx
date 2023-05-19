@@ -8,7 +8,7 @@ import {
 } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '@/lib/auth';
 
 type UserInput = {
@@ -24,14 +24,15 @@ export function Signup() {
     formState: { errors, isSubmitting },
   } = useForm<UserInput>({ mode: 'onBlur' });
   const { signup, currentUser } = useAuth();
+  const [searchParams] = useSearchParams();
+  const redirectUrl = searchParams.get('redirect');
   const navigate = useNavigate();
 
   useEffect(() => {
-    // ユーザーがログイン済みなら / に飛ばす
     if (currentUser) {
-      navigate('/');
+      navigate(redirectUrl ? decodeURIComponent(redirectUrl) : '/');
     }
-  }, [currentUser, navigate]);
+  }, [currentUser, navigate, redirectUrl]);
 
   const onSubmit: SubmitHandler<UserInput> = async (userInput) => {
     console.log(`UserInput: ${JSON.stringify(userInput)}`);
