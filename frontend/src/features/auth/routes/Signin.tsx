@@ -24,8 +24,9 @@ import {
   useSearchParams,
 } from 'react-router-dom';
 import { useAuth } from '@/lib/auth';
+import { emailRegexp } from '@/utils';
 
-type UserInput = {
+type SigninFormInput = {
   email: string;
   password: string;
 };
@@ -35,7 +36,7 @@ function SigninForm() {
     handleSubmit,
     register,
     formState: { errors, isSubmitting },
-  } = useForm<UserInput>({ mode: 'onBlur' });
+  } = useForm<SigninFormInput>({ mode: 'onBlur' });
   const { signin, currentUser } = useAuth();
   const [searchParams] = useSearchParams();
   const redirectUrl = searchParams.get('redirect');
@@ -47,7 +48,7 @@ function SigninForm() {
     }
   }, [currentUser, navigate, redirectUrl]);
 
-  const onSubmit: SubmitHandler<UserInput> = async (userInput) => {
+  const onSubmit: SubmitHandler<SigninFormInput> = async (userInput) => {
     console.log(`UserInput: ${JSON.stringify(userInput)}`);
     // TODO: エラーレスポンスのハンドリング
     await signin(userInput);
@@ -68,8 +69,7 @@ function SigninForm() {
                 message: 'メールアドレスを入力してください',
               },
               pattern: {
-                value:
-                  /^[a-zA-Z0-9_+-]+(.[a-zA-Z0-9_+-]+)*@([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$/,
+                value: emailRegexp,
                 message: 'メールアドレスの形式が合っていません。',
               },
             })}

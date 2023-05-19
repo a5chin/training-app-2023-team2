@@ -10,8 +10,9 @@ import { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '@/lib/auth';
+import { emailRegexp } from '@/utils';
 
-type UserInput = {
+type SignupFormInput = {
   name: string;
   email: string;
   password: string;
@@ -22,7 +23,7 @@ export function Signup() {
     handleSubmit,
     register,
     formState: { errors, isSubmitting },
-  } = useForm<UserInput>({ mode: 'onBlur' });
+  } = useForm<SignupFormInput>({ mode: 'onBlur' });
   const { signup, currentUser } = useAuth();
   const [searchParams] = useSearchParams();
   const redirectUrl = searchParams.get('redirect');
@@ -34,7 +35,7 @@ export function Signup() {
     }
   }, [currentUser, navigate, redirectUrl]);
 
-  const onSubmit: SubmitHandler<UserInput> = async (userInput) => {
+  const onSubmit: SubmitHandler<SignupFormInput> = async (userInput) => {
     console.log(`UserInput: ${JSON.stringify(userInput)}`);
     // TODO: エラーレスポンスのハンドリング
     await signup(userInput);
@@ -76,8 +77,7 @@ export function Signup() {
                 message: 'メールアドレスを入力してください',
               },
               pattern: {
-                value:
-                  /^[a-zA-Z0-9_+-]+(.[a-zA-Z0-9_+-]+)*@([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$/,
+                value: emailRegexp,
                 message: 'メールアドレスの形式が合っていません。',
               },
             })}
