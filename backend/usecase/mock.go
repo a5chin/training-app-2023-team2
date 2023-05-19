@@ -213,3 +213,40 @@ func (mr *MockUserRepoMockRecorder) TokenizeUser(user interface{}) *gomock.Call 
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "TokenizeUser", reflect.TypeOf((*MockUserRepo)(nil).TokenizeUser), user)
 }
+
+// MockFavoriteRepo is a mock of FavoriteRepo interface.
+type MockFavoriteRepo struct {
+	ctrl     *gomock.Controller
+	recorder *MockFavoriteRepoMockRecorder
+}
+
+// MockFavoriteRepoMockRecorder is the mock recorder for MockFavoriteRepo.
+type MockFavoriteRepoMockRecorder struct {
+	mock *MockFavoriteRepo
+}
+
+// NewMockFavoriteRepo creates a new mock instance.
+func NewMockFavoriteRepo(ctrl *gomock.Controller) *MockFavoriteRepo {
+	mock := &MockFavoriteRepo{ctrl: ctrl}
+	mock.recorder = &MockFavoriteRepoMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockFavoriteRepo) EXPECT() *MockFavoriteRepoMockRecorder {
+	return m.recorder
+}
+
+// CreateFavorite mocks base method.
+func (m *MockFavoriteRepo) CreateFavorite(ctx context.Context, uid, pid string) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreateFavorite", ctx, uid, pid)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// CreateFavorite indicates an expected call of CreateFavorite.
+func (mr *MockFavoriteRepoMockRecorder) CreateFavorite(ctx, uid, pid interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateFavorite", reflect.TypeOf((*MockFavoriteRepo)(nil).CreateFavorite), ctx, uid, pid)
+}

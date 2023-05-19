@@ -16,8 +16,8 @@ type CreateFavoriteRequest struct {
 	Favorite entity.Favorite `json:"posts"`
 }
 
-func NewFavoriteController() *FavoriteController {
-	return &FavoriteController{}
+func NewFavoriteController(u FavoriteUseCase) *FavoriteController {
+	return &FavoriteController{u}
 }
 
 // CreateFavorite godoc
