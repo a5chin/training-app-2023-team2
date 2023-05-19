@@ -18,7 +18,7 @@ import { AiFillHome, AiOutlineUser } from 'react-icons/ai';
 import { GiHummingbird } from 'react-icons/gi';
 import { BiPen } from 'react-icons/bi';
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, createSearchParams, useLocation } from 'react-router-dom';
 import { useAuth } from '@/lib/auth';
 import { UserIcon } from '@/components/Avatar/BoringAvatar';
 
@@ -56,6 +56,7 @@ function TweetButton() {
 
 function AccountMenu({ ...props }: BoxProps) {
   const { currentUser } = useAuth();
+  const location = useLocation();
 
   return (
     <Box {...props}>
@@ -77,14 +78,49 @@ function AccountMenu({ ...props }: BoxProps) {
           {/* MenuItems are not rendered unless Menu is open */}
           {currentUser ? (
             <>
-              <MenuItem>Profile</MenuItem>
               <MenuItem>Settings</MenuItem>
-              <MenuItem>Signout</MenuItem>
+              <MenuItem
+                as={Link}
+                to={{
+                  pathname: '/auth/signout',
+                  search: `?${createSearchParams({
+                    from: encodeURIComponent(
+                      location.pathname + location.search
+                    ),
+                  })}`,
+                }}
+              >
+                Signout
+              </MenuItem>
             </>
           ) : (
             <>
-              <MenuItem>Signup</MenuItem>
-              <MenuItem>Signin</MenuItem>
+              <MenuItem
+                as={Link}
+                to={{
+                  pathname: '/auth/signup',
+                  search: `?${createSearchParams({
+                    redirect: encodeURIComponent(
+                      location.pathname + location.search
+                    ),
+                  })}`,
+                }}
+              >
+                Signup
+              </MenuItem>
+              <MenuItem
+                as={Link}
+                to={{
+                  pathname: '/auth/signin',
+                  search: `?${createSearchParams({
+                    redirect: encodeURIComponent(
+                      location.pathname + location.search
+                    ),
+                  })}`,
+                }}
+              >
+                Signin
+              </MenuItem>
             </>
           )}
         </MenuList>
