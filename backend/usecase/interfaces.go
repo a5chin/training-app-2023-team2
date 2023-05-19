@@ -24,3 +24,7 @@ type UserRepo interface {
 	GetUserFromToken(ctx context.Context, idToken string) (*entity.User, error)
 	TokenizeUser(user *entity.User) (string, error)
 }
+
+type FavoriteRepo interface {
+	CreateFavorite(ctx context.Context, uid, pid string) error
+}

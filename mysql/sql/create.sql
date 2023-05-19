@@ -26,3 +26,9 @@ CREATE TABLE IF NOT EXISTS posts(
   deleted_at DATETIME     NULL,
   FOREIGN KEY (user_id) REFERENCES users (id)
 );
+
+CREATE TABLE IF NOT EXISTS favorites(
+  post_id    VARCHAR(26)  NOT NULL,
+  user_id    VARCHAR(26)  NOT NULL,
+  PRIMARY KEY (post_id, user_id)
+);
