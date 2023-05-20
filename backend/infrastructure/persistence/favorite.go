@@ -38,3 +38,10 @@ func (p FavoritePersistence) CreateFavorite(
 	}
 	return nil
 }
+
+func (p FavoritePersistence) GetFavorites(
+	ctx context.Context,
+	pid, uid string,
+) (*entity.Favorite, error) {
+	return nil, nil
+}

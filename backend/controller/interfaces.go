@@ -22,6 +22,7 @@ type PostUseCase interface {
 
 type FavoriteUseCase interface {
 	CreateFavorite(ctx context.Context, pid, uid string) error
+	GetFavorites(ctx context.Context, pid, uid string) (*entity.Favorite, error)
 }
 
 type UserUseCase interface {
