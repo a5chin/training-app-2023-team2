@@ -1,5 +1,6 @@
 import { Flex, Text, FormControl, Input, Button } from '@chakra-ui/react';
 
+// TODO: バリデーション
 export function ReplayFormInDetail() {
   return (
     <FormControl
