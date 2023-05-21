@@ -35,6 +35,8 @@ module.exports = {
     ],
     // 関数の型宣言のパラメータに対して no-unused-vars を適用しないようにする
     'no-unused-vars': 'off',
+    // aspida の関数にアンダースコアが存在するため許容
+    'no-underscore-dangle': 'off',
     '@typescript-eslint/no-unused-vars': ['error'],
   },
 };
