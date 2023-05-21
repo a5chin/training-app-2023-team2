@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { axios } from '@/lib/axios';
 import { User } from '../types';
 
 type FetchMeResponseType = User;

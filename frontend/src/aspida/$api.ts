@@ -14,7 +14,7 @@ import type { Methods as Methods9 } from './users/me';
 const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
   const prefix = (baseURL === undefined ? '' : baseURL).replace(/\/$/, '');
   const PATH0 = '/hello';
-  const PATH1 = '/posts/';
+  const PATH1 = '/posts';
   const PATH2 = '/favorites';
   const PATH3 = '/replies';
   const PATH4 = '/sign_in';

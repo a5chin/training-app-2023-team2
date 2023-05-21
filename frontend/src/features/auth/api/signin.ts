@@ -1,12 +1,8 @@
 import { axios } from '@/lib/axios';
-import { Entity_User as entityUser } from '@/aspida/@types';
+import { User } from '../types';
+import { Controller_SignInRequest as SigninDTO } from '@/aspida/@types';
 
-export type SigninDTO = {
-  email: string;
-  password: string;
-};
-
-type SigninResponseType = entityUser;
+type SigninResponseType = User;
 
 export const signin = async (data: SigninDTO): Promise<SigninResponseType> => {
   const response = await axios.post('/sign_in', data, {
