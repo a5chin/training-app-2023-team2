@@ -1,5 +1,15 @@
-import { Box } from '@chakra-ui/react';
+import { ModalLayout } from '../components/ModalLayout';
+import { SignoutForm } from '../components/SignoutForm';
 
 export function Signout() {
-  return <Box>Signout!</Box>;
+  const modalHeader = <>Are you sure you want to log out?</>;
+  const modalBody = <SignoutForm />;
+  const modalFooter = null;
+  return (
+    <ModalLayout
+      modalHeader={modalHeader}
+      modalBody={modalBody}
+      modalFooter={modalFooter}
+    />
+  );
 }
