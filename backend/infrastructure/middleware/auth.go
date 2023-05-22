@@ -14,19 +14,18 @@ type UserRepo interface {
 
 func Authentication(userRepo UserRepo) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		if ctx.Request.Method != http.MethodGet {
-			token, err := ctx.Cookie(entity.AuthCookieKey)
-			if err != nil {
-				ctx.AbortWithError(http.StatusUnauthorized, err)
-				return
-			}
-			user, err := userRepo.GetUserFromToken(ctx, token)
-			if err != nil {
-				ctx.AbortWithError(http.StatusUnauthorized, err)
-				return
-			}
-			ctx.Set(entity.ContextAuthUserKey, user)
+		isGet := ctx.Request.Method == http.MethodGet
+		token, err := ctx.Cookie(entity.AuthCookieKey)
+		if err != nil && !isGet {
+			ctx.AbortWithError(http.StatusUnauthorized, err)
+			return
 		}
+		user, err := userRepo.GetUserFromToken(ctx, token)
+		if err != nil && !isGet {
+			ctx.AbortWithError(http.StatusUnauthorized, err)
+			return
+		}
+		ctx.Set(entity.ContextAuthUserKey, user)
 		ctx.Next()
 	}
 }

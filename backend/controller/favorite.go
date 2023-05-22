@@ -57,27 +57,3 @@ func (c FavoriteController) CreateFavorite(ctx *gin.Context) (interface{}, error
 func (c FavoriteController) DeleteFavorite(ctx *gin.Context) (interface{}, error) {
 	return GetPostsResponse{Posts: nil}, nil
 }
-
-// GetReplies godoc
-//
-//	@Summary	リプライ一覧取得API
-//	@Description
-//	@Tags		Favorite
-//	@Accept		json
-//	@Produce	json
-//	@Param		postId	path		string	true	"投稿ID"
-//	@Success	200		{object}	GetPostsResponse
-//	@Failure	404		{object}	entity.ErrorResponse
-//	@Router		/posts/{postId}/favorites [get]
-func (c FavoriteController) GetFavorites(ctx *gin.Context) (interface{}, error) {
-	pid := ctx.Param("postId")
-	_user, ok := ctx.Get(entity.ContextAuthUserKey)
-	if !ok {
-		return nil, entity.WrapError(http.StatusUnauthorized, errors.New("empty user"))
-	}
-	user, ok := _user.(*entity.User)
-	if !ok {
-		return nil, entity.WrapError(http.StatusUnauthorized, errors.New("_user is not entity user"))
-	}
-	return c.FavoriteUseCase.GetFavorites(ctx, pid, user.ID)
-}

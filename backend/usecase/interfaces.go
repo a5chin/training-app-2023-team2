@@ -12,8 +12,8 @@ type HelloWorldRepo interface {
 }
 
 type PostRepo interface {
-	GetPosts(ctx context.Context, pid *string, limit, offset *int) ([]*entity.Post, error)
-	GetPostByID(ctx context.Context, pid string) (*entity.Post, error)
+	GetPosts(ctx context.Context, pid, loginUserID *string, limit, offset *int) ([]*entity.Post, error)
+	GetPostByID(ctx context.Context, loginUserID *string, pid string) (*entity.Post, error)
 	CreatePost(ctx context.Context, parentID *string, uid, body string) error
 	DeletePost(ctx context.Context, uid, pid string) error
 }
@@ -27,5 +27,4 @@ type UserRepo interface {
 
 type FavoriteRepo interface {
 	CreateFavorite(ctx context.Context, uid, pid string) error
-	GetFavorites(ctx context.Context, uid, pid string) (*entity.Favorite, error)
 }

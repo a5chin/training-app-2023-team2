@@ -65,7 +65,7 @@ func (p PostPersistence) DeletePost(
 
 func (p PostPersistence) GetPosts(
 	ctx context.Context,
-	pid *string,
+	pid, loginUserID *string,
 	limit *int,
 	offset *int,
 ) ([]*entity.Post, error) {
@@ -80,28 +80,29 @@ func (p PostPersistence) GetPosts(
 	if pid != nil {
 		db = db.Where("parent_id = ?", pid)
 	}
-	if err := db.Preload("User").Preload("Parent").Order("posts.id DESC").Find(&records).Error; err != nil {
+	if err := db.Preload("User").Preload("Parent").Preload("Favorites").Order("posts.id DESC").Find(&records).Error; err != nil {
 		return nil, err
 	}
 	var posts []*entity.Post
 	for _, record := range records {
-		posts = append(posts, record.ToEntity())
+		posts = append(posts, record.ToEntity(loginUserID))
 	}
 	return posts, nil
 }
 
 func (p PostPersistence) GetPostByID(
 	ctx context.Context,
+	loginUserID *string,
 	pid string,
 ) (*entity.Post, error) {
 	var record *model.Post
 	db, _ := ctx.Value(driver.TxKey).(*gorm.DB)
-	if err := db.Preload("User").Preload("Parent").First(&record, "id = ?", pid).Error; err != nil {
+	if err := db.Preload("User").Preload("Parent").Preload("Favorites").First(&record, "id = ?", pid).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, entity.WrapError(http.StatusNotFound, err)
 		}
 		return nil, err
 	}
 
-	return record.ToEntity(), nil
+	return record.ToEntity(loginUserID), nil
 }
