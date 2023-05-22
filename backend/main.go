@@ -18,6 +18,9 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
+// @title training-app-2023-team2
+// @description training-app-2023-team2
+// @version 1.0
 func main() {
 	// Dependency Injection
 	conf := config.Load()
@@ -53,26 +56,23 @@ func main() {
 	postRouter.Use(middleware.Authentication(userRepo))
 	postRouter.GET("/", handleResponse(postController.GetPosts))
 	postRouter.POST("/", handleResponse(postController.CreatePost))
-	postRouter.GET("/:postId", handleResponse(postController.GetPostByID))
-	postRouter.DELETE("/:postId", handleResponse(postController.DeletePost))
-	postRouter.GET("/:postId/replies", handleResponse(postController.GetReplies))
-	postRouter.POST("/:postId/replies", handleResponse(postController.CreateReply))
+	postRouter.GET("/:postId/", handleResponse(postController.GetPostByID))
+	postRouter.DELETE("/:postId/", handleResponse(postController.DeletePost))
+	postRouter.GET("/:postId/replies/", handleResponse(postController.GetReplies))
+	postRouter.POST("/:postId/replies/", handleResponse(postController.CreateReply))
 
-	postRouter.POST("/:postId/favorites", handleResponse(favoriteController.CreateFavorite))
-	postRouter.DELETE("/:postId/favorites/:favoriteId", handleResponse(favoriteController.DeleteFavorite))
+	postRouter.POST("/:postId/favorites/", handleResponse(favoriteController.CreateFavorite))
+	postRouter.DELETE("/:postId/favorites/:favoriteId/", handleResponse(favoriteController.DeleteFavorite))
 
-	api.GET("/users/me", handleResponse(userController.GetMe))
-	api.POST("/sign_up", handleResponse(userController.SignUp))
-	api.POST("/sign_in", handleResponse(userController.SignIn))
-	api.POST("/sign_out", handleResponse(userController.SignOut))
+	api.GET("/users/me/", handleResponse(userController.GetMe))
+	api.POST("/sign_up/", handleResponse(userController.SignUp))
+	api.POST("/sign_in/", handleResponse(userController.SignIn))
+	api.POST("/sign_out/", handleResponse(userController.SignOut))
 
 	runApp(app, conf)
 }
 
 func runApp(app *gin.Engine, conf *config.Config) {
-	docs.SwaggerInfo.Title = "training-app-2023-team2"
-	docs.SwaggerInfo.Description = "training-app-2023-team2"
-	docs.SwaggerInfo.Version = "1.0"
 	docs.SwaggerInfo.Host = fmt.Sprintf("localhost:%d", conf.Port)
 	docs.SwaggerInfo.BasePath = "/api/v1"
 	docs.SwaggerInfo.Schemes = []string{"http"}

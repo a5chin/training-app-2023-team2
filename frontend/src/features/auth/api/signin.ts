@@ -1,10 +1,6 @@
 import { axios } from '@/lib/axios';
 import { User } from '../types';
-
-export type SigninDTO = {
-  email: string;
-  password: string;
-};
+import { Controller_SignInRequest as SigninDTO } from '@/aspida/@types';
 
 type SigninResponseType = User;
 

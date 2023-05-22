@@ -21,7 +21,7 @@ export function AppRoutes() {
         path: '/',
         element: <Navigate to="/posts" />,
       },
-      { path: '/posts', element: <PostsRoutes /> },
+      { path: '/posts/*', element: <PostsRoutes /> },
       { path: '/auth/*', element: <AuthRoutes /> },
     ],
   };

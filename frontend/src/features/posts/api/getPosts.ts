@@ -1,21 +1,18 @@
-import useSWR, { Fetcher } from 'swr';
-import { axios } from '@/lib/axios';
-import { Posts } from '../types';
-
-type PostsResponseType = {
-  posts: Posts;
-};
-
-const fetcher: Fetcher<PostsResponseType> = () =>
-  axios.get('/posts').then((res) => res.data);
+import useAspidaSWR from '@aspida/swr';
+import { aspidaClient } from '@/lib/aspida';
 
 export const usePosts = () => {
+  console.log(aspidaClient.posts);
   // TODO: ページング対応
-  const { data, error, isLoading } = useSWR('/posts', fetcher);
+  const { data, error, isLoading, mutate } = useAspidaSWR(
+    aspidaClient.posts,
+    'get'
+  );
 
   return {
-    posts: data?.posts,
+    posts: data?.body.posts,
     isLoading,
     isError: error,
+    mutate,
   };
 };

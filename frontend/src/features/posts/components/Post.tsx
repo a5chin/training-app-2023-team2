@@ -8,7 +8,7 @@ type PostProps = {
 };
 
 export function Post({ post }: PostProps) {
-  const { title, body, user } = post;
+  const { body, user } = post;
 
   return (
     <Box borderColor="black" borderWidth="1px">
@@ -18,8 +18,7 @@ export function Post({ post }: PostProps) {
           </Flex> */}
         <Flex direction="column">
           <HStack>
-            <Text>{title}</Text>
-            <Text>written by {user.name}</Text>
+            <Text>{user?.name}</Text>
           </HStack>
           <Text>{body}</Text>
           <HStack>

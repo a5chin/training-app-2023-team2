@@ -56,6 +56,9 @@ definitions:
     type: object
 info:
   contact: {}
+  description: training-app-2023-team2
+  title: training-app-2023-team2
+  version: "1.0"
 paths:
   /hello:
     get:
@@ -297,7 +300,6 @@ paths:
       - description: 画像ファイル
         in: formData
         name: file
-        required: true
         type: file
       - in: formData
         name: content

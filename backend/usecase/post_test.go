@@ -2,12 +2,13 @@ package usecase
 
 import (
 	"errors"
-	"github.com/gin-gonic/gin"
-	"github.com/golang/mock/gomock"
-	"github.com/stretchr/testify/assert"
 	"myapp/entity"
 	"net/http/httptest"
 	"testing"
+
+	"github.com/gin-gonic/gin"
+	"github.com/golang/mock/gomock"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestPostUseCase_GetPosts(t *testing.T) {
@@ -83,14 +84,14 @@ func TestPostUseCase_GetPosts(t *testing.T) {
 			if test.err != nil {
 				// mockのメソッドをspyしておく
 				repo.EXPECT().
-					GetPosts(gomock.Any(), length, offset).
+					GetPosts(gomock.Any(), nil, length, offset).
 					Return(nil, test.err).AnyTimes()
 				useCase := NewPostUseCase(repo)
 				_, err := useCase.GetPosts(ginCtx, length, offset)
 				assert.Error(t, err)
 			} else {
 				repo.EXPECT().
-					GetPosts(gomock.Any(), length, offset).
+					GetPosts(gomock.Any(), nil, length, offset).
 					Return(expected, nil).AnyTimes()
 				postCtrl := NewPostUseCase(repo)
 				posts, err := postCtrl.GetPosts(ginCtx, length, offset)
@@ -160,17 +161,17 @@ func TestPostUseCase_GetPostByID(t *testing.T) {
 			if test.err != nil {
 				// mockのメソッドをspyしておく
 				repo.EXPECT().
-					GetPostByID(gomock.Any(), 1).
+					GetPostByID(gomock.Any(), "1").
 					Return(nil, test.err).AnyTimes()
 				useCase := NewPostUseCase(repo)
-				_, err := useCase.GetPostByID(ginCtx, 1)
+				_, err := useCase.GetPostByID(ginCtx, "1")
 				assert.Error(t, err)
 			} else {
 				repo.EXPECT().
-					GetPostByID(gomock.Any(), 1).
+					GetPostByID(gomock.Any(), "1").
 					Return(expected, nil).AnyTimes()
 				postCtrl := NewPostUseCase(repo)
-				posts, err := postCtrl.GetPostByID(ginCtx, 1)
+				posts, err := postCtrl.GetPostByID(ginCtx, "1")
 				assert.NoError(t, err)
 				assert.Equal(t, expected, posts)
 			}

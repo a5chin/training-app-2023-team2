@@ -12,13 +12,12 @@ type HelloWorldUseCase interface {
 }
 
 type PostUseCase interface {
-	GetPosts(ctx context.Context, limit *int, offset *int) ([]*entity.Post, error)
-	GetPostByID(ctx context.Context, id int) (*entity.Post, error)
-	CreatePost(
-		ctx context.Context,
-		uid string,
-		body string,
-	) error
+	GetPosts(ctx context.Context, limit, offset *int) ([]*entity.Post, error)
+	GetPostByID(ctx context.Context, pid string) (*entity.Post, error)
+	CreatePost(ctx context.Context, uid, body string) error
+	DeletePost(ctx context.Context, uid, pid string) error
+	CreateReply(ctx context.Context, parentID, uid, body string) error
+	GetReplies(ctx context.Context, pid string, limit, offset *int) ([]*entity.Post, error)
 }
 
 type UserUseCase interface {

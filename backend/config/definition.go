@@ -1,20 +1,21 @@
 package config
 
 import (
-	"github.com/spf13/viper"
 	"log"
 	"strings"
+
+	"github.com/spf13/viper"
 )
 
 type Config struct {
-	Database `yaml:"db"`
+	DB       `yaml:"db"`
 	Cors     `yaml:"cors"`
 	Jwt      `yaml:"jwt"`
 	Port     uint   `yaml:"port"`
 	Hostname string `yaml:"hostname"`
 }
 
-type Database struct {
+type DB struct {
 	Hostname string `yaml:"hostname"`
 	Port     uint   `yaml:"port"`
 	Name     string `yaml:"name"`
