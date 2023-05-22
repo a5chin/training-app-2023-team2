@@ -85,6 +85,7 @@ func TestPostController_GetPosts(t *testing.T) {
 			ginCtx, _ := gin.CreateTestContext(httptest.NewRecorder())
 			req, _ := http.NewRequest("GET", path, nil)
 			ginCtx.Request = req
+			ginCtx.Set(entity.ContextAuthUserKey, nil)
 			// mock作成
 			useCase := getMockPostUseCase(t)
 			if test.err != nil {
@@ -172,6 +173,7 @@ func TestPostController_GetPostByID(t *testing.T) {
 					Value: "1",
 				},
 			}
+			ginCtx.Set(entity.ContextAuthUserKey, nil)
 
 			// mock作成
 			useCase := getMockPostUseCase(t)
