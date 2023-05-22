@@ -5,10 +5,12 @@ import {
   FormErrorMessage,
   FormLabel,
   Input,
+  useToast,
 } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { AxiosError } from 'axios';
 import { useAuth } from '@/lib/auth';
 import { emailRegexp } from '@/utils';
 
@@ -19,6 +21,7 @@ type SignupFormInput = {
 };
 
 export function SignupForm() {
+  const toast = useToast();
   const {
     handleSubmit,
     register,
@@ -37,8 +40,23 @@ export function SignupForm() {
 
   const onSubmit: SubmitHandler<SignupFormInput> = async (userInput) => {
     console.log(`UserInput: ${JSON.stringify(userInput)}`);
-    // TODO: エラーレスポンスのハンドリング
-    await signup(userInput);
+    try {
+      await signup(userInput);
+    } catch (e) {
+      if (e instanceof AxiosError) {
+        toast({
+          title: 'Error',
+          description: e.response?.data.message,
+          status: 'error',
+          duration: 3000,
+          isClosable: true,
+        });
+      } else {
+        // HTTPエラー以外は全て上に伝播させる。
+        console.error(`Uknown error: ${JSON.stringify(e)}`);
+        throw e;
+      }
+    }
   };
 
   return (
