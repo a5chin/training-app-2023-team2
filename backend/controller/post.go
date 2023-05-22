@@ -44,10 +44,19 @@ func (c PostController) GetPosts(ctx *gin.Context) (interface{}, error) {
 	if err != nil {
 		return nil, entity.WrapError(http.StatusBadRequest, err)
 	}
+	_user, ok := ctx.Get(entity.ContextAuthUserKey)
+	if !ok {
+		return nil, entity.WrapError(http.StatusUnauthorized, errors.New("empty user"))
+	}
+	var userID *string
+	user, _ := _user.(*entity.User)
+	if user != nil {
+		userID = &user.ID
+	}
 	if query.Limit == nil && query.Offset != nil {
 		return nil, entity.WrapError(http.StatusBadRequest, errors.New("can't use offset without limit"))
 	}
-	posts, err := c.PostUseCase.GetPosts(ctx, query.Limit, query.Offset)
+	posts, err := c.PostUseCase.GetPosts(ctx, userID, query.Limit, query.Offset)
 	if err != nil {
 		return nil, err
 	}
@@ -71,7 +80,16 @@ func (c PostController) GetPosts(ctx *gin.Context) (interface{}, error) {
 //	@Router			/posts/{postId} [get]
 func (c PostController) GetPostByID(ctx *gin.Context) (interface{}, error) {
 	pid := ctx.Param("postId")
-	return c.PostUseCase.GetPostByID(ctx, pid)
+	_user, ok := ctx.Get(entity.ContextAuthUserKey)
+	if !ok {
+		return nil, entity.WrapError(http.StatusUnauthorized, errors.New("empty user"))
+	}
+	var userID *string
+	user, _ := _user.(*entity.User)
+	if user != nil {
+		userID = &user.ID
+	}
+	return c.PostUseCase.GetPostByID(ctx, userID, pid)
 }
 
 type CreatePostRequest struct {
@@ -183,10 +201,19 @@ func (c PostController) GetReplies(ctx *gin.Context) (interface{}, error) {
 	if err != nil {
 		return nil, entity.WrapError(http.StatusBadRequest, err)
 	}
+	_user, ok := ctx.Get(entity.ContextAuthUserKey)
+	if !ok {
+		return nil, entity.WrapError(http.StatusUnauthorized, errors.New("empty user"))
+	}
+	var userID *string
+	user, _ := _user.(*entity.User)
+	if user != nil {
+		userID = &user.ID
+	}
 	if query.Limit == nil && query.Offset != nil {
 		return nil, entity.WrapError(http.StatusBadRequest, errors.New("can't use offset without limit"))
 	}
-	posts, err := c.PostUseCase.GetReplies(ctx, pid, query.Limit, query.Offset)
+	posts, err := c.PostUseCase.GetReplies(ctx, userID, pid, query.Limit, query.Offset)
 	if err != nil {
 		return nil, err
 	}

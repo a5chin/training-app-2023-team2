@@ -38,8 +38,12 @@ definitions:
     properties:
       body:
         type: string
+      favorites_count:
+        type: integer
       id:
         type: string
+      is_my_favorite:
+        type: boolean
       parent:
         $ref: '#/definitions/entity.Post'
       user:
@@ -200,6 +204,31 @@ paths:
       tags:
       - Post
   /posts/{postId}/favorites:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 投稿ID
+        in: path
+        name: postId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/entity.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/entity.ErrorResponse'
+      summary: いいね削除API
+      tags:
+      - Favorite
     post:
       consumes:
       - application/json
@@ -223,37 +252,6 @@ paths:
           schema:
             $ref: '#/definitions/entity.ErrorResponse'
       summary: いいね作成API
-      tags:
-      - Favorite
-  /posts/{postId}/favorites/{favoriteId}:
-    delete:
-      consumes:
-      - application/json
-      parameters:
-      - description: 投稿ID
-        in: path
-        name: postId
-        required: true
-        type: string
-      - description: いいねID
-        in: path
-        name: favoriteId
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "201":
-          description: Created
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/entity.ErrorResponse'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/entity.ErrorResponse'
-      summary: いいね削除API
       tags:
       - Favorite
   /posts/{postId}/replies:

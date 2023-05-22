@@ -30,15 +30,17 @@ func main() {
 	postRepo := persistence.NewPostPersistence()
 	helloWorldRepo := persistence.NewHelloWorldPersistence()
 	userRepo := persistence.NewUserPersistence(tokenDriver)
+	favoriteRepo := persistence.NewFavoritePersistence()
 
 	postUseCase := usecase.NewPostUseCase(postRepo)
 	helloWorldUseCase := usecase.NewHelloWorldUseCase(helloWorldRepo)
 	userUseCase := usecase.NewUserUseCase(userRepo)
+	favoriteUseCase := usecase.NewFavoriteUseCase(favoriteRepo)
 
 	postController := controller.NewPostController(postUseCase)
 	helloWorldController := controller.NewHelloWorldController(helloWorldUseCase)
 	userController := controller.NewUserController(userUseCase)
-	favoriteController := controller.NewFavoriteController()
+	favoriteController := controller.NewFavoriteController(favoriteUseCase)
 
 	// Setup webserver
 	app := gin.Default()
@@ -62,7 +64,7 @@ func main() {
 	postRouter.POST("/:postId/replies/", handleResponse(postController.CreateReply))
 
 	postRouter.POST("/:postId/favorites/", handleResponse(favoriteController.CreateFavorite))
-	postRouter.DELETE("/:postId/favorites/:favoriteId/", handleResponse(favoriteController.DeleteFavorite))
+	postRouter.DELETE("/:postId/favorites/", handleResponse(favoriteController.DeleteFavorite))
 
 	api.GET("/users/me/", handleResponse(userController.GetMe))
 	api.POST("/sign_up/", handleResponse(userController.SignUp))

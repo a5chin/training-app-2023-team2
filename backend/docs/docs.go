@@ -267,9 +267,7 @@ const docTemplate = `{
                         }
                     }
                 }
-            }
-        },
-        "/posts/{postId}/favorites/{favoriteId}": {
+            },
             "delete": {
                 "consumes": [
                     "application/json"
@@ -286,13 +284,6 @@ const docTemplate = `{
                         "type": "string",
                         "description": "投稿ID",
                         "name": "postId",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "いいねID",
-                        "name": "favoriteId",
                         "in": "path",
                         "required": true
                     }
@@ -632,8 +623,14 @@ const docTemplate = `{
                 "body": {
                     "type": "string"
                 },
+                "favorites_count": {
+                    "type": "integer"
+                },
                 "id": {
                     "type": "string"
+                },
+                "is_my_favorite": {
+                    "type": "boolean"
                 },
                 "parent": {
                     "$ref": "#/definitions/entity.Post"

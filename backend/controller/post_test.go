@@ -85,19 +85,20 @@ func TestPostController_GetPosts(t *testing.T) {
 			ginCtx, _ := gin.CreateTestContext(httptest.NewRecorder())
 			req, _ := http.NewRequest("GET", path, nil)
 			ginCtx.Request = req
+			ginCtx.Set(entity.ContextAuthUserKey, nil)
 			// mock作成
 			useCase := getMockPostUseCase(t)
 			if test.err != nil {
 				// mockのメソッドをspyしておく
 				useCase.EXPECT().
-					GetPosts(gomock.Any(), length, offset).
+					GetPosts(gomock.Any(), nil, length, offset).
 					Return(nil, test.err).AnyTimes()
 				postCtrl := NewPostController(useCase)
 				_, err := postCtrl.GetPosts(ginCtx)
 				assert.Error(t, err)
 			} else {
 				useCase.EXPECT().
-					GetPosts(gomock.Any(), length, offset).
+					GetPosts(gomock.Any(), nil, length, offset).
 					Return(expected, nil).AnyTimes()
 				postCtrl := NewPostController(useCase)
 				posts, err := postCtrl.GetPosts(ginCtx)
@@ -172,20 +173,21 @@ func TestPostController_GetPostByID(t *testing.T) {
 					Value: "1",
 				},
 			}
+			ginCtx.Set(entity.ContextAuthUserKey, nil)
 
 			// mock作成
 			useCase := getMockPostUseCase(t)
 			if test.err != nil {
 				// mockのメソッドをspyしておく
 				useCase.EXPECT().
-					GetPostByID(gomock.Any(), gomock.Any()).
+					GetPostByID(gomock.Any(), nil, gomock.Any()).
 					Return(nil, test.err).AnyTimes()
 				postCtrl := NewPostController(useCase)
 				_, err := postCtrl.GetPostByID(ginCtx)
 				assert.Error(t, err)
 			} else {
 				useCase.EXPECT().
-					GetPostByID(gomock.Any(), gomock.Any()).
+					GetPostByID(gomock.Any(), gomock.Any(), gomock.Any()).
 					Return(expected, nil).AnyTimes()
 				postCtrl := NewPostController(useCase)
 				posts, err := postCtrl.GetPostByID(ginCtx)
