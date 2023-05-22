@@ -15,3 +15,7 @@ func NewFavoriteUseCase(repo FavoriteRepo) *FavoriteUseCase {
 func (u FavoriteUseCase) CreateFavorite(ctx context.Context, uid, pid string) error {
 	return u.FavoriteRepo.CreateFavorite(ctx, uid, pid)
 }
+
+func (u FavoriteUseCase) DeleteFavorite(ctx context.Context, loginUserID, pid string) error {
+	return u.FavoriteRepo.DeleteFavorite(ctx, loginUserID, pid)
+}

@@ -22,6 +22,7 @@ type PostUseCase interface {
 
 type FavoriteUseCase interface {
 	CreateFavorite(ctx context.Context, pid, uid string) error
+	DeleteFavorite(ctx context.Context, loginUserID, pid string) error
 }
 
 type UserUseCase interface {

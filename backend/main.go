@@ -64,7 +64,7 @@ func main() {
 	postRouter.POST("/:postId/replies/", handleResponse(postController.CreateReply))
 
 	postRouter.POST("/:postId/favorites/", handleResponse(favoriteController.CreateFavorite))
-	postRouter.DELETE("/:postId/favorites/:favoriteId/", handleResponse(favoriteController.DeleteFavorite))
+	postRouter.DELETE("/:postId/favorites/", handleResponse(favoriteController.DeleteFavorite))
 
 	api.GET("/users/me/", handleResponse(userController.GetMe))
 	api.POST("/sign_up/", handleResponse(userController.SignUp))

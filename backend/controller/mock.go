@@ -197,6 +197,20 @@ func (mr *MockFavoriteUseCaseMockRecorder) CreateFavorite(ctx, pid, uid interfac
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateFavorite", reflect.TypeOf((*MockFavoriteUseCase)(nil).CreateFavorite), ctx, pid, uid)
 }
 
+// DeleteFavorite mocks base method.
+func (m *MockFavoriteUseCase) DeleteFavorite(ctx context.Context, loginUserID, pid string) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeleteFavorite", ctx, loginUserID, pid)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// DeleteFavorite indicates an expected call of DeleteFavorite.
+func (mr *MockFavoriteUseCaseMockRecorder) DeleteFavorite(ctx, loginUserID, pid interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteFavorite", reflect.TypeOf((*MockFavoriteUseCase)(nil).DeleteFavorite), ctx, loginUserID, pid)
+}
+
 // MockUserUseCase is a mock of UserUseCase interface.
 type MockUserUseCase struct {
 	ctrl     *gomock.Controller

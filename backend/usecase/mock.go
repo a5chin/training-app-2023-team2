@@ -250,3 +250,17 @@ func (mr *MockFavoriteRepoMockRecorder) CreateFavorite(ctx, uid, pid interface{}
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateFavorite", reflect.TypeOf((*MockFavoriteRepo)(nil).CreateFavorite), ctx, uid, pid)
 }
+
+// DeleteFavorite mocks base method.
+func (m *MockFavoriteRepo) DeleteFavorite(ctx context.Context, loginUserID, pid string) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeleteFavorite", ctx, loginUserID, pid)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// DeleteFavorite indicates an expected call of DeleteFavorite.
+func (mr *MockFavoriteRepoMockRecorder) DeleteFavorite(ctx, loginUserID, pid interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteFavorite", reflect.TypeOf((*MockFavoriteRepo)(nil).DeleteFavorite), ctx, loginUserID, pid)
+}
