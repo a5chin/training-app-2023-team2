@@ -34,9 +34,13 @@ module.exports = {
       },
     ],
     // 関数の型宣言のパラメータに対して no-unused-vars を適用しないようにする
-    'no-unused-vars': 'off',
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": ["error"],
+    // ChakraUI や React-Hook-Form でSpread演算子使いたい
+    "react/jsx-props-no-spreading": ["error", {custom: "ignore"}],
     // aspida の関数にアンダースコアが存在するため許容
     'no-underscore-dangle': 'off',
-    '@typescript-eslint/no-unused-vars': ['error'],
+    // Functional Component は defaultProps がないので対応できない。 defaultArguments で賄う。
+    "react/require-default-props": [0, {functions: "defaultArguments"}]
   },
 };
