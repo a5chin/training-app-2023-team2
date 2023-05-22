@@ -27,4 +27,5 @@ type UserRepo interface {
 
 type FavoriteRepo interface {
 	CreateFavorite(ctx context.Context, uid, pid string) error
+	DeleteFavorite(ctx context.Context, loginUserID, pid string) error
 }

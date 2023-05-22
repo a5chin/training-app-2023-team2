@@ -38,3 +38,7 @@ func (p FavoritePersistence) CreateFavorite(
 	}
 	return nil
 }
+
+func (p FavoritePersistence) DeleteFavorite(ctx context.Context, loginUserID, pid string) error {
+	return nil
+}
