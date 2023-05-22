@@ -38,7 +38,6 @@ export function SigninForm() {
   }, [currentUser, navigate, redirectUrl]);
 
   const onSubmit: SubmitHandler<SigninFormInput> = async (userInput) => {
-    console.log(`UserInput: ${JSON.stringify(userInput)}`);
     try {
       await signin(userInput);
     } catch (e) {

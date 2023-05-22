@@ -39,7 +39,6 @@ export function SignupForm() {
   }, [currentUser, navigate, redirectUrl]);
 
   const onSubmit: SubmitHandler<SignupFormInput> = async (userInput) => {
-    console.log(`UserInput: ${JSON.stringify(userInput)}`);
     try {
       await signup(userInput);
     } catch (e) {
