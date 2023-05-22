@@ -1,36 +1,30 @@
-import { Box, Button } from '@chakra-ui/react';
-import { useEffect } from 'react';
-import { useAuth } from '@/lib/auth';
+import { Text, Link } from '@chakra-ui/react';
+import { Link as ReachLink } from 'react-router-dom';
+import { ModalLayout } from '../components/ModalLayout';
+import { SigninForm } from '../components/SingninForm';
 
 export function Signin() {
-  const { signin, signout, currentUser } = useAuth();
-
-  useEffect(() => {
-    // TODO: ユーザーがログイン済みなら /posts に飛ばす
-    console.log(`currentUser has changed! ${JSON.stringify(currentUser)}`);
-  }, [currentUser]);
+  const modalHeader = <>Signin</>;
+  const modalBody = <SigninForm />;
+  const modalFooter = (
+    <Text>
+      New to here?{' '}
+      <Link
+        fontWeight="bold"
+        textColor="blue.400"
+        as={ReachLink}
+        to="/auth/signup"
+      >
+        Create an account
+      </Link>
+    </Text>
+  );
 
   return (
-    <Box>
-      <Box>This is signin page.</Box>
-      <Box>currentUser: {currentUser ? currentUser.name : 'Not signined'}</Box>
-      <Button
-        onClick={async () => {
-          await signin({
-            email: 'testuser@a.com',
-            password: 'password',
-          });
-        }}
-      >
-        Signin!
-      </Button>
-      <Button
-        onClick={async () => {
-          await signout();
-        }}
-      >
-        Signout!
-      </Button>
-    </Box>
+    <ModalLayout
+      modalHeader={modalHeader}
+      modalBody={modalBody}
+      modalFooter={modalFooter}
+    />
   );
 }

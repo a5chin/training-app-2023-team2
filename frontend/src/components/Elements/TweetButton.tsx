@@ -14,7 +14,7 @@ import {
   ModalFooter,
   FormControl,
 } from '@chakra-ui/react';
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import { BiPen } from 'react-icons/bi';
 import { useForm } from 'react-hook-form';
 import { axios } from '@/lib/axios';

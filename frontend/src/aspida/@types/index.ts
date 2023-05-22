@@ -25,7 +25,9 @@ export type Entity_HelloWorld = {
 
 export type Entity_Post = {
   body?: string | undefined;
+  favorites_count?: number | undefined;
   id?: string | undefined;
+  is_my_favorite?: boolean | undefined;
   parent?: Entity_Post | undefined;
   user?: Entity_User | undefined;
 };

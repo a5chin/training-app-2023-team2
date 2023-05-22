@@ -34,6 +34,7 @@ const useAuthContext = (): IAuthContext => {
         if (isAxiosError<ErrorResponseType>(e)) {
           console.error(`error: ${JSON.stringify(e.response?.data)}`);
         }
+        throw e;
       }
     };
     if (!user) {
@@ -49,6 +50,7 @@ const useAuthContext = (): IAuthContext => {
       if (isAxiosError<ErrorResponseType>(e)) {
         console.error(`error: ${JSON.stringify(e.response?.data)}`);
       }
+      throw e;
     }
   };
 
@@ -60,6 +62,7 @@ const useAuthContext = (): IAuthContext => {
       if (isAxiosError<ErrorResponseType>(e)) {
         console.error(`error: ${JSON.stringify(e.response?.data)}`);
       }
+      throw e;
     }
   };
 
@@ -71,6 +74,7 @@ const useAuthContext = (): IAuthContext => {
       if (isAxiosError<ErrorResponseType>(e)) {
         console.error(`error: ${JSON.stringify(e.response?.data)}`);
       }
+      throw e;
     }
   };
 
