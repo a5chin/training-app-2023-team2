@@ -10,7 +10,7 @@ export function ReplayFormInDetail() {
       borderColor="red.200"
       borderStyle="solid"
     >
-      <Text fontSize="15pt">返信先：</Text>
+      <Text fontSize="15px">返信先：</Text>
       <Input
         size="sm"
         type="text"
