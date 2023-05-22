@@ -40,5 +40,20 @@ func (p FavoritePersistence) CreateFavorite(
 }
 
 func (p FavoritePersistence) DeleteFavorite(ctx context.Context, loginUserID, pid string) error {
+	db, _ := ctx.Value(driver.TxKey).(*gorm.DB)
+
+	if err := db.Where(
+		"user_id = ? and post_id = ?", loginUserID, pid,
+	).First(&model.Favorite{}).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return entity.WrapError(http.StatusNotFound, err)
+		}
+		return err
+	}
+	if err := db.Delete(
+		&model.Favorite{}, "user_id = ? and post_id = ?", loginUserID, pid,
+	).Error; err != nil {
+		return err
+	}
 	return nil
 }
