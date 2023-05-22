@@ -39,6 +39,8 @@ module.exports = {
     // ChakraUI や React-Hook-Form でSpread演算子使いたい
     "react/jsx-props-no-spreading": ["error", {custom: "ignore"}],
     // aspida の関数にアンダースコアが存在するため許容
-    'no-underscore-dangle': 'off'
+    'no-underscore-dangle': 'off',
+    // Functional Component は defaultProps がないので対応できない。 defaultArguments で賄う。
+    "react/require-default-props": [0, {functions: "defaultArguments"}]
   },
 };
