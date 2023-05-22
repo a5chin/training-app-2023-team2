@@ -84,17 +84,17 @@ func TestPostUseCase_GetPosts(t *testing.T) {
 			if test.err != nil {
 				// mockのメソッドをspyしておく
 				repo.EXPECT().
-					GetPosts(gomock.Any(), nil, length, offset).
+					GetPosts(gomock.Any(), nil, nil, length, offset).
 					Return(nil, test.err).AnyTimes()
 				useCase := NewPostUseCase(repo)
-				_, err := useCase.GetPosts(ginCtx, length, offset)
+				_, err := useCase.GetPosts(ginCtx, nil, length, offset)
 				assert.Error(t, err)
 			} else {
 				repo.EXPECT().
-					GetPosts(gomock.Any(), nil, length, offset).
+					GetPosts(gomock.Any(), nil, nil, length, offset).
 					Return(expected, nil).AnyTimes()
 				postCtrl := NewPostUseCase(repo)
-				posts, err := postCtrl.GetPosts(ginCtx, length, offset)
+				posts, err := postCtrl.GetPosts(ginCtx, nil, length, offset)
 				assert.NoError(t, err)
 				assert.Equal(t, expected, posts)
 			}
@@ -161,17 +161,17 @@ func TestPostUseCase_GetPostByID(t *testing.T) {
 			if test.err != nil {
 				// mockのメソッドをspyしておく
 				repo.EXPECT().
-					GetPostByID(gomock.Any(), "1").
+					GetPostByID(gomock.Any(), nil, "1").
 					Return(nil, test.err).AnyTimes()
 				useCase := NewPostUseCase(repo)
-				_, err := useCase.GetPostByID(ginCtx, "1")
+				_, err := useCase.GetPostByID(ginCtx, nil, "1")
 				assert.Error(t, err)
 			} else {
 				repo.EXPECT().
-					GetPostByID(gomock.Any(), "1").
+					GetPostByID(gomock.Any(), nil, "1").
 					Return(expected, nil).AnyTimes()
 				postCtrl := NewPostUseCase(repo)
-				posts, err := postCtrl.GetPostByID(ginCtx, "1")
+				posts, err := postCtrl.GetPostByID(ginCtx, nil, "1")
 				assert.NoError(t, err)
 				assert.Equal(t, expected, posts)
 			}

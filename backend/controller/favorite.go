@@ -1,12 +1,19 @@
 package controller
 
-import "github.com/gin-gonic/gin"
+import (
+	"errors"
+	"myapp/entity"
+	"net/http"
+
+	"github.com/gin-gonic/gin"
+)
 
 type FavoriteController struct {
+	FavoriteUseCase
 }
 
-func NewFavoriteController() *FavoriteController {
-	return &FavoriteController{}
+func NewFavoriteController(u FavoriteUseCase) *FavoriteController {
+	return &FavoriteController{u}
 }
 
 // CreateFavorite godoc
@@ -22,7 +29,16 @@ func NewFavoriteController() *FavoriteController {
 //	@Failure	404		{object}	entity.ErrorResponse
 //	@Router		/posts/{postId}/favorites [post]
 func (c FavoriteController) CreateFavorite(ctx *gin.Context) (interface{}, error) {
-	return GetPostsResponse{Posts: nil}, nil
+	pid := ctx.Param("postId")
+	_user, ok := ctx.Get(entity.ContextAuthUserKey)
+	if !ok {
+		return nil, entity.WrapError(http.StatusUnauthorized, errors.New("empty user"))
+	}
+	user, ok := _user.(*entity.User)
+	if !ok {
+		return nil, entity.WrapError(http.StatusUnauthorized, errors.New("_user is not entity user"))
+	}
+	return nil, c.FavoriteUseCase.CreateFavorite(ctx, pid, user.ID)
 }
 
 // DeleteFavorite godoc

@@ -30,15 +30,17 @@ func main() {
 	postRepo := persistence.NewPostPersistence()
 	helloWorldRepo := persistence.NewHelloWorldPersistence()
 	userRepo := persistence.NewUserPersistence(tokenDriver)
+	favoriteRepo := persistence.NewFavoritePersistence()
 
 	postUseCase := usecase.NewPostUseCase(postRepo)
 	helloWorldUseCase := usecase.NewHelloWorldUseCase(helloWorldRepo)
 	userUseCase := usecase.NewUserUseCase(userRepo)
+	favoriteUseCase := usecase.NewFavoriteUseCase(favoriteRepo)
 
 	postController := controller.NewPostController(postUseCase)
 	helloWorldController := controller.NewHelloWorldController(helloWorldUseCase)
 	userController := controller.NewUserController(userUseCase)
-	favoriteController := controller.NewFavoriteController()
+	favoriteController := controller.NewFavoriteController(favoriteUseCase)
 
 	// Setup webserver
 	app := gin.Default()

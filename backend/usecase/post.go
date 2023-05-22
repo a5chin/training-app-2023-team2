@@ -13,12 +13,12 @@ func NewPostUseCase(repo PostRepo) *PostUseCase {
 	return &PostUseCase{repo}
 }
 
-func (u PostUseCase) GetPosts(ctx context.Context, limit, offset *int) ([]*entity.Post, error) {
-	return u.PostRepo.GetPosts(ctx, nil, limit, offset)
+func (u PostUseCase) GetPosts(ctx context.Context, loginUserID *string, limit, offset *int) ([]*entity.Post, error) {
+	return u.PostRepo.GetPosts(ctx, nil, loginUserID, limit, offset)
 }
 
-func (u PostUseCase) GetPostByID(ctx context.Context, pid string) (*entity.Post, error) {
-	return u.PostRepo.GetPostByID(ctx, pid)
+func (u PostUseCase) GetPostByID(ctx context.Context, loginUserID *string, pid string) (*entity.Post, error) {
+	return u.PostRepo.GetPostByID(ctx, loginUserID, pid)
 }
 
 func (u PostUseCase) CreatePost(ctx context.Context, uid, body string) error {
@@ -33,6 +33,6 @@ func (u PostUseCase) CreateReply(ctx context.Context, parentID, uid, body string
 	return u.PostRepo.CreatePost(ctx, &parentID, uid, body)
 }
 
-func (u PostUseCase) GetReplies(ctx context.Context, pid string, limit, offset *int) ([]*entity.Post, error) {
-	return u.PostRepo.GetPosts(ctx, &pid, limit, offset)
+func (u PostUseCase) GetReplies(ctx context.Context, loginUserID *string, pid string, limit, offset *int) ([]*entity.Post, error) {
+	return u.PostRepo.GetPosts(ctx, &pid, loginUserID, limit, offset)
 }
