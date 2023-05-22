@@ -1,51 +1,9 @@
-import {
-  Box,
-  Button,
-  Flex,
-  HStack,
-  Icon,
-  IconButton,
-  Stack,
-  Text,
-  useBreakpointValue,
-} from '@chakra-ui/react';
+import { Box, Flex, HStack, Icon, Stack, Text } from '@chakra-ui/react';
 import { AiFillHome, AiOutlineUser } from 'react-icons/ai';
 import { GiHummingbird } from 'react-icons/gi';
-import { BiPen } from 'react-icons/bi';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-
-function TweetButton() {
-  const isLessThanMd = useBreakpointValue({ base: true, md: false });
-  if (isLessThanMd) {
-    return (
-      <IconButton
-        aspectRatio="1/1"
-        size="md"
-        icon={<BiPen />}
-        bg="blue.400"
-        aria-label="Tweet button"
-        rounded="full"
-      />
-    );
-  }
-  return (
-    <Button
-      bg="blue.400"
-      textColor="white"
-      fontSize="xl"
-      fontWeight="bold"
-      width="full"
-      variant="solid"
-      boxShadow="md"
-      rounded="full"
-      paddingY={6}
-      textAlign="center"
-    >
-      Tweet
-    </Button>
-  );
-}
+import { TweetButton } from '../Elements/TweetButton';
 
 type MainLayoutProps = {
   children: React.ReactNode;
