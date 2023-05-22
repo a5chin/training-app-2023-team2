@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { isAxiosError } from 'axios';
 import {
-  SigninDTO,
-  SignupDTO,
   User,
   signup as callSignupApi,
   signin as callSigninApi,
   fetchMe,
   signout as callSignoutApi,
 } from '@/features/auth';
+import {
+  Controller_SignInRequest as SigninDTO,
+  Controller_SignUpRequest as SignupDTO,
+} from '@/aspida/@types';
 import { ErrorResponseType } from '@/types';
 import { createCtxWithoutDefaultValue } from './createCtxWithoutDefaultValue';
 

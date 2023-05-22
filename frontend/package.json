@@ -6,15 +6,19 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "aspida_build": "rm -rf ./src/aspida && npx openapi2aspida -i ../backend/docs/swagger.json -o ./src/aspida && echo !!!!! /frontend/src/aspida/$api.ts の const PATH1 = '/posts' を const PATH1 = '/posts/' に変更してください !!!!!",
     "lint": "npx eslint --fix ./src && npx prettier --write './**/*'",
     "preview": "vite preview",
     "format": "npx prettier --write .",
     "prepare": "cd .. && husky install frontend/.husky"
   },
   "dependencies": {
+    "@aspida/axios": "^1.12.0",
+    "@aspida/swr": "^1.12.0",
     "@chakra-ui/react": "^2.6.0",
     "@emotion/react": "^11.10.8",
     "@emotion/styled": "^11.10.8",
+    "aspida": "^1.12.0",
     "axios": "^1.4.0",
     "bootstrap": "^5.2.3",
     "classnames": "^2.3.2",

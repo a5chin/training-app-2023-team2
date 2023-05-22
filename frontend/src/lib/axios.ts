@@ -12,6 +12,12 @@ export const axios = Axios.create({
 });
 
 axios.interceptors.request.use(loggingRequestInterceptor);
+axios.interceptors.request.use((request) => {
+  if (request.url && request.url[request.url.length - 1] !== '/') {
+    request.url += '/';
+  }
+  return request;
+});
 axios.interceptors.response.use(
   (response) => {
     console.log(`success: ${JSON.stringify(response)}`);
