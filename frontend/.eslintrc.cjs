@@ -37,6 +37,8 @@ module.exports = {
     "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": ["error"],
     // ChakraUI や React-Hook-Form でSpread演算子使いたい
-    "react/jsx-props-no-spreading": ["error", {custom: "ignore"}]
+    "react/jsx-props-no-spreading": ["error", {custom: "ignore"}],
+    // aspida の関数にアンダースコアが存在するため許容
+    'no-underscore-dangle': 'off'
   },
 };

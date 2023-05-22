@@ -29,6 +29,9 @@ export function CustomCommentButton({
       }
       _focus={{ bg: 'inherit' }}
       _hover={{ bg: 'inherit' }}
+      onClick={(e) => {
+        e.stopPropagation();
+      }}
     />
   );
 }

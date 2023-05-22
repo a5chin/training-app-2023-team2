@@ -36,7 +36,8 @@ export function CustomGoodButton({
       }
       _focus={{ bg: 'inherit' }}
       _hover={{ bg: 'inherit' }}
-      onClick={() => {
+      onClick={(e) => {
+        e.stopPropagation();
         setIsLiked(!isLiked);
         setColor(hoverColor);
       }}
