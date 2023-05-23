@@ -1,4 +1,4 @@
-import { IconButton } from '@chakra-ui/react';
+import { IconButton, IconButtonProps } from '@chakra-ui/react';
 import { AiOutlineComment } from 'react-icons/ai';
 import { useState } from 'react';
 
@@ -10,14 +10,14 @@ export type CommentButtonColorProps = {
 export function CustomCommentButton({
   baseColor,
   hoverColor,
-}: CommentButtonColorProps) {
+  ...attributes
+}: CommentButtonColorProps & IconButtonProps) {
   const [color, setColor] = useState<string>(baseColor);
 
   return (
     <IconButton
       bg="inherit"
       size="sm"
-      aria-label="comment-button"
       icon={
         <div>
           <AiOutlineComment
@@ -29,9 +29,7 @@ export function CustomCommentButton({
       }
       _focus={{ bg: 'inherit' }}
       _hover={{ bg: 'inherit' }}
-      onClick={(e) => {
-        e.stopPropagation();
-      }}
+      {...attributes}
     />
   );
 }
