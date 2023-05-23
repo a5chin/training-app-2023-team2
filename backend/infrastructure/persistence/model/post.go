@@ -17,7 +17,7 @@ type Post struct {
 	gorm.Model
 }
 
-func (m Post) ToEntity(loginUserID *string) *entity.Post {
+func (m Post) ToEntity(loginUserID *string, repliesCount int64) *entity.Post {
 	var user *entity.User
 	var parent *entity.Post
 	var favoritesCount int64
@@ -26,7 +26,7 @@ func (m Post) ToEntity(loginUserID *string) *entity.Post {
 		user = m.User.ToEntity()
 	}
 	if m.Parent != nil {
-		parent = m.Parent.ToEntity(loginUserID)
+		parent = m.Parent.ToEntity(loginUserID, repliesCount)
 	}
 	if m.Favorites != nil {
 		favoritesCount = int64(len(m.Favorites))
@@ -43,5 +43,6 @@ func (m Post) ToEntity(loginUserID *string) *entity.Post {
 		Parent:         parent,
 		FavoritesCount: favoritesCount,
 		IsMyFavorite:   isMyFavorite,
+		RepliesCount:   repliesCount,
 	}
 }

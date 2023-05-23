@@ -3,6 +3,7 @@ package persistence
 import (
 	"context"
 	"errors"
+	"fmt"
 	"myapp/entity"
 	"myapp/infrastructure/driver"
 	"myapp/infrastructure/persistence/model"
@@ -85,7 +86,12 @@ func (p PostPersistence) GetPosts(
 	}
 	var posts []*entity.Post
 	for _, record := range records {
-		posts = append(posts, record.ToEntity(loginUserID))
+		var repliesCount int64
+		fmt.Println("ああああ", repliesCount)
+		if err := db.Model(&model.Post{}).Where("parent_id =?", record.ID).Count(&repliesCount).Error; err != nil {
+			return nil, err
+		}
+		posts = append(posts, record.ToEntity(loginUserID, repliesCount))
 	}
 	return posts, nil
 }
@@ -103,6 +109,10 @@ func (p PostPersistence) GetPostByID(
 		}
 		return nil, err
 	}
-
-	return record.ToEntity(loginUserID), nil
+	parentID := *record.ParentID
+	var repliesCount int64
+	if err := db.Model(&model.Post{}).Where("parent_id =?", parentID).Count(&repliesCount).Error; err != nil {
+		return nil, err
+	}
+	return record.ToEntity(loginUserID, repliesCount), nil
 }

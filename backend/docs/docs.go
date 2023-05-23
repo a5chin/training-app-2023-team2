@@ -632,11 +632,20 @@ const docTemplate = `{
                 "body": {
                     "type": "string"
                 },
+                "favorites_count": {
+                    "type": "integer"
+                },
                 "id": {
                     "type": "string"
                 },
+                "is_my_favorite": {
+                    "type": "boolean"
+                },
                 "parent": {
                     "$ref": "#/definitions/entity.Post"
+                },
+                "replies_count": {
+                    "type": "integer"
                 },
                 "user": {
                     "$ref": "#/definitions/entity.User"

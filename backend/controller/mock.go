@@ -115,6 +115,21 @@ func (mr *MockPostUseCaseMockRecorder) DeletePost(ctx, uid, pid interface{}) *go
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeletePost", reflect.TypeOf((*MockPostUseCase)(nil).DeletePost), ctx, uid, pid)
 }
 
+// GetPepliesCount mocks base method.
+func (m *MockPostUseCase) GetPepliesCount(ctx context.Context, pid string) (int, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetPepliesCount", ctx, pid)
+	ret0, _ := ret[0].(int)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetPepliesCount indicates an expected call of GetPepliesCount.
+func (mr *MockPostUseCaseMockRecorder) GetPepliesCount(ctx, pid interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPepliesCount", reflect.TypeOf((*MockPostUseCase)(nil).GetPepliesCount), ctx, pid)
+}
+
 // GetPostByID mocks base method.
 func (m *MockPostUseCase) GetPostByID(ctx context.Context, loginUserID *string, pid string) (*entity.Post, error) {
 	m.ctrl.T.Helper()
