@@ -1,7 +1,7 @@
 import useAspidaSWR from '@aspida/swr';
 import { axios } from '@/lib/axios';
 import { aspidaClient } from '@/lib/aspida';
-import { Entity_Post as Post } from '@/aspida/@types';
+import { Post } from '@/features/posts';
 
 type UsePostsResponse = {
   posts: Post[];
@@ -42,7 +42,10 @@ export const usePosts = (): UsePostsResponse => {
   };
 
   return {
-    posts: data && data.body && data.body.posts ? data.body.posts : [],
+    posts:
+      data && data.body && data.body.posts
+        ? data.body.posts.map((post) => new Post(post))
+        : [],
     isLoading,
     error,
     mutate,

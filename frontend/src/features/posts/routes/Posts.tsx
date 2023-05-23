@@ -11,8 +11,7 @@ import { useForm } from 'react-hook-form';
 import { useCallback } from 'react';
 import { usePosts } from '../hooks/usePosts';
 import { Post } from '../components/Post';
-import { IsPost } from '../types';
-import { Entity_Post as PostType } from '@/aspida/@types';
+import { Post as PostType } from '@/features/posts/types';
 
 type TweetFormInput = {
   content: string;
@@ -28,7 +27,7 @@ export function Posts() {
     async (post: PostType) => {
       try {
         if (post.id) {
-          if (post.is_my_favorite) {
+          if (post.isMyFavorite) {
             await deleteFavorite(post.id);
           } else {
             await addFavorite(post.id);
@@ -95,7 +94,7 @@ export function Posts() {
         {posts &&
           posts?.map(
             (post) =>
-              IsPost(post) && (
+              post && (
                 <Post
                   key={post.id}
                   post={post}

@@ -1,9 +1,9 @@
 import useAspidaSWR from '@aspida/swr';
 import { aspidaClient } from '@/lib/aspida';
-import { Entity_Post as PostType } from '@/aspida/@types';
+import { Post } from '@/features/posts';
 
 type UsePostDetailResponse = {
-  post?: PostType;
+  post?: Post;
   error: Error;
   isLoading: boolean;
   mutate: () => void;
@@ -30,7 +30,7 @@ export const usePostDetail = (postId: string): UsePostDetailResponse => {
   };
 
   return {
-    post: data?.body,
+    post: data?.body ? new Post(data?.body) : undefined,
     isLoading,
     error,
     mutate,

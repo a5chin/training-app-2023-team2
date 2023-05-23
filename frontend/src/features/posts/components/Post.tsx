@@ -2,7 +2,7 @@ import { Box, Flex, Text, HStack } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { CustomCommentButton } from './CustomCommentButton';
 import { CustomGoodButton } from './CustomGoodButton';
-import { Entity_Post as PostType } from '@/aspida/@types';
+import { Post as PostType } from '@/features/posts';
 
 type PostProps = {
   post: PostType;
@@ -45,14 +45,14 @@ export function Post({ post, handleClickLike }: PostProps) {
                 hoverColor="pink"
                 fillColor="pink"
                 aria-label="comment-button"
-                disabled={!post.is_my_favorite}
-                isLiked={post.is_my_favorite}
+                disabled={!post.isMyFavorite}
+                isLiked={post.isMyFavorite}
                 onClick={(e) => {
                   e.stopPropagation();
                   handleClickLike(post);
                 }}
               />
-              <Text>{post.favorites_count}</Text>
+              <Text>{post.favoritesCount}</Text>
             </HStack>
           </HStack>
         </Flex>

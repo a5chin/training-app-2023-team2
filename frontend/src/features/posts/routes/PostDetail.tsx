@@ -18,7 +18,7 @@ export function PostDetail() {
   const handleClickLike = useCallback(async () => {
     try {
       if (post) {
-        if (post.is_my_favorite) {
+        if (post.isMyFavorite) {
           await deleteFavorite();
         } else {
           await addFavorite();
@@ -80,11 +80,11 @@ export function PostDetail() {
                           baseColor="black"
                           hoverColor="pink"
                           fillColor="pink"
-                          isLiked={post.is_my_favorite}
+                          isLiked={post.isMyFavorite}
                           aria-label="good-button"
                           onClick={handleClickLike}
                         />
-                        <Text>{post.favorites_count}</Text>
+                        <Text>{post.favoritesCount}</Text>
                       </HStack>
                     </HStack>
                     <ReplayFormInDetail />
