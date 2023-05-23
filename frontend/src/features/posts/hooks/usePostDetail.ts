@@ -7,6 +7,7 @@ type UsePostDetailResponse = {
   error: Error;
   isLoading: boolean;
   mutate: () => void;
+  deleteTweet: (id: string) => void;
   addFavorite: () => void;
   deleteFavorite: () => void;
 };
@@ -16,6 +17,10 @@ export const usePostDetail = (postId: string): UsePostDetailResponse => {
     aspidaClient.posts._postId(postId),
     'get'
   );
+
+  const deleteTweet = async (id: string) => {
+    await aspidaClient.posts._postId(id).$delete();
+  };
 
   const addFavorite = async () => {
     const favoriteClient = aspidaClient.posts._postId(postId).favorites;
@@ -34,6 +39,7 @@ export const usePostDetail = (postId: string): UsePostDetailResponse => {
     isLoading,
     error,
     mutate,
+    deleteTweet,
     addFavorite,
     deleteFavorite,
   };

@@ -1,8 +1,9 @@
-import { useParams } from 'react-router-dom';
+import { useParams , useNavigate } from 'react-router-dom';
 import { Box, Flex, Text, HStack, useToast } from '@chakra-ui/react';
 import { useCallback } from 'react';
 import { usePostDetail } from '../hooks/usePostDetail';
 
+import { CustomInfoButton } from '../components/CustomInfoButton';
 import { CustomBackButton } from '../components/CustomBackButton';
 import { CustomCommentButton } from '../components/CustomCommentButton';
 import { CustomGoodButton } from '../components/CustomGoodButton';
@@ -10,10 +11,29 @@ import { ReplayFormInDetail } from '../components/ReplayFormInDetail';
 
 export function PostDetail() {
   const { postId } = useParams<{ postId: string }>();
-  const { post, addFavorite, deleteFavorite, mutate } = usePostDetail(
-    postId ?? ''
-  );
+  const { post, deleteTweet, addFavorite, deleteFavorite, mutate } =
+    usePostDetail(postId ?? '');
   const toast = useToast();
+  const navigate = useNavigate();
+
+  const handleDeleteTweet = async () => {
+    try {
+      if (postId) {
+        await deleteTweet(postId);
+      } else {
+        throw Error('postId is not found');
+      }
+      navigate('/posts');
+    } catch (e: any) {
+      toast({
+        title: 'Error',
+        description: e.message,
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+  };
 
   const handleClickLike = useCallback(async () => {
     try {
@@ -47,11 +67,22 @@ export function PostDetail() {
                   <CustomBackButton path="/posts" />
                   <Text fontWeight="bold">投稿</Text>
                 </HStack>
+
                 <Flex direction="row" px="19px">
                   <Flex direction="column" flex="auto">
-                    <HStack>
+                    <HStack justifyContent="space-between">
                       <Text> {post.user?.name}</Text>
+                      <CustomInfoButton
+                        baseColor="white"
+                        hoverColor="pink"
+                        aria-label="info-button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDeleteTweet();
+                        }}
+                      />
                     </HStack>
+
                     <Text>{post.body}</Text>
                     <Box
                       width="100%"
