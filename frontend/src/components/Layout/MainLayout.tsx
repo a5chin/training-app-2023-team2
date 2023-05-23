@@ -21,6 +21,7 @@ import { Link, createSearchParams, useLocation } from 'react-router-dom';
 import { useAuth } from '@/lib/auth';
 import { UserIcon } from '@/components/Avatar/BoringAvatar';
 import { TweetButton } from '../Elements/TweetButton';
+import { truncateWithEllipsis } from '@/utils/strings';
 
 function AccountMenu({ ...props }: BoxProps) {
   const { currentUser } = useAuth();
@@ -38,11 +39,16 @@ function AccountMenu({ ...props }: BoxProps) {
               borderColor="black"
             />
             <Text
+              overflow="hidden"
+              whiteSpace="nowrap"
+              width="full"
+              textOverflow="ellipsis"
               fontSize={{ base: '0', md: '3xl' }}
               fontWeight="medium"
-              textOverflow="ellipsis"
             >
-              {currentUser ? currentUser.name : 'Not Logged in'}
+              {currentUser
+                ? truncateWithEllipsis(currentUser.name, 13)
+                : 'Not Logged in'}
             </Text>
           </HStack>
         </MenuButton>
