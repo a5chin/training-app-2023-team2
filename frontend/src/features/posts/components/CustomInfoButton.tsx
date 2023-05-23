@@ -28,11 +28,13 @@ import { useState } from 'react';
 export type CustomInfoButtonProps = {
   baseColor: string;
   hoverColor: string;
+  canDelete: boolean;
 };
 
 export function CustomInfoButton({
   baseColor,
   hoverColor,
+  canDelete,
   onClick,
 }: CustomInfoButtonProps & IconButtonProps) {
   const [color, setColor] = useState<string>(baseColor);
@@ -75,16 +77,18 @@ export function CustomInfoButton({
                 e.stopPropagation();
               }}
             >
-              <ListItem
-                color="red"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onOpen();
-                }}
-              >
-                <ListIcon as={AiOutlineDelete} />
-                削除
-              </ListItem>
+              {canDelete && (
+                <ListItem
+                  color="red"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onOpen();
+                  }}
+                >
+                  <ListIcon as={AiOutlineDelete} />
+                  削除
+                </ListItem>
+              )}
               <ListItem>
                 <ListIcon as={AiOutlineAreaChart} />
                 アナリティクス

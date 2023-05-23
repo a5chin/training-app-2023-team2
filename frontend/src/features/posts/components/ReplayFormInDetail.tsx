@@ -1,13 +1,22 @@
-import { Flex, Text, FormControl, Input, Button } from '@chakra-ui/react';
+import {
+  Flex,
+  Text,
+  FormControl,
+  Input,
+  Button,
+  useColorMode,
+} from '@chakra-ui/react';
 
 // TODO: バリデーション
 export function ReplayFormInDetail() {
+  const { colorMode } = useColorMode();
+
   return (
     <FormControl
       py="12px"
       width="100%"
       borderTopWidth={1}
-      borderColor="red.200"
+      borderColor={colorMode === 'light' ? 'black' : 'white'}
       borderStyle="solid"
     >
       <Text fontSize="15px">返信先：</Text>

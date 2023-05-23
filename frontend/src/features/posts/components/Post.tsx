@@ -1,5 +1,6 @@
 import { Box, Flex, Text, HStack, useColorMode } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@/lib/auth';
 import { CustomCommentButton } from './CustomCommentButton';
 import { CustomGoodButton } from './CustomGoodButton';
 import { CustomInfoButton } from './CustomInfoButton';
@@ -13,6 +14,7 @@ type PostProps = {
 
 export function Post({ post, handleDeleteTweet, handleClickLike }: PostProps) {
   const navigate = useNavigate();
+  const { currentUser } = useAuth();
   const { colorMode } = useColorMode();
 
   return (
@@ -29,9 +31,10 @@ export function Post({ post, handleDeleteTweet, handleClickLike }: PostProps) {
           <HStack justifyContent="space-between">
             <Text>{post.user?.name}</Text>
             <CustomInfoButton
-              baseColor="white"
-              hoverColor="pink"
+              baseColor={colorMode === 'light' ? 'black' : 'white'}
+              hoverColor="blue"
               aria-label="info-button"
+              canDelete={currentUser?.id === post?.user?.id}
               onClick={(e) => {
                 e.stopPropagation();
                 handleDeleteTweet(post);

@@ -9,6 +9,7 @@ import {
 } from '@chakra-ui/react';
 import { useCallback } from 'react';
 import { usePostDetail } from '../hooks/usePostDetail';
+import { useAuth } from '@/lib/auth';
 
 import { CustomInfoButton } from '../components/CustomInfoButton';
 import { CustomBackButton } from '../components/CustomBackButton';
@@ -25,6 +26,7 @@ export function PostDetail() {
   const toast = useToast();
   const { colorMode } = useColorMode();
   const navigate = useNavigate();
+  const { currentUser } = useAuth();
 
   const handleDeleteTweet = async () => {
     try {
@@ -83,9 +85,10 @@ export function PostDetail() {
                     <HStack justifyContent="space-between">
                       <Text> {post.user?.name}</Text>
                       <CustomInfoButton
-                        baseColor="white"
-                        hoverColor="pink"
+                        baseColor={colorMode === 'light' ? 'black' : 'white'}
+                        hoverColor="blue"
                         aria-label="info-button"
+                        canDelete={currentUser?.id === post?.user?.id}
                         onClick={(e) => {
                           e.stopPropagation();
                           handleDeleteTweet();
@@ -97,7 +100,7 @@ export function PostDetail() {
                     <Box
                       width="100%"
                       borderTopWidth={1}
-                      borderColor="red.200"
+                      borderColor={colorMode === 'light' ? 'black' : 'white'}
                       borderStyle="solid"
                     >
                       <Text fontSize="15pt">件のいいね</Text>
@@ -105,13 +108,13 @@ export function PostDetail() {
                     <HStack
                       width="100%"
                       borderTopWidth={1}
-                      borderColor="red.200"
+                      borderColor={colorMode === 'light' ? 'black' : 'white'}
                       borderStyle="solid"
                     >
                       <HStack>
                         <CustomCommentButton
                           baseColor={colorMode === 'light' ? 'black' : 'white'}
-                          hoverColor="red"
+                          hoverColor={colorMode === 'light' ? 'black' : 'white'}
                           aria-label="comment-button"
                         />
                         <Text>N</Text>
