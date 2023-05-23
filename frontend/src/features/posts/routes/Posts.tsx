@@ -18,10 +18,25 @@ type TweetFormInput = {
 };
 
 export function Posts() {
-  const { posts, postTweet, addFavorite, deleteFavorite } = usePosts();
+  const { posts, postTweet, deleteTweet, addFavorite, deleteFavorite } =
+    usePosts();
   const { register, getValues, handleSubmit, reset } =
     useForm<TweetFormInput>();
   const toast = useToast();
+
+  const handleDeleteTweet = async (post: PostType) => {
+    try {
+      await deleteTweet(post.id);
+    } catch (e: any) {
+      toast({
+        title: 'Error',
+        description: e.message,
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+  };
 
   const handleClickLike = useCallback(
     async (post: PostType) => {
@@ -98,6 +113,7 @@ export function Posts() {
                 <Post
                   key={post.id}
                   post={post}
+                  handleDeleteTweet={handleDeleteTweet}
                   handleClickLike={handleClickLike}
                 />
               )

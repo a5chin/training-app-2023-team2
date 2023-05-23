@@ -7,6 +7,7 @@ import {
   Text,
   Button,
   IconButton,
+  IconButtonProps,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -24,7 +25,7 @@ import {
 } from '@chakra-ui/react';
 import { useState } from 'react';
 
-export type CommentButtonColorProps = {
+export type CustomInfoButtonProps = {
   baseColor: string;
   hoverColor: string;
 };
@@ -32,7 +33,8 @@ export type CommentButtonColorProps = {
 export function CustomInfoButton({
   baseColor,
   hoverColor,
-}: CommentButtonColorProps) {
+  onClick,
+}: CustomInfoButtonProps & IconButtonProps) {
   const [color, setColor] = useState<string>(baseColor);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -62,8 +64,6 @@ export function CustomInfoButton({
         </PopoverTrigger>
         <PopoverContent
           width="305px"
-          bg="black"
-          color="white"
           fontSize="15px"
           fontWeight="700"
           boxShadow="md"
@@ -85,7 +85,7 @@ export function CustomInfoButton({
                 <ListIcon as={AiOutlineDelete} />
                 削除
               </ListItem>
-              <ListItem color="white">
+              <ListItem>
                 <ListIcon as={AiOutlineAreaChart} />
                 アナリティクス
               </ListItem>
@@ -95,12 +95,7 @@ export function CustomInfoButton({
       </Popover>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent
-          bg="black"
-          color="white"
-          width="320px"
-          boxShadow="md"
-        >
+        <ModalContent width="320px" boxShadow="md">
           <ModalHeader fontSize="23px" pb="0px">
             投稿を削除しますか？
           </ModalHeader>
@@ -118,14 +113,13 @@ export function CustomInfoButton({
                 rounded="xl"
                 fontSize="15px"
                 fontWeight="700"
+                onClick={onClick}
               >
                 削除
               </Button>
               <Button
                 size="sm"
                 width="100%"
-                bg="black"
-                color="white"
                 border="1px"
                 borderColor="white"
                 rounded="xl"

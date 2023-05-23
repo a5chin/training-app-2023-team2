@@ -7,10 +7,11 @@ import { Post as PostType } from '@/features/posts';
 
 type PostProps = {
   post: PostType;
+  handleDeleteTweet: (post: PostType) => void;
   handleClickLike: (post: PostType) => void;
 };
 
-export function Post({ post, handleClickLike }: PostProps) {
+export function Post({ post, handleDeleteTweet, handleClickLike }: PostProps) {
   const navigate = useNavigate();
 
   return (
@@ -26,7 +27,15 @@ export function Post({ post, handleClickLike }: PostProps) {
         <Flex direction="column" w="100%">
           <HStack justifyContent="space-between">
             <Text>{post.user?.name}</Text>
-            <CustomInfoButton baseColor="white" hoverColor="pink" />
+            <CustomInfoButton
+              baseColor="white"
+              hoverColor="pink"
+              aria-label="info-button"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleDeleteTweet(post);
+              }}
+            />
           </HStack>
           <Text>{post.body}</Text>
           <HStack>

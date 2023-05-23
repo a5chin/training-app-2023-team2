@@ -9,6 +9,7 @@ type UsePostsResponse = {
   error: Error;
   mutate: () => void;
   postTweet: (content: string) => void;
+  deleteTweet: (postId: string) => void;
   addFavorite: (postId: string) => void;
   deleteFavorite: (postId: string) => void;
 };
@@ -26,6 +27,11 @@ export const usePosts = (): UsePostsResponse => {
     await axios.post('/posts', formData, {
       withCredentials: true,
     });
+    await mutate();
+  };
+
+  const deleteTweet = async (postId: string) => {
+    await aspidaClient.posts._postId(postId).delete();
     await mutate();
   };
 
@@ -50,6 +56,7 @@ export const usePosts = (): UsePostsResponse => {
     error,
     mutate,
     postTweet,
+    deleteTweet,
     addFavorite,
     deleteFavorite,
   };
