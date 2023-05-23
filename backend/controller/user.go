@@ -67,7 +67,7 @@ func (c UserController) SignUp(ctx *gin.Context) (interface{}, error) {
 	if err != nil {
 		return nil, err
 	}
-	ctx.SetCookie(entity.AuthCookieKey, token, 3600, "/", "localhost", false, true)
+	ctx.SetCookie(entity.AuthCookieKey, token, 3600, "/", "", false, true)
 	return user, nil
 }
 
@@ -95,7 +95,7 @@ func (c UserController) SignIn(ctx *gin.Context) (interface{}, error) {
 	if err != nil {
 		return nil, err
 	}
-	ctx.SetCookie(entity.AuthCookieKey, token, 3600, "/", "localhost", false, true)
+	ctx.SetCookie(entity.AuthCookieKey, token, 3600, "/", "", false, true)
 	return user, nil
 }
 
@@ -109,6 +109,6 @@ func (c UserController) SignIn(ctx *gin.Context) (interface{}, error) {
 //	@Success	200		"OK"
 //	@Router		/sign_out [post]
 func (c UserController) SignOut(ctx *gin.Context) (interface{}, error) {
-	ctx.SetCookie(entity.AuthCookieKey, "none", 5, "/", "localhost", false, true)
+	ctx.SetCookie(entity.AuthCookieKey, "none", 5, "/", "", false, true)
 	return nil, nil
 }
