@@ -25,7 +25,7 @@ export function Posts() {
   return (
     <Flex direction="row" w="full">
       {/* Tweets */}
-      <Flex flexGrow={2} direction="column" fontSize="md" bg="blue">
+      <Flex flexGrow={2} direction="column" fontSize="md">
         <form
           onSubmit={handleSubmit(async () => {
             try {

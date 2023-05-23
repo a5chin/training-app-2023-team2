@@ -10,9 +10,11 @@ import {
   MenuList,
   Stack,
   Text,
+  useColorMode,
   useColorModeValue,
 } from '@chakra-ui/react';
 import { AiFillHome, AiOutlineUser } from 'react-icons/ai';
+import { MdDarkMode, MdLightMode } from 'react-icons/md';
 import { GiHummingbird } from 'react-icons/gi';
 import * as React from 'react';
 import { Link, createSearchParams, useLocation } from 'react-router-dom';
@@ -98,6 +100,8 @@ function AccountMenu({ ...props }: BoxProps) {
 type MainHeaderProps = BoxProps;
 
 function MainHeader({ ...rest }: MainHeaderProps) {
+  const { toggleColorMode, colorMode } = useColorMode();
+
   return (
     <Flex
       as="header"
@@ -105,7 +109,7 @@ function MainHeader({ ...rest }: MainHeaderProps) {
       flexGrow={0}
       flexShrink={10}
       paddingX={4}
-      bg={useColorModeValue('white', 'gray.900')}
+      bg={useColorModeValue('gray.50', 'gray.900')}
       minH="full"
       {...rest}
     >
@@ -123,6 +127,15 @@ function MainHeader({ ...rest }: MainHeaderProps) {
               <Icon boxSize={8} as={AiOutlineUser} />
               <Text fontSize={{ base: '0', md: '3xl' }} fontWeight="medium">
                 Profile
+              </Text>
+            </HStack>
+            <HStack onClick={toggleColorMode} spacing={4}>
+              <Icon
+                boxSize={8}
+                as={colorMode === 'light' ? MdDarkMode : MdLightMode}
+              />
+              <Text fontSize={{ base: '0', md: '3xl' }} fontWeight="medium">
+                {colorMode === 'light' ? 'To DarkMode' : 'To LightMode'}
               </Text>
             </HStack>
           </Box>
