@@ -38,14 +38,7 @@ function AccountMenu({ ...props }: BoxProps) {
               border={2}
               borderColor="black"
             />
-            <Text
-              overflow="hidden"
-              whiteSpace="nowrap"
-              width="full"
-              textOverflow="ellipsis"
-              fontSize={{ base: '0', md: '3xl' }}
-              fontWeight="medium"
-            >
+            <Text fontSize={{ base: '0', md: '3xl' }} fontWeight="medium">
               {currentUser
                 ? truncateWithEllipsis(currentUser.name, 13)
                 : 'Not Logged in'}
