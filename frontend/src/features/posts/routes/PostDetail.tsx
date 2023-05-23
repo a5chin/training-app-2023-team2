@@ -14,7 +14,7 @@ export function PostDetail() {
   return (
     <div>
       <Flex direction="row" w="full">
-        <Flex flexGrow={2} direction="column" fontSize="md" bg="blue">
+        <Flex flexGrow={2} direction="column" fontSize="md">
           <Box borderColor="black" borderWidth="1px" py={2}>
             {post ? (
               <div>
