@@ -1,58 +1,23 @@
 import {
   Box,
   BoxProps,
-  Button,
   Flex,
   HStack,
   Icon,
-  IconButton,
   Menu,
   MenuButton,
   MenuItem,
   MenuList,
   Stack,
   Text,
-  useBreakpointValue,
 } from '@chakra-ui/react';
 import { AiFillHome, AiOutlineUser } from 'react-icons/ai';
 import { GiHummingbird } from 'react-icons/gi';
-import { BiPen } from 'react-icons/bi';
 import * as React from 'react';
 import { Link, createSearchParams, useLocation } from 'react-router-dom';
 import { useAuth } from '@/lib/auth';
 import { UserIcon } from '@/components/Avatar/BoringAvatar';
-
-function TweetButton() {
-  const isLessThanMd = useBreakpointValue({ base: true, md: false });
-  if (isLessThanMd) {
-    return (
-      <IconButton
-        aspectRatio="1/1"
-        size="md"
-        icon={<BiPen />}
-        bg="blue.400"
-        aria-label="Tweet button"
-        rounded="full"
-      />
-    );
-  }
-  return (
-    <Button
-      bg="blue.400"
-      textColor="white"
-      fontSize="xl"
-      fontWeight="bold"
-      width="full"
-      variant="solid"
-      boxShadow="md"
-      rounded="full"
-      paddingY={6}
-      textAlign="center"
-    >
-      Tweet
-    </Button>
-  );
-}
+import { TweetButton } from '../Elements/TweetButton';
 
 function AccountMenu({ ...props }: BoxProps) {
   const { currentUser } = useAuth();
