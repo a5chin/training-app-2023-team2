@@ -1,4 +1,4 @@
-import { Box, Flex, Text, HStack } from '@chakra-ui/react';
+import { Box, Flex, Text, HStack, useColorMode } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { CustomCommentButton } from './CustomCommentButton';
 import { CustomGoodButton } from './CustomGoodButton';
@@ -11,11 +11,12 @@ type PostProps = {
 export function Post({ post }: PostProps) {
   const { id, body, user } = post;
   const navigate = useNavigate();
+  const { colorMode } = useColorMode();
 
   return (
     <Box
-      borderColor="black"
-      borderWidth="1px"
+      borderColor="gray.400"
+      borderBottomWidth="1px"
       onClick={() => navigate(`/posts/${id}`)}
     >
       <Flex direction="row" px="19px">
@@ -28,9 +29,12 @@ export function Post({ post }: PostProps) {
           </HStack>
           <Text>{body}</Text>
           <HStack>
-            <CustomCommentButton baseColor="black" hoverColor="red" />
+            <CustomCommentButton
+              baseColor={colorMode === 'light' ? 'black' : 'white'}
+              hoverColor="red"
+            />
             <CustomGoodButton
-              baseColor="black"
+              baseColor={colorMode === 'light' ? 'black' : 'white'}
               hoverColor="pink"
               fillColor="pink"
             />

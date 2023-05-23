@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { Box, Flex, Text, HStack } from '@chakra-ui/react';
+import { Box, Flex, Text, HStack, useColorMode } from '@chakra-ui/react';
 import { usePostDetail } from '../api/getPostDetail';
 
 import { CustomBackButton } from '../components/CustomBackButton';
@@ -10,12 +10,13 @@ import { ReplayFormInDetail } from '../components/ReplayFormInDetail';
 export function PostDetail() {
   const { postId } = useParams<{ postId: string }>();
   const { post } = usePostDetail(postId ?? '');
+  const { colorMode } = useColorMode();
 
   return (
     <div>
       <Flex direction="row" w="full">
         <Flex flexGrow={2} direction="column" fontSize="md">
-          <Box borderColor="black" borderWidth="1px" py={2}>
+          <Box borderBottomColor="gray.400" borderBottomWidth="1px" py={2}>
             {post ? (
               <div>
                 <HStack>
@@ -42,9 +43,12 @@ export function PostDetail() {
                       borderColor="red.200"
                       borderStyle="solid"
                     >
-                      <CustomCommentButton baseColor="black" hoverColor="red" />
+                      <CustomCommentButton
+                        baseColor={colorMode === 'light' ? 'black' : 'white'}
+                        hoverColor="red"
+                      />
                       <CustomGoodButton
-                        baseColor="black"
+                        baseColor={colorMode === 'light' ? 'black' : 'white'}
                         hoverColor="pink"
                         fillColor="pink"
                       />
@@ -58,7 +62,7 @@ export function PostDetail() {
             )}
           </Box>
         </Flex>
-        <Flex flexGrow={1} direction="column" bg="green">
+        <Flex flexGrow={1} direction="column">
           <Box>Ranking</Box>
           <Box>Recommendation</Box>
         </Flex>
