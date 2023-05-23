@@ -1,5 +1,12 @@
-import { useParams , useNavigate } from 'react-router-dom';
-import { Box, Flex, Text, HStack, useToast } from '@chakra-ui/react';
+import { useParams, useNavigate } from 'react-router-dom';
+import {
+  Box,
+  Flex,
+  Text,
+  HStack,
+  useToast,
+  useColorMode,
+} from '@chakra-ui/react';
 import { useCallback } from 'react';
 import { usePostDetail } from '../hooks/usePostDetail';
 
@@ -8,12 +15,15 @@ import { CustomBackButton } from '../components/CustomBackButton';
 import { CustomCommentButton } from '../components/CustomCommentButton';
 import { CustomGoodButton } from '../components/CustomGoodButton';
 import { ReplayFormInDetail } from '../components/ReplayFormInDetail';
+import { Ranking } from '../components/Ranking';
+import { Recommendation } from '../components/Recommendation';
 
 export function PostDetail() {
   const { postId } = useParams<{ postId: string }>();
   const { post, deleteTweet, addFavorite, deleteFavorite, mutate } =
     usePostDetail(postId ?? '');
   const toast = useToast();
+  const { colorMode } = useColorMode();
   const navigate = useNavigate();
 
   const handleDeleteTweet = async () => {
@@ -59,8 +69,8 @@ export function PostDetail() {
   return (
     <div>
       <Flex direction="row" w="full">
-        <Flex flexGrow={2} direction="column" fontSize="md" bg="blue">
-          <Box borderColor="black" borderWidth="1px" py={2}>
+        <Flex flexGrow={2} direction="column" fontSize="md">
+          <Box borderBottomColor="gray.400" borderBottomWidth="1px" py={2}>
             {post ? (
               <div>
                 <HStack>
@@ -100,7 +110,7 @@ export function PostDetail() {
                     >
                       <HStack>
                         <CustomCommentButton
-                          baseColor="black"
+                          baseColor={colorMode === 'light' ? 'black' : 'white'}
                           hoverColor="red"
                           aria-label="comment-button"
                         />
@@ -108,7 +118,7 @@ export function PostDetail() {
                       </HStack>
                       <HStack>
                         <CustomGoodButton
-                          baseColor="black"
+                          baseColor={colorMode === 'light' ? 'black' : 'white'}
                           hoverColor="pink"
                           fillColor="pink"
                           isLiked={post.isMyFavorite}
@@ -127,9 +137,9 @@ export function PostDetail() {
             )}
           </Box>
         </Flex>
-        <Flex flexGrow={1} direction="column" bg="green">
-          <Box>Ranking</Box>
-          <Box>Recommendation</Box>
+        <Flex flexGrow={1} direction="column">
+          <Ranking />
+          <Recommendation />
         </Flex>
       </Flex>
     </div>
