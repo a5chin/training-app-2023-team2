@@ -1,6 +1,14 @@
 import { useParams } from 'react-router-dom';
-import { Box, Flex, Text, HStack, useColorMode } from '@chakra-ui/react';
-import { usePostDetail } from '../api/getPostDetail';
+import {
+  Box,
+  Flex,
+  Text,
+  HStack,
+  useToast,
+  useColorMode,
+} from '@chakra-ui/react';
+import { useCallback } from 'react';
+import { usePostDetail } from '../hooks/usePostDetail';
 
 import { CustomBackButton } from '../components/CustomBackButton';
 import { CustomCommentButton } from '../components/CustomCommentButton';
@@ -11,8 +19,32 @@ import { Recommendation } from '../components/Recommendation';
 
 export function PostDetail() {
   const { postId } = useParams<{ postId: string }>();
-  const { post } = usePostDetail(postId ?? '');
+  const { post, addFavorite, deleteFavorite, mutate } = usePostDetail(
+    postId ?? ''
+  );
+  const toast = useToast();
   const { colorMode } = useColorMode();
+
+  const handleClickLike = useCallback(async () => {
+    try {
+      if (post) {
+        if (post.isMyFavorite) {
+          await deleteFavorite();
+        } else {
+          await addFavorite();
+        }
+      }
+      await mutate();
+    } catch (e: any) {
+      toast({
+        title: 'Error',
+        description: e.message,
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+  }, [addFavorite, deleteFavorite, mutate, post, toast]);
 
   return (
     <div>
@@ -45,15 +77,25 @@ export function PostDetail() {
                       borderColor="red.200"
                       borderStyle="solid"
                     >
-                      <CustomCommentButton
-                        baseColor={colorMode === 'light' ? 'black' : 'white'}
-                        hoverColor="red"
-                      />
-                      <CustomGoodButton
-                        baseColor={colorMode === 'light' ? 'black' : 'white'}
-                        hoverColor="pink"
-                        fillColor="pink"
-                      />
+                      <HStack>
+                        <CustomCommentButton
+                          baseColor={colorMode === 'light' ? 'black' : 'white'}
+                          hoverColor="red"
+                          aria-label="comment-button"
+                        />
+                        <Text>N</Text>
+                      </HStack>
+                      <HStack>
+                        <CustomGoodButton
+                          baseColor={colorMode === 'light' ? 'black' : 'white'}
+                          hoverColor="pink"
+                          fillColor="pink"
+                          isLiked={post.isMyFavorite}
+                          aria-label="good-button"
+                          onClick={handleClickLike}
+                        />
+                        <Text>{post.favoritesCount}</Text>
+                      </HStack>
                     </HStack>
                     <ReplayFormInDetail />
                   </Flex>

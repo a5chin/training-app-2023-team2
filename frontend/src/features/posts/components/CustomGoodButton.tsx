@@ -1,4 +1,4 @@
-import { IconButton } from '@chakra-ui/react';
+import { IconButton, IconButtonProps } from '@chakra-ui/react';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { useState } from 'react';
 
@@ -6,21 +6,22 @@ export type CommentGoodColorProps = {
   baseColor: string;
   hoverColor: string;
   fillColor: string;
+  isLiked?: boolean;
 };
 
 export function CustomGoodButton({
   baseColor,
   hoverColor,
   fillColor,
-}: CommentGoodColorProps) {
+  isLiked = false,
+  ...attributes
+}: CommentGoodColorProps & IconButtonProps) {
   const [color, setColor] = useState<string>(baseColor);
-  const [isLiked, setIsLiked] = useState<boolean>(false);
 
   return (
     <IconButton
       bg="inherit"
       size="sm"
-      aria-label="good-button"
       icon={
         <div>
           {isLiked ? (
@@ -36,11 +37,7 @@ export function CustomGoodButton({
       }
       _focus={{ bg: 'inherit' }}
       _hover={{ bg: 'inherit' }}
-      onClick={(e) => {
-        e.stopPropagation();
-        setIsLiked(!isLiked);
-        setColor(hoverColor);
-      }}
+      {...attributes}
     />
   );
 }
