@@ -2,6 +2,7 @@ import React from 'react';
 import { ChakraProvider } from '@chakra-ui/react';
 import { BrowserRouter } from 'react-router-dom';
 import { AuthProvider } from '@/lib/auth';
+import { theme } from '@/config/theme';
 
 type AppProviderProps = {
   children: React.ReactNode;
@@ -9,7 +10,7 @@ type AppProviderProps = {
 
 export function AppProvider({ children }: AppProviderProps) {
   return (
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
       <AuthProvider>
         <BrowserRouter>{children}</BrowserRouter>
       </AuthProvider>

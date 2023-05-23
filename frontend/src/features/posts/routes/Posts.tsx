@@ -11,6 +11,8 @@ import { useForm } from 'react-hook-form';
 import { useCallback } from 'react';
 import { usePosts } from '../hooks/usePosts';
 import { Post } from '../components/Post';
+import { Ranking } from '../components/Ranking';
+import { Recommendation } from '../components/Recommendation';
 import { Post as PostType } from '@/features/posts/types';
 
 type TweetFormInput = {
@@ -49,7 +51,13 @@ export function Posts() {
   return (
     <Flex direction="row" w="full">
       {/* Tweets */}
-      <Flex flexGrow={2} direction="column" fontSize="md" bg="blue">
+      <Flex
+        flexGrow={2}
+        direction="column"
+        fontSize="md"
+        borderColor="gray.400"
+        borderX="1px"
+      >
         <form
           onSubmit={handleSubmit(async () => {
             try {
@@ -66,13 +74,12 @@ export function Posts() {
             }
           })}
         >
-          <Box px="16px" pt="10px" borderColor="black" borderWidth="1px">
+          <Box px="16px" pt="10px" borderColor="gray.400" borderBottom="1px">
             <FormControl>
               <Textarea
                 variant="unstyled"
                 placeholder="今どうしてる？"
                 size="sm"
-                color="white"
                 fontSize="25px"
                 resize="none"
                 {...register('content', { required: true })}
@@ -105,9 +112,9 @@ export function Posts() {
       </Flex>
 
       {/* Sub information */}
-      <Flex flexGrow={1} direction="column" bg="green">
-        <Box>Ranking</Box>
-        <Box>Recommendation</Box>
+      <Flex flexGrow={1} direction="column">
+        <Ranking />
+        <Recommendation />
       </Flex>
     </Flex>
   );

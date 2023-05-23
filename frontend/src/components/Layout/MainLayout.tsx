@@ -10,8 +10,11 @@ import {
   MenuList,
   Stack,
   Text,
+  useColorMode,
+  useColorModeValue,
 } from '@chakra-ui/react';
 import { AiFillHome, AiOutlineUser } from 'react-icons/ai';
+import { MdOutlineDarkMode, MdOutlineLightMode } from 'react-icons/md';
 import { GiHummingbird } from 'react-icons/gi';
 import * as React from 'react';
 import { Link, createSearchParams, useLocation } from 'react-router-dom';
@@ -34,7 +37,11 @@ function AccountMenu({ ...props }: BoxProps) {
               border={2}
               borderColor="black"
             />
-            <Text fontSize={{ base: '0', md: '3xl' }} fontWeight="medium">
+            <Text
+              fontSize={{ base: '0', md: '3xl' }}
+              fontWeight="medium"
+              textOverflow="ellipsis"
+            >
               {currentUser ? currentUser.name : 'Not Logged in'}
             </Text>
           </HStack>
@@ -94,49 +101,67 @@ function AccountMenu({ ...props }: BoxProps) {
   );
 }
 
+type MainHeaderProps = BoxProps;
+
+function MainHeader({ ...rest }: MainHeaderProps) {
+  const { toggleColorMode, colorMode } = useColorMode();
+
+  return (
+    <Flex
+      as="header"
+      direction="column"
+      paddingX={4}
+      bg={useColorModeValue('gray.50', 'gray.900')}
+      minH="full"
+      {...rest}
+    >
+      <Stack>
+        <Icon boxSize={8} as={GiHummingbird} />
+        <Box>
+          <HStack as={Link} to="/" spacing={4}>
+            <Icon boxSize={8} as={AiFillHome} />
+            <Text fontSize={{ base: '0', md: '3xl' }} fontWeight="medium">
+              Home
+            </Text>
+          </HStack>
+          <HStack as={Link} to="/" spacing={4}>
+            <Icon boxSize={8} as={AiOutlineUser} />
+            <Text fontSize={{ base: '0', md: '3xl' }} fontWeight="medium">
+              Profile
+            </Text>
+          </HStack>
+          <HStack onClick={toggleColorMode} spacing={4}>
+            <Icon
+              boxSize={8}
+              as={
+                colorMode === 'light' ? MdOutlineDarkMode : MdOutlineLightMode
+              }
+            />
+            <Text fontSize={{ base: '0', md: '3xl' }} fontWeight="medium">
+              {colorMode === 'light' ? 'To DarkMode' : 'To LightMode'}
+            </Text>
+          </HStack>
+        </Box>
+        <TweetButton />
+      </Stack>
+      <AccountMenu marginTop="auto" />
+    </Flex>
+  );
+}
+
 type MainLayoutProps = {
   children: React.ReactNode;
 };
 
 export function MainLayout({ children }: MainLayoutProps) {
-  // TODO: 以下の情報を渡せるようにする
-  // - SideMenuのどの項目のページを表示しているか
-  return (
-    <Flex direction="row" w="100vw" h="100vh">
-      <Flex
-        as="header"
-        direction="row-reverse"
-        bg="red"
-        flexGrow={0}
-        flexShrink={10}
-        paddingX={4}
-      >
-        <Flex flexDirection="column" flexBasis={{ md: '275px' }}>
-          <Stack>
-            <Icon boxSize={8} as={GiHummingbird} />
-            <Box>
-              <HStack as={Link} to="/" spacing={4}>
-                <Icon boxSize={8} as={AiFillHome} />
-                <Text fontSize={{ base: '0', md: '3xl' }} fontWeight="medium">
-                  Home
-                </Text>
-              </HStack>
-              <HStack as={Link} to="/" spacing={4}>
-                <Icon boxSize={8} as={AiOutlineUser} />
-                <Text fontSize={{ base: '0', md: '3xl' }} fontWeight="medium">
-                  Profile
-                </Text>
-              </HStack>
-            </Box>
-            <TweetButton />
-          </Stack>
-          <AccountMenu marginTop="auto" />
-        </Flex>
-      </Flex>
+  const headerWidth = { base: '5rem', md: '18rem' };
 
-      <Box as="main" h="full" flexGrow={3} flexShrink={0}>
+  return (
+    <Box minW="100vw" minH="100vh">
+      <MainHeader width={headerWidth} pos="fixed" />
+      <Box as="main" h="full" paddingLeft={headerWidth}>
         {children}
       </Box>
-    </Flex>
+    </Box>
   );
 }
