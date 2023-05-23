@@ -67,19 +67,25 @@ export function PostDetail() {
                       borderColor="red.200"
                       borderStyle="solid"
                     >
-                      <CustomCommentButton
-                        baseColor="black"
-                        hoverColor="red"
-                        aria-label="comment-button"
-                      />
-                      <CustomGoodButton
-                        baseColor="black"
-                        hoverColor="pink"
-                        fillColor="pink"
-                        isLiked={post.is_my_favorite}
-                        aria-label="good-button"
-                        onClick={handleClickLike}
-                      />
+                      <HStack>
+                        <CustomCommentButton
+                          baseColor="black"
+                          hoverColor="red"
+                          aria-label="comment-button"
+                        />
+                        <Text>N</Text>
+                      </HStack>
+                      <HStack>
+                        <CustomGoodButton
+                          baseColor="black"
+                          hoverColor="pink"
+                          fillColor="pink"
+                          isLiked={post.is_my_favorite}
+                          aria-label="good-button"
+                          onClick={handleClickLike}
+                        />
+                        <Text>{post.favorites_count}</Text>
+                      </HStack>
                     </HStack>
                     <ReplayFormInDetail />
                   </Flex>
