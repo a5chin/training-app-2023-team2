@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom';
-import { Box, Flex, Text, HStack } from '@chakra-ui/react';
-import { usePostDetail } from '../api/getPostDetail';
+import { Box, Flex, Text, HStack, useToast } from '@chakra-ui/react';
+import { useCallback } from 'react';
+import { usePostDetail } from '../hooks/usePostDetail';
 
 import { CustomBackButton } from '../components/CustomBackButton';
 import { CustomCommentButton } from '../components/CustomCommentButton';
@@ -9,7 +10,31 @@ import { ReplayFormInDetail } from '../components/ReplayFormInDetail';
 
 export function PostDetail() {
   const { postId } = useParams<{ postId: string }>();
-  const { post } = usePostDetail(postId ?? '');
+  const { post, addFavorite, deleteFavorite, mutate } = usePostDetail(
+    postId ?? ''
+  );
+  const toast = useToast();
+
+  const handleClickLike = useCallback(async () => {
+    try {
+      if (post) {
+        if (post.is_my_favorite) {
+          await deleteFavorite();
+        } else {
+          await addFavorite();
+        }
+      }
+      await mutate();
+    } catch (e: any) {
+      toast({
+        title: 'Error',
+        description: e.message,
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+  }, [addFavorite, deleteFavorite, mutate, post, toast]);
 
   return (
     <div>
@@ -42,11 +67,18 @@ export function PostDetail() {
                       borderColor="red.200"
                       borderStyle="solid"
                     >
-                      <CustomCommentButton baseColor="black" hoverColor="red" />
+                      <CustomCommentButton
+                        baseColor="black"
+                        hoverColor="red"
+                        aria-label="comment-button"
+                      />
                       <CustomGoodButton
                         baseColor="black"
                         hoverColor="pink"
                         fillColor="pink"
+                        isLiked={post.is_my_favorite}
+                        aria-label="good-button"
+                        onClick={handleClickLike}
                       />
                     </HStack>
                     <ReplayFormInDetail />
