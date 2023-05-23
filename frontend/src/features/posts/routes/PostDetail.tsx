@@ -6,6 +6,8 @@ import { CustomBackButton } from '../components/CustomBackButton';
 import { CustomCommentButton } from '../components/CustomCommentButton';
 import { CustomGoodButton } from '../components/CustomGoodButton';
 import { ReplayFormInDetail } from '../components/ReplayFormInDetail';
+import { Ranking } from '../components/Ranking';
+import { Recommendation } from '../components/Recommendation';
 
 export function PostDetail() {
   const { postId } = useParams<{ postId: string }>();
@@ -63,8 +65,8 @@ export function PostDetail() {
           </Box>
         </Flex>
         <Flex flexGrow={1} direction="column">
-          <Box>Ranking</Box>
-          <Box>Recommendation</Box>
+          <Ranking />
+          <Recommendation />
         </Flex>
       </Flex>
     </div>

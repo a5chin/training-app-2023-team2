@@ -11,6 +11,8 @@ import { useForm } from 'react-hook-form';
 import { usePosts } from '../hooks/usePosts';
 import { Post } from '../components/Post';
 import { IsPost } from '../types';
+import { Ranking } from '../components/Ranking';
+import { Recommendation } from '../components/Recommendation';
 
 type TweetFormInput = {
   content: string;
@@ -79,15 +81,9 @@ export function Posts() {
       </Flex>
 
       {/* Sub information */}
-      <Flex
-        border="solid"
-        rounded={10}
-        margin={2}
-        flexGrow={1}
-        direction="column"
-      >
-        <Box>Ranking</Box>
-        <Box>Recommendation</Box>
+      <Flex flexGrow={1} direction="column">
+        <Ranking />
+        <Recommendation />
       </Flex>
     </Flex>
   );
