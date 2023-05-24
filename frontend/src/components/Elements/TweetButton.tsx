@@ -48,7 +48,6 @@ export function TweetButton() {
       ) : (
         <Button
           colorScheme="twitter"
-          textColor="white"
           fontSize="xl"
           fontWeight="bold"
           width="full"
@@ -113,9 +112,10 @@ export function TweetButton() {
               <Button
                 colorScheme="twitter"
                 textColor="white"
-                size="sm"
-                mr={1}
                 type="submit"
+                size="md"
+                rounded={50}
+                px={6}
               >
                 投稿する
               </Button>

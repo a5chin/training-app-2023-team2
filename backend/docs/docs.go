@@ -635,6 +635,9 @@ const docTemplate = `{
                 "parent": {
                     "$ref": "#/definitions/entity.Post"
                 },
+                "replies_count": {
+                    "type": "integer"
+                },
                 "user": {
                     "$ref": "#/definitions/entity.User"
                 }

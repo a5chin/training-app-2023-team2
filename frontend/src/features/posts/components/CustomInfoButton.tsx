@@ -35,7 +35,7 @@ export function CustomInfoButton({
   baseColor,
   hoverColor,
   canDelete,
-  onClick,
+  ...atribute
 }: CustomInfoButtonProps & IconButtonProps) {
   const [color, setColor] = useState<string>(baseColor);
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -47,7 +47,7 @@ export function CustomInfoButton({
           <IconButton
             bg="inherit"
             size="md"
-            aria-label="comment-button"
+            {...atribute}
             icon={
               <div>
                 <AiOutlineEllipsis
@@ -117,7 +117,7 @@ export function CustomInfoButton({
                 rounded="xl"
                 fontSize="15px"
                 fontWeight="700"
-                onClick={onClick}
+                onClick={atribute.onClick}
               >
                 削除
               </Button>
