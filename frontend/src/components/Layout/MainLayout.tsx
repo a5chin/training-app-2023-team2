@@ -18,7 +18,8 @@ import {
   Text,
   useColorMode,
 } from '@chakra-ui/react';
-import { AiFillHome, AiOutlineUser } from 'react-icons/ai';
+import { AiFillHome, AiOutlineHome } from 'react-icons/ai';
+import { HiOutlineUser, HiUser } from 'react-icons/hi';
 import { MdOutlineDarkMode, MdOutlineLightMode } from 'react-icons/md';
 import { GiHummingbird } from 'react-icons/gi';
 import * as React from 'react';
@@ -112,6 +113,7 @@ type MainHeaderProps = BoxProps;
 function MainHeader({ ...rest }: MainHeaderProps) {
   const { toggleColorMode, colorMode } = useColorMode();
   const location = useLocation();
+
   return (
     <Flex
       as="header"
@@ -126,7 +128,10 @@ function MainHeader({ ...rest }: MainHeaderProps) {
         <Stack gap={5} px={3} pb={4}>
           <Icon boxSize={8} as={GiHummingbird} />
           <HStack as={Link} to="/" spacing={4}>
-            <Icon boxSize={6} as={AiFillHome} />
+            <Icon
+              boxSize={6}
+              as={location.pathname === '/posts' ? AiFillHome : AiOutlineHome}
+            />
             <Text
               fontSize={{ base: '0', md: 'xl' }}
               fontWeight={
@@ -137,7 +142,10 @@ function MainHeader({ ...rest }: MainHeaderProps) {
             </Text>
           </HStack>
           <HStack as={Link} to="/users/me" spacing={4}>
-            <Icon boxSize={6} as={AiOutlineUser} />
+            <Icon
+              boxSize={6}
+              as={location.pathname === '/users/me' ? HiUser : HiOutlineUser}
+            />
             <Text
               fontSize={{ base: '0', md: 'xl' }}
               fontWeight={
