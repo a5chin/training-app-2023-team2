@@ -32,6 +32,7 @@ export const useReplies = (postId: string): UseRepliesResponse => {
 
   const deleteReply = async (id: string) => {
     await aspidaClient.posts._postId(id).$delete();
+    await mutate();
   };
 
   const addFavorite = async (id: string) => {
