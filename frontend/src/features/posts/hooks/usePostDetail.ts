@@ -30,7 +30,7 @@ export const usePostDetail = (postId: string): UsePostDetailResponse => {
   };
 
   return {
-    post: data?.body ? new Post(data?.body) : undefined,
+    post: data && data.body ? new Post(data?.body) : undefined,
     isLoading,
     error,
     mutate,

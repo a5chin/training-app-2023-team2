@@ -1,8 +1,19 @@
-import { Box, Flex, Text, HStack, useColorMode } from '@chakra-ui/react';
-import { useNavigate } from 'react-router-dom';
+import {
+  Box,
+  Text,
+  HStack,
+  useColorMode,
+  Stack,
+  Link,
+  Divider,
+  useDisclosure,
+} from '@chakra-ui/react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { CustomCommentButton } from './CustomCommentButton';
 import { CustomGoodButton } from './CustomGoodButton';
 import { Post as PostType } from '@/features/posts';
+import { UserIcon } from '@/components/Avatar/BoringAvatar';
+import { ReplyModal } from '@/features/posts/components/ReplyModal';
 
 type PostProps = {
   post: PostType;
@@ -12,52 +23,67 @@ type PostProps = {
 export function Post({ post, handleClickLike }: PostProps) {
   const navigate = useNavigate();
   const { colorMode } = useColorMode();
+  const location = useLocation();
+  const replyModalDisclosure = useDisclosure();
 
   return (
-    <Box
-      borderColor="gray.400"
-      borderBottomWidth="1px"
-      onClick={() => navigate(`/posts/${post.id}`)}
-    >
-      <Flex direction="row" px="19px">
-        {/* <Flex direction="column">
-            <Icon />
-          </Flex> */}
-        <Flex direction="column">
-          <HStack>
-            <Text>{post.user?.name}</Text>
-          </HStack>
-          <Text>{post.body}</Text>
-          <HStack>
-            <HStack>
-              <CustomCommentButton
-                baseColor={colorMode === 'light' ? 'black' : 'white'}
-                hoverColor="red"
-                aria-label="comment-button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                }}
-              />
-              <Text>N</Text>
+    <Stack _hover={{ bg: colorMode === 'dark' ? 'blackAlpha.400' : 'gray.50' }}>
+      <Divider />
+      <Box p={3} onClick={() => navigate(`/posts/${post.id}`)}>
+        <HStack alignItems="start">
+          <Stack>{post.user && <UserIcon name={post.user.name} />}</Stack>
+          <Stack>
+            <Stack px={1}>
+              <Text fontWeight="semibold" fontSize="md">
+                {post.user?.name}
+              </Text>
+              {post.parent &&
+                location.pathname !== `/posts/${post.parent?.id}` && (
+                  <Link
+                    href={`${post.parent?.id}`}
+                    fontSize="sm"
+                    color="blue.500"
+                  >
+                    この返信を表示
+                  </Link>
+                )}
+              <Text fontSize="sm">{post.body}</Text>
+            </Stack>
+            <HStack pt={2}>
+              <HStack>
+                <CustomCommentButton
+                  baseColor={colorMode === 'light' ? 'black' : 'white'}
+                  hoverColor={
+                    colorMode === 'light' ? 'blackAlpha.400' : 'gray.50'
+                  }
+                  aria-label="comment-button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    replyModalDisclosure.onOpen();
+                  }}
+                />
+                <Text fontSize="sm">N</Text>
+              </HStack>
+              <HStack>
+                <CustomGoodButton
+                  baseColor={colorMode === 'light' ? 'black' : 'white'}
+                  hoverColor="pink"
+                  fillColor="pink"
+                  aria-label="comment-button"
+                  disabled={!post.isMyFavorite}
+                  isLiked={post.isMyFavorite}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleClickLike(post);
+                  }}
+                />
+                <Text fontSize="sm">{post.favoritesCount}</Text>
+              </HStack>
             </HStack>
-            <HStack>
-              <CustomGoodButton
-                baseColor={colorMode === 'light' ? 'black' : 'white'}
-                hoverColor="pink"
-                fillColor="pink"
-                aria-label="comment-button"
-                disabled={!post.isMyFavorite}
-                isLiked={post.isMyFavorite}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleClickLike(post);
-                }}
-              />
-              <Text>{post.favoritesCount}</Text>
-            </HStack>
-          </HStack>
-        </Flex>
-      </Flex>
-    </Box>
+          </Stack>
+        </HStack>
+      </Box>
+      <ReplyModal disclosure={replyModalDisclosure} post={post} />
+    </Stack>
   );
 }

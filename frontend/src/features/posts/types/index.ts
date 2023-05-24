@@ -35,6 +35,9 @@ export class Post {
 
   favoritesCount: number;
 
+  // eslint-disable-next-line no-use-before-define
+  parent: Post | undefined;
+
   constructor(entity: PostType) {
     this.id = entity.id ? entity.id : '';
     this.body = entity.body ? entity.body : '';
@@ -46,6 +49,7 @@ export class Post {
       : undefined;
     this.isMyFavorite = entity.is_my_favorite ? entity.is_my_favorite : false;
     this.favoritesCount = entity.favorites_count ? entity.favorites_count : 0;
+    this.parent = entity.parent ? new Post(entity.parent) : undefined;
   }
 }
 

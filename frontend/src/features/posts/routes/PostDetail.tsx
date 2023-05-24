@@ -6,6 +6,9 @@ import {
   HStack,
   useToast,
   useColorMode,
+  Stack,
+  Divider,
+  useDisclosure,
 } from '@chakra-ui/react';
 import { useCallback } from 'react';
 import { usePostDetail } from '../hooks/usePostDetail';
@@ -13,9 +16,11 @@ import { usePostDetail } from '../hooks/usePostDetail';
 import { CustomBackButton } from '../components/CustomBackButton';
 import { CustomCommentButton } from '../components/CustomCommentButton';
 import { CustomGoodButton } from '../components/CustomGoodButton';
-import { ReplayFormInDetail } from '../components/ReplayFormInDetail';
 import { Ranking } from '../components/Ranking';
 import { Recommendation } from '../components/Recommendation';
+import { Replies } from '@/features/posts/components/Replies';
+import { UserIcon } from '@/components/Avatar/BoringAvatar';
+import { ReplyModal } from '@/features/posts/components/ReplyModal';
 
 export function PostDetail() {
   const { postId } = useParams<{ postId: string }>();
@@ -24,6 +29,7 @@ export function PostDetail() {
   );
   const toast = useToast();
   const { colorMode } = useColorMode();
+  const disclosure = useDisclosure();
 
   const handleClickLike = useCallback(async () => {
     try {
@@ -50,57 +56,72 @@ export function PostDetail() {
     <div>
       <Flex direction="row" w="full">
         <Flex flexGrow={2} direction="column" fontSize="md">
-          <Box borderBottomColor="gray.400" borderBottomWidth="1px" py={2}>
+          <Box py={2}>
             {post ? (
-              <div>
-                <HStack>
-                  <CustomBackButton path="/posts" />
+              <Box>
+                <HStack px={3}>
+                  <CustomBackButton
+                    path="/posts"
+                    aria-label="back-button"
+                    _hover={{ bg: 'inherit' }}
+                  />
                   <Text fontWeight="bold">投稿</Text>
                 </HStack>
-                <Flex direction="row" px="19px">
-                  <Flex direction="column" flex="auto">
-                    <HStack>
-                      <Text> {post.user?.name}</Text>
-                    </HStack>
-                    <Text>{post.body}</Text>
-                    <Box
-                      width="100%"
-                      borderTopWidth={1}
-                      borderColor="red.200"
-                      borderStyle="solid"
-                    >
-                      <Text fontSize="15pt">件のいいね</Text>
-                    </Box>
-                    <HStack
-                      width="100%"
-                      borderTopWidth={1}
-                      borderColor="red.200"
-                      borderStyle="solid"
-                    >
+                <Flex direction="row" px={2} fontSize="sm">
+                  <Stack direction="column" flex="auto" pt={3}>
+                    {post.user && (
                       <HStack>
-                        <CustomCommentButton
-                          baseColor={colorMode === 'light' ? 'black' : 'white'}
-                          hoverColor="red"
-                          aria-label="comment-button"
-                        />
-                        <Text>N</Text>
+                        <UserIcon name={post.user.name} />
+                        <Text fontWeight="semibold" fontSize="md">
+                          {' '}
+                          {post.user.name}
+                        </Text>
                       </HStack>
-                      <HStack>
-                        <CustomGoodButton
-                          baseColor={colorMode === 'light' ? 'black' : 'white'}
-                          hoverColor="pink"
-                          fillColor="pink"
-                          isLiked={post.isMyFavorite}
-                          aria-label="good-button"
-                          onClick={handleClickLike}
-                        />
-                        <Text>{post.favoritesCount}</Text>
+                    )}
+                    <Stack px={2}>
+                      <Text fontSize="lg" overflowWrap="break-word">
+                        {post.body}
+                      </Text>
+                      <Divider />
+                      <Stack py={1} width="100%">
+                        <Text fontSize="sm">
+                          <Box as="b" px={1}>
+                            {post.favoritesCount}
+                          </Box>
+                          件のいいね
+                        </Text>
+                      </Stack>
+                      <Divider />
+                      <HStack width="100%">
+                        <HStack mt={0}>
+                          <CustomCommentButton
+                            baseColor={
+                              colorMode === 'light' ? 'black' : 'white'
+                            }
+                            hoverColor="white"
+                            aria-label="comment-button"
+                            onClick={disclosure.onOpen}
+                          />
+                        </HStack>
+                        <HStack>
+                          <CustomGoodButton
+                            baseColor={
+                              colorMode === 'light' ? 'black' : 'white'
+                            }
+                            hoverColor="pink"
+                            fillColor="pink"
+                            isLiked={post.isMyFavorite}
+                            aria-label="good-button"
+                            onClick={handleClickLike}
+                          />
+                        </HStack>
                       </HStack>
-                    </HStack>
-                    <ReplayFormInDetail />
-                  </Flex>
+                    </Stack>
+                  </Stack>
                 </Flex>
-              </div>
+                <Replies post={post} />
+                <ReplyModal disclosure={disclosure} post={post} />
+              </Box>
             ) : (
               <Text>該当の投稿はありません</Text>
             )}
