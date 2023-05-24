@@ -9,6 +9,7 @@ import {
   Stack,
   Heading,
   useColorMode,
+  Divider,
 } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { useCallback } from 'react';
@@ -156,6 +157,7 @@ export function Posts() {
                 />
               )
           )}
+        <Divider />
       </Flex>
     </Flex>
   );
