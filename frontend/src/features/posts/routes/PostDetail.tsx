@@ -8,6 +8,7 @@ import {
   useColorMode,
   Stack,
   Divider,
+  useDisclosure,
 } from '@chakra-ui/react';
 import { useCallback } from 'react';
 import { usePostDetail } from '../hooks/usePostDetail';
@@ -19,6 +20,7 @@ import { Ranking } from '../components/Ranking';
 import { Recommendation } from '../components/Recommendation';
 import { Replies } from '@/features/posts/components/Replies';
 import { UserIcon } from '@/components/Avatar/BoringAvatar';
+import { ReplyModal } from '@/features/posts/components/ReplyModal';
 
 export function PostDetail() {
   const { postId } = useParams<{ postId: string }>();
@@ -27,6 +29,7 @@ export function PostDetail() {
   );
   const toast = useToast();
   const { colorMode } = useColorMode();
+  const disclosure = useDisclosure();
 
   const handleClickLike = useCallback(async () => {
     try {
@@ -95,8 +98,9 @@ export function PostDetail() {
                             baseColor={
                               colorMode === 'light' ? 'black' : 'white'
                             }
-                            hoverColor="red"
+                            hoverColor="white"
                             aria-label="comment-button"
+                            onClick={disclosure.onOpen}
                           />
                         </HStack>
                         <HStack>
@@ -116,6 +120,7 @@ export function PostDetail() {
                   </Stack>
                 </Flex>
                 <Replies post={post} />
+                <ReplyModal disclosure={disclosure} post={post} />
               </Box>
             ) : (
               <Text>該当の投稿はありません</Text>

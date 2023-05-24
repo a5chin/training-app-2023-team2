@@ -6,12 +6,14 @@ import {
   Stack,
   Link,
   Divider,
+  useDisclosure,
 } from '@chakra-ui/react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { CustomCommentButton } from './CustomCommentButton';
 import { CustomGoodButton } from './CustomGoodButton';
 import { Post as PostType } from '@/features/posts';
 import { UserIcon } from '@/components/Avatar/BoringAvatar';
+import { ReplyModal } from '@/features/posts/components/ReplyModal';
 
 type PostProps = {
   post: PostType;
@@ -22,6 +24,7 @@ export function Post({ post, handleClickLike }: PostProps) {
   const navigate = useNavigate();
   const { colorMode } = useColorMode();
   const location = useLocation();
+  const replyModalDisclosure = useDisclosure();
 
   return (
     <Stack _hover={{ bg: colorMode === 'dark' ? 'blackAlpha.400' : 'gray.50' }}>
@@ -50,10 +53,13 @@ export function Post({ post, handleClickLike }: PostProps) {
               <HStack>
                 <CustomCommentButton
                   baseColor={colorMode === 'light' ? 'black' : 'white'}
-                  hoverColor="red"
+                  hoverColor={
+                    colorMode === 'light' ? 'blackAlpha.400' : 'gray.50'
+                  }
                   aria-label="comment-button"
                   onClick={(e) => {
                     e.stopPropagation();
+                    replyModalDisclosure.onOpen();
                   }}
                 />
                 <Text fontSize="sm">N</Text>
@@ -77,6 +83,7 @@ export function Post({ post, handleClickLike }: PostProps) {
           </Stack>
         </HStack>
       </Box>
+      <ReplyModal disclosure={replyModalDisclosure} post={post} />
     </Stack>
   );
 }
