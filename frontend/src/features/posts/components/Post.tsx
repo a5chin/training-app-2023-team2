@@ -24,7 +24,7 @@ export function Post({ post, handleClickLike }: PostProps) {
   const location = useLocation();
 
   return (
-    <Stack _hover={{ bg: 'gray.50' }}>
+    <Stack _hover={{ bg: colorMode === 'dark' ? 'blackAlpha.400' : 'gray.50' }}>
       <Divider />
       <Box p={3} onClick={() => navigate(`/posts/${post.id}`)}>
         <HStack alignItems="start">
