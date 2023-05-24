@@ -18,10 +18,12 @@ import { UserIcon } from '@/components/Avatar/BoringAvatar';
 //   { id: 'aaaa', name: 'iam' },
 // ];
 
+// const { currentUser } = useAuth();
+
 const axios = Axios.create();
 
 const Users: User[] = await axios
-  .get('http://localhost:8888/hoge', {})
+  .get(`http://localhost:8888/01H0F7PC287Q3C2XH9C575F9ZW`, {})
   .then((res) => res.data.data);
 
 export function Recommendation({ ...rest }: BoxProps) {
