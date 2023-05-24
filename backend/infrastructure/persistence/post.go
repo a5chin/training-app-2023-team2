@@ -80,16 +80,12 @@ func (p PostPersistence) GetPosts(
 	if pid != nil {
 		db = db.Where("parent_id = ?", pid)
 	}
-	if err := db.Preload("User").Preload("Parent").Preload("Favorites").Order("posts.id DESC").Find(&records).Error; err != nil {
+	if err := db.Preload("User").Preload("Parent").Preload("Favorites").Preload("Posts").Order("posts.id DESC").Find(&records).Error; err != nil {
 		return nil, err
 	}
 	var posts []*entity.Post
 	for _, record := range records {
-		var repliesCount int64
-		if err := db.Model(&model.Post{}).Where("parent_id =?", record.ID).Count(&repliesCount).Error; err != nil {
-			return nil, err
-		}
-		posts = append(posts, record.ToEntity(loginUserID, repliesCount))
+		posts = append(posts, record.ToEntity(loginUserID))
 	}
 	return posts, nil
 }
@@ -111,5 +107,7 @@ func (p PostPersistence) GetPostByID(
 	if err := db.Model(&model.Post{}).Where("parent_id =?", record.ID).Count(&repliesCount).Error; err != nil {
 		return nil, err
 	}
-	return record.ToEntity(loginUserID, repliesCount), nil
+	post := record.ToEntity(loginUserID)
+	post.RepliesCount = repliesCount
+	return post, nil
 }
