@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"errors"
 	"myapp/entity"
 	"net/http"
 
@@ -49,7 +50,12 @@ func (c UserController) GetMe(ctx *gin.Context) (interface{}, error) {
 //	@Failure	404	{object}	entity.ErrorResponse
 //	@Router		/users/{userId} [get]
 func (c UserController) GetUser(ctx *gin.Context) (interface{}, error) {
-	return nil, nil
+	userID := ctx.Param("userId")
+	return c.UserUseCase.GetUserByID(ctx, userID)
+}
+
+type UpdateProfileRequest struct {
+	Profile string `form:"profile"`
 }
 
 // GetUser godoc
@@ -57,15 +63,27 @@ func (c UserController) GetUser(ctx *gin.Context) (interface{}, error) {
 //	@Summary	プロフィール更新API
 //	@Description
 //	@Tags		User
-//	@Accept		json
-//
+//	@Accept		mpfd
 //	@Produce	json
-//	@Success	200				"OK"
-//	@Failure	401	{object}	entity.ErrorResponse
-//	@Failure	404	{object}	entity.ErrorResponse
+//	@Param		request	formData	UpdateProfileRequest	true	"プロフィール更新リクエスト"
+//	@Success	200					"OK"
+//	@Failure	401	{object}		entity.ErrorResponse
+//	@Failure	404	{object}		entity.ErrorResponse
 //	@Router		/users/me/profile [put]
 func (c UserController) UpdateProfile(ctx *gin.Context) (interface{}, error) {
-	return nil, nil
+	var req *UpdateProfileRequest
+	if err := ctx.Bind(&req); err != nil {
+		return nil, entity.WrapError(http.StatusBadRequest, err)
+	}
+	_user, ok := ctx.Get(entity.ContextAuthUserKey)
+	if !ok {
+		return nil, entity.WrapError(http.StatusUnauthorized, errors.New("empty user"))
+	}
+	user, ok := _user.(*entity.User)
+	if !ok {
+		return nil, entity.WrapError(http.StatusUnauthorized, errors.New("_user is not entity user"))
+	}
+	return nil, c.UserUseCase.UpdateProfile(ctx, user.ID, req.Profile)
 }
 
 type SignUpRequest struct {

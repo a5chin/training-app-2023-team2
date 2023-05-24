@@ -13,6 +13,14 @@ func NewUserUseCase(repo UserRepo) *UserUseCase {
 	return &UserUseCase{repo}
 }
 
+func (u UserUseCase) GetUserByID(ctx context.Context, userID string) (*entity.User, error) {
+	return u.UserRepo.GetUserByID(ctx, userID)
+}
+
+func (u UserUseCase) UpdateProfile(ctx context.Context, userID string, profile string) error {
+	return u.UserRepo.UpdateProfile(ctx, userID, profile)
+}
+
 func (u UserUseCase) SignInUser(ctx context.Context, email, password string) (*entity.User, string, error) {
 	user, err := u.UserRepo.GetUserFromEmail(ctx, email, password)
 	if err != nil {

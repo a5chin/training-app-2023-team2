@@ -453,7 +453,11 @@ paths:
   /users/me/profile:
     put:
       consumes:
-      - application/json
+      - multipart/form-data
+      parameters:
+      - in: formData
+        name: profile
+        type: string
       produces:
       - application/json
       responses:

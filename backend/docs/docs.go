@@ -563,7 +563,7 @@ const docTemplate = `{
         "/users/me/profile": {
             "put": {
                 "consumes": [
-                    "application/json"
+                    "multipart/form-data"
                 ],
                 "produces": [
                     "application/json"
@@ -572,6 +572,13 @@ const docTemplate = `{
                     "User"
                 ],
                 "summary": "プロフィール更新API",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "name": "profile",
+                        "in": "formData"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK"
