@@ -11,6 +11,7 @@ import {
 } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import { usePosts } from '../hooks/usePosts';
 import { Post } from '../components/Post';
 import { Ranking } from '../components/Ranking';
@@ -98,7 +99,9 @@ export function Posts() {
               py={4}
             >
               <Stack>
-                {currentUser && <UserIcon name={currentUser.name} />}
+                <Link to="/users/me/profile">
+                  {currentUser && <UserIcon name={currentUser.name} />}
+                </Link>
               </Stack>
               <Stack flex="auto">
                 <FormControl>
