@@ -21,6 +21,32 @@ func NewUserPersistence(tokenDriver *driver.TokenDriver) *UserPersistence {
 	return &UserPersistence{tokenDriver}
 }
 
+func (p UserPersistence) GetUserByID(ctx context.Context, userID string) (*entity.User, error) {
+	var user *model.User
+	db, _ := ctx.Value(driver.TxKey).(*gorm.DB)
+	if err := db.First(&user, "id = ?", userID).Error; err != nil {
+		return nil, err
+	}
+	return user.ToEntity(), nil
+}
+
+func (p UserPersistence) UpdateProfile(ctx context.Context, userID, profile string) error {
+	db, _ := ctx.Value(driver.TxKey).(*gorm.DB)
+	var user *model.User
+	if err := db.First(&user, "id = ?", userID).Error; err != nil {
+		return err
+	}
+	user.Profile = profile
+	if err := db.Save(user).Error; err != nil {
+		var mysqlErr *mysql.MySQLError
+		if errors.As(err, &mysqlErr) && mysqlErr.Number == driver.ErrDuplicateEntryNumber {
+			return entity.WrapError(http.StatusConflict, err)
+		}
+		return err
+	}
+	return nil
+}
+
 func (p UserPersistence) GetUserFromToken(ctx context.Context, idToken string) (*entity.User, error) {
 	db, _ := ctx.Value(driver.TxKey).(*gorm.DB)
 	user, err := p.TokenDriver.DecodeJwt(idToken)
@@ -62,6 +88,7 @@ func (p UserPersistence) CreateUser(ctx context.Context, name, email, password s
 		ID:       model.GenerateID().String(),
 		Name:     name,
 		Password: string(hash),
+		Profile:  "",
 		Email:    email,
 	}
 	if err := db.Create(user).Error; err != nil {

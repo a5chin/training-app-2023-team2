@@ -19,6 +19,8 @@ type PostRepo interface {
 }
 
 type UserRepo interface {
+	GetUserByID(ctx context.Context, userID string) (*entity.User, error)
+	UpdateProfile(ctx context.Context, userID, profile string) error
 	CreateUser(ctx context.Context, name, email, password string) (*entity.User, error)
 	GetUserFromEmail(ctx context.Context, email, password string) (*entity.User, error)
 	GetUserFromToken(ctx context.Context, idToken string) (*entity.User, error)

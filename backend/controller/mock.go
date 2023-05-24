@@ -234,6 +234,21 @@ func (m *MockUserUseCase) EXPECT() *MockUserUseCaseMockRecorder {
 	return m.recorder
 }
 
+// GetUserByID mocks base method.
+func (m *MockUserUseCase) GetUserByID(ctx context.Context, userID string) (*entity.User, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetUserByID", ctx, userID)
+	ret0, _ := ret[0].(*entity.User)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetUserByID indicates an expected call of GetUserByID.
+func (mr *MockUserUseCaseMockRecorder) GetUserByID(ctx, userID interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserByID", reflect.TypeOf((*MockUserUseCase)(nil).GetUserByID), ctx, userID)
+}
+
 // GetUserFromToken mocks base method.
 func (m *MockUserUseCase) GetUserFromToken(ctx context.Context, token string) (*entity.User, error) {
 	m.ctrl.T.Helper()
@@ -279,4 +294,18 @@ func (m *MockUserUseCase) SignUpUser(ctx context.Context, name, email, password 
 func (mr *MockUserUseCaseMockRecorder) SignUpUser(ctx, name, email, password interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SignUpUser", reflect.TypeOf((*MockUserUseCase)(nil).SignUpUser), ctx, name, email, password)
+}
+
+// UpdateProfile mocks base method.
+func (m *MockUserUseCase) UpdateProfile(ctx context.Context, userID, profile string) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UpdateProfile", ctx, userID, profile)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// UpdateProfile indicates an expected call of UpdateProfile.
+func (mr *MockUserUseCaseMockRecorder) UpdateProfile(ctx, userID, profile interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateProfile", reflect.TypeOf((*MockUserUseCase)(nil).UpdateProfile), ctx, userID, profile)
 }
