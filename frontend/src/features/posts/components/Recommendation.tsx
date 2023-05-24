@@ -29,11 +29,12 @@ export function Recommendation({ ...rest }: BoxProps) {
   const [users, setUsers] = useState<User[]>(dummy);
 
   useEffect(() => {
+    console.log(currentUser);
     axios
       .get(`http://localhost:8888/${currentUser?.id}`, {})
       .then((res) => setUsers(res.data));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [currentUser]);
 
   return (
     <Box
@@ -47,7 +48,7 @@ export function Recommendation({ ...rest }: BoxProps) {
       <Heading size="md">おすすめユーザー</Heading>
       <Stack py={5} gap={4}>
         {users &&
-          users.map((user) => (
+          users.reverse().map((user) => (
             <HStack gap={1} key={user.id}>
               <Stack>{user && <UserIcon name={user.name} />}</Stack>
               <Text fontWeight="semibold">{user.name}</Text>
