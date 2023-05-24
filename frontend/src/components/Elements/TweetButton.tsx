@@ -13,6 +13,7 @@ import {
   ModalBody,
   ModalFooter,
   FormControl,
+  useColorMode,
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { BiPen } from 'react-icons/bi';
@@ -30,6 +31,7 @@ export function TweetButton() {
   const { register, getValues, handleSubmit, reset } =
     useForm<TweetFormInput>();
   const toast = useToast();
+  const { colorMode } = useColorMode();
 
   return (
     <div>
@@ -45,7 +47,7 @@ export function TweetButton() {
         />
       ) : (
         <Button
-          bg="blue.400"
+          colorScheme="twitter"
           textColor="white"
           fontSize="xl"
           fontWeight="bold"
@@ -62,7 +64,7 @@ export function TweetButton() {
       )}
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent bg="black">
+        <ModalContent bg={colorMode === 'light' ? 'white' : 'black'}>
           <form
             onSubmit={handleSubmit(async () => {
               const data = new FormData();
@@ -84,17 +86,22 @@ export function TweetButton() {
               }
             })}
           >
-            <ModalHeader fontSize="25px" color="white">
+            <ModalHeader
+              fontSize="25px"
+              color={colorMode === 'light' ? 'black' : 'white'}
+            >
               投稿内容
             </ModalHeader>
-            <ModalCloseButton color="white" />
+            <ModalCloseButton
+              color={colorMode === 'light' ? 'black' : 'white'}
+            />
             <ModalBody pb={6}>
               <FormControl>
                 <Textarea
                   variant="unstyled"
                   placeholder="今どうしてる？"
                   size="sm"
-                  color="white"
+                  color={colorMode === 'light' ? 'black' : 'white'}
                   fontSize="25px"
                   resize="none"
                   {...register('content', { required: true })}
@@ -103,7 +110,13 @@ export function TweetButton() {
             </ModalBody>
 
             <ModalFooter>
-              <Button colorScheme="blue" size="sm" mr={1} type="submit">
+              <Button
+                colorScheme="twitter"
+                textColor="white"
+                size="sm"
+                mr={1}
+                type="submit"
+              >
                 投稿する
               </Button>
             </ModalFooter>
