@@ -1,24 +1,24 @@
-version: '3.9'
+version: "3.9"
 services:
   backend:
     build:
       context: ./docker
       dockerfile: backend.Dockerfile
     ports:
-      - '9000:9000'
+      - "9000:9000"
     volumes:
       - ./backend:/go/src/myapp
     command: "bash -c 'sh build.sh'"
     depends_on:
       db:
-          condition: service_healthy
+        condition: service_healthy
     environment:
       TZ: Asia/Tokyo
   frontend:
     image: node:16.14.2
     working_dir: /home/node/myapp
     ports:
-      - '3000:3000'
+      - "3000:3000"
     volumes:
       - ./frontend:/home/node/myapp
       - /home/node/myapp/node_modules
@@ -30,7 +30,7 @@ services:
       context: ./docker
       dockerfile: mysql.Dockerfile
     healthcheck:
-      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       timeout: 5s
       retries: 10
     platform: linux/x86_64
@@ -39,7 +39,7 @@ services:
       - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf
       - ./mysql/sql:/docker-entrypoint-initdb.d
     ports:
-      - '3306:3306'
+      - "3306:3306"
     environment:
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
       - MYSQL_DATABASE=training
@@ -52,4 +52,15 @@ services:
     command: mock -h 0.0.0.0 /swagger.yaml
     volumes:
       - ./backend/docs/swagger.yaml:/swagger.yaml
-
+  recommend:
+    build:
+      context: ./docker
+      dockerfile: recommend.Dockerfile
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./recommend:/app
+    working_dir: /app
+    command: "uvicorn main:app --host 0.0.0.0 --port 8888"
+    environment:
+      TZ: Asia/Tokyo
