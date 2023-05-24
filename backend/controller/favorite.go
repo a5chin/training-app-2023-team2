@@ -48,10 +48,10 @@ func (c FavoriteController) CreateFavorite(ctx *gin.Context) (interface{}, error
 //	@Tags		Favorite
 //	@Accept		json
 //	@Produce	json
-//	@Param		postId		path	string	true	"投稿ID"
-//	@Success	201			"Created"
-//	@Failure	401			{object}	entity.ErrorResponse
-//	@Failure	404			{object}	entity.ErrorResponse
+//	@Param		postId	path	string	true	"投稿ID"
+//	@Success	201		"Created"
+//	@Failure	401		{object}	entity.ErrorResponse
+//	@Failure	404		{object}	entity.ErrorResponse
 //	@Router		/posts/{postId}/favorites [delete]
 func (c FavoriteController) DeleteFavorite(ctx *gin.Context) (interface{}, error) {
 	pid := ctx.Param("postId")

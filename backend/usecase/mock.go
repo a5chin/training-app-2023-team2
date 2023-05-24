@@ -117,18 +117,18 @@ func (mr *MockPostRepoMockRecorder) GetPostByID(ctx, loginUserID, pid interface{
 }
 
 // GetPosts mocks base method.
-func (m *MockPostRepo) GetPosts(ctx context.Context, pid, loginUserID *string, limit, offset *int) ([]*entity.Post, error) {
+func (m *MockPostRepo) GetPosts(ctx context.Context, pid, loginUserID *string, limit, offset *int, userID *string) ([]*entity.Post, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetPosts", ctx, pid, loginUserID, limit, offset)
+	ret := m.ctrl.Call(m, "GetPosts", ctx, pid, loginUserID, limit, offset, userID)
 	ret0, _ := ret[0].([]*entity.Post)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // GetPosts indicates an expected call of GetPosts.
-func (mr *MockPostRepoMockRecorder) GetPosts(ctx, pid, loginUserID, limit, offset interface{}) *gomock.Call {
+func (mr *MockPostRepoMockRecorder) GetPosts(ctx, pid, loginUserID, limit, offset, userID interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPosts", reflect.TypeOf((*MockPostRepo)(nil).GetPosts), ctx, pid, loginUserID, limit, offset)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPosts", reflect.TypeOf((*MockPostRepo)(nil).GetPosts), ctx, pid, loginUserID, limit, offset, userID)
 }
 
 // MockUserRepo is a mock of UserRepo interface.

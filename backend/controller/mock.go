@@ -131,18 +131,18 @@ func (mr *MockPostUseCaseMockRecorder) GetPostByID(ctx, loginUserID, pid interfa
 }
 
 // GetPosts mocks base method.
-func (m *MockPostUseCase) GetPosts(ctx context.Context, loginUserID *string, limit, offset *int) ([]*entity.Post, error) {
+func (m *MockPostUseCase) GetPosts(ctx context.Context, loginUserID *string, limit, offset *int, userID *string) ([]*entity.Post, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetPosts", ctx, loginUserID, limit, offset)
+	ret := m.ctrl.Call(m, "GetPosts", ctx, loginUserID, limit, offset, userID)
 	ret0, _ := ret[0].([]*entity.Post)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // GetPosts indicates an expected call of GetPosts.
-func (mr *MockPostUseCaseMockRecorder) GetPosts(ctx, loginUserID, limit, offset interface{}) *gomock.Call {
+func (mr *MockPostUseCaseMockRecorder) GetPosts(ctx, loginUserID, limit, offset, userID interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPosts", reflect.TypeOf((*MockPostUseCase)(nil).GetPosts), ctx, loginUserID, limit, offset)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPosts", reflect.TypeOf((*MockPostUseCase)(nil).GetPosts), ctx, loginUserID, limit, offset, userID)
 }
 
 // GetReplies mocks base method.

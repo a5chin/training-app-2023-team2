@@ -17,8 +17,9 @@ func NewPostController(u PostUseCase) *PostController {
 }
 
 type GetPostsQuery struct {
-	Limit  *int `form:"limit,omitempty"`
-	Offset *int `form:"offset,omitempty"`
+	Limit  *int    `form:"limit,omitempty"`
+	Offset *int    `form:"offset,omitempty"`
+	UserID *string `form:"userId,omitempty"`
 }
 
 type GetPostsResponse struct {
@@ -34,6 +35,7 @@ type GetPostsResponse struct {
 //	@Produce	json
 //	@Param		limit	query		string	false	"limit"
 //	@Param		offset	query		string	false	"offset"
+//	@Param		userId	query		string	false	"userId"
 //	@Success	200		{object}	GetPostsResponse
 //	@Failure	400		{object}	entity.ErrorResponse
 //	@Failure	404		{object}	entity.ErrorResponse
@@ -56,7 +58,7 @@ func (c PostController) GetPosts(ctx *gin.Context) (interface{}, error) {
 	if query.Limit == nil && query.Offset != nil {
 		return nil, entity.WrapError(http.StatusBadRequest, errors.New("can't use offset without limit"))
 	}
-	posts, err := c.PostUseCase.GetPosts(ctx, userID, query.Limit, query.Offset)
+	posts, err := c.PostUseCase.GetPosts(ctx, userID, query.Limit, query.Offset, query.UserID)
 	if err != nil {
 		return nil, err
 	}

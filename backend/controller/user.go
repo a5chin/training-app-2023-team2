@@ -83,9 +83,9 @@ type UpdateProfileRequest struct {
 //	@Accept		mpfd
 //	@Produce	json
 //	@Param		request	formData	UpdateProfileRequest	true	"プロフィール更新リクエスト"
-//	@Success	200					"OK"
-//	@Failure	401	{object}		entity.ErrorResponse
-//	@Failure	404	{object}		entity.ErrorResponse
+//	@Success	200		"OK"
+//	@Failure	401		{object}	entity.ErrorResponse
+//	@Failure	404		{object}	entity.ErrorResponse
 //	@Router		/users/me/profile [put]
 func (c UserController) UpdateProfile(ctx *gin.Context) (interface{}, error) {
 	var req *UpdateProfileRequest
@@ -175,7 +175,7 @@ func (c UserController) SignIn(ctx *gin.Context) (interface{}, error) {
 //	@Tags		User
 //	@Accept		json
 //	@Produce	json
-//	@Success	200		"OK"
+//	@Success	200	"OK"
 //	@Router		/sign_out [post]
 func (c UserController) SignOut(ctx *gin.Context) (interface{}, error) {
 	ctx.SetCookie(entity.AuthCookieKey, "none", 5, "/", "", false, true)

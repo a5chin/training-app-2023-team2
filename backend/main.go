@@ -18,9 +18,9 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
-// @title training-app-2023-team2
-// @description training-app-2023-team2
-// @version 1.0
+// @title			training-app-2023-team2
+// @description	training-app-2023-team2
+// @version		1.0
 func main() {
 	// Dependency Injection
 	conf := config.Load()
