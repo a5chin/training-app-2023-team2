@@ -5,6 +5,7 @@ import { Post } from '@/features/posts';
 type UseRepliesResponse = {
   replies: Post[];
   createReply: (content: string) => void;
+  deleteReply: (id: string) => void;
   addFavorite: (id: string) => void;
   deleteFavorite: (id: string) => void;
   mutate: () => void;
@@ -29,6 +30,11 @@ export const useReplies = (postId: string): UseRepliesResponse => {
     await mutate();
   };
 
+  const deleteReply = async (id: string) => {
+    await aspidaClient.posts._postId(id).$delete();
+    await mutate();
+  };
+
   const addFavorite = async (id: string) => {
     const favoriteClient = aspidaClient.posts._postId(id).favorites;
     await favoriteClient.$post();
@@ -44,6 +50,7 @@ export const useReplies = (postId: string): UseRepliesResponse => {
   return {
     replies: data && data.posts ? data.posts.map((post) => new Post(post)) : [],
     createReply,
+    deleteReply,
     addFavorite,
     deleteFavorite,
     mutate,

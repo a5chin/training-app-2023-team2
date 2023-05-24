@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import {
   Box,
   Flex,
@@ -12,7 +12,9 @@ import {
 } from '@chakra-ui/react';
 import { useCallback } from 'react';
 import { usePostDetail } from '../hooks/usePostDetail';
+import { useAuth } from '@/lib/auth';
 
+import { CustomInfoButton } from '../components/CustomInfoButton';
 import { CustomBackButton } from '../components/CustomBackButton';
 import { CustomCommentButton } from '../components/CustomCommentButton';
 import { CustomGoodButton } from '../components/CustomGoodButton';
@@ -24,11 +26,31 @@ import { ReplyModal } from '@/features/posts/components/ReplyModal';
 
 export function PostDetail() {
   const { postId } = useParams<{ postId: string }>();
-  const { post, addFavorite, deleteFavorite, mutate } = usePostDetail(
-    postId ?? ''
-  );
+  const { post, deleteTweet, addFavorite, deleteFavorite, mutate } =
+    usePostDetail(postId ?? '');
   const toast = useToast();
   const { colorMode } = useColorMode();
+  const navigate = useNavigate();
+  const { currentUser } = useAuth();
+
+  const handleDeleteTweet = async () => {
+    try {
+      if (postId) {
+        await deleteTweet();
+      } else {
+        throw Error('postId is not found');
+      }
+      navigate('/posts');
+    } catch (e: any) {
+      toast({
+        title: 'Error',
+        description: e.message,
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+  };
   const disclosure = useDisclosure();
 
   const handleClickLike = useCallback(async () => {
@@ -70,12 +92,23 @@ export function PostDetail() {
                 <Flex direction="row" px={2} fontSize="sm">
                   <Stack direction="column" flex="auto" pt={3}>
                     {post.user && (
-                      <HStack>
-                        <UserIcon name={post.user.name} />
-                        <Text fontWeight="semibold" fontSize="md">
-                          {' '}
-                          {post.user.name}
-                        </Text>
+                      <HStack justifyContent="space-between">
+                        <HStack align="start">
+                          <UserIcon name={post.user.name} />
+                          <Text fontWeight="semibold" fontSize="md">
+                            {post.user.name}
+                          </Text>
+                        </HStack>
+                        <CustomInfoButton
+                          baseColor={colorMode === 'light' ? 'black' : 'white'}
+                          hoverColor="blue"
+                          aria-label="info-button"
+                          canDelete={currentUser?.id === post?.user?.id}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleDeleteTweet();
+                          }}
+                        />
                       </HStack>
                     )}
                     <Stack px={2}>

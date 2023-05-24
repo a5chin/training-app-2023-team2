@@ -7,8 +7,14 @@ import { Post as PostType } from '@/features/posts/types';
 import { useAuth } from '@/lib/auth';
 
 export function Replies({ post }: { post: PostType }) {
-  const { replies, createReply, addFavorite, deleteFavorite, mutate } =
-    useReplies(post.id);
+  const {
+    replies,
+    createReply,
+    deleteReply,
+    addFavorite,
+    deleteFavorite,
+    mutate,
+  } = useReplies(post.id);
   const toast = useToast();
   const { currentUser } = useAuth();
 
@@ -51,6 +57,26 @@ export function Replies({ post }: { post: PostType }) {
     [createReply, toast]
   );
 
+  const handleDeleteReply = useCallback(
+    async (selectedPost: PostType) => {
+      try {
+        if (selectedPost) {
+          await deleteReply(selectedPost.id);
+        }
+        await mutate();
+      } catch (e: any) {
+        toast({
+          title: 'Error',
+          description: e.message,
+          status: 'error',
+          duration: 3000,
+          isClosable: true,
+        });
+      }
+    },
+    [deleteReply, mutate, toast]
+  );
+
   return (
     <Stack>
       {currentUser && (
@@ -62,6 +88,7 @@ export function Replies({ post }: { post: PostType }) {
             <Post
               post={reply}
               handleClickLike={handleClickLike}
+              handleDeleteTweet={handleDeleteReply}
               key={reply.id}
             />
           ))}
