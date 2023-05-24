@@ -91,14 +91,14 @@ func TestPostController_GetPosts(t *testing.T) {
 			if test.err != nil {
 				// mockのメソッドをspyしておく
 				useCase.EXPECT().
-					GetPosts(gomock.Any(), nil, length, offset).
+					GetPosts(gomock.Any(), nil, length, offset, nil).
 					Return(nil, test.err).AnyTimes()
 				postCtrl := NewPostController(useCase)
 				_, err := postCtrl.GetPosts(ginCtx)
 				assert.Error(t, err)
 			} else {
 				useCase.EXPECT().
-					GetPosts(gomock.Any(), nil, length, offset).
+					GetPosts(gomock.Any(), nil, length, offset, nil).
 					Return(expected, nil).AnyTimes()
 				postCtrl := NewPostController(useCase)
 				posts, err := postCtrl.GetPosts(ginCtx)

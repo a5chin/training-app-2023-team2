@@ -68,6 +68,7 @@ func (p PostPersistence) GetPosts(
 	pid, loginUserID *string,
 	limit *int,
 	offset *int,
+	userID *string,
 ) ([]*entity.Post, error) {
 	var records []*model.Post
 	db, _ := ctx.Value(driver.TxKey).(*gorm.DB)
@@ -79,6 +80,9 @@ func (p PostPersistence) GetPosts(
 	}
 	if pid != nil {
 		db = db.Where("parent_id = ?", pid)
+	}
+	if userID != nil {
+		db = db.Where("user_id = ?", userID)
 	}
 	if err := db.Preload("User").Preload("Parent").Preload("Favorites").Preload("Posts").Order("posts.id DESC").Find(&records).Error; err != nil {
 		return nil, err

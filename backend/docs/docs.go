@@ -75,6 +75,12 @@ const docTemplate = `{
                         "description": "offset",
                         "name": "offset",
                         "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "userId",
+                        "name": "userId",
+                        "in": "query"
                     }
                 ],
                 "responses": {
