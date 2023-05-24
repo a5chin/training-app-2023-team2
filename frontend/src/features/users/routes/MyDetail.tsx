@@ -8,33 +8,44 @@ import {
   Flex,
   AspectRatio,
   Button,
+  useColorMode,
+  useDisclosure,
 } from '@chakra-ui/react';
 import { UserIcon } from '@/components/Avatar/BoringAvatar';
 import { useAuth } from '@/lib/auth';
+import { Posts } from '@/features/users/components/Posts';
+import { UpdateProfileModal } from '@/features/users/components/UpdateProfileModal';
+
+export const HeaderFallBackComponent = (
+  <AspectRatio zIndex="hide" ratio={8 / 2}>
+    <Flex
+      justifyContent="center"
+      alignItems="center"
+      width="full"
+      height="full"
+      bg="gray.900"
+    >
+      <Spinner size="xl" colorScheme="twitter" />
+    </Flex>
+  </AspectRatio>
+);
 
 export function MyDetail() {
   const { currentUser } = useAuth();
+  const { colorMode } = useColorMode();
+  const disclosure = useDisclosure();
 
   if (!currentUser) {
     return <Box>User has not logged in!</Box>;
   }
 
-  const HeaderFallBackComponent = (
-    <AspectRatio zIndex="hide" ratio={8 / 2}>
-      <Flex
-        justifyContent="center"
-        alignItems="center"
-        width="full"
-        height="full"
-        bg="gray.900"
-      >
-        <Spinner size="xl" colorScheme="twitter" />
-      </Flex>
-    </AspectRatio>
-  );
-
   return (
-    <Stack>
+    <Stack
+      minH="100vh"
+      borderColor={colorMode === 'dark' ? 'gray.700' : 'gray.100'}
+      borderStartWidth="1px"
+      borderEndWidth="1px"
+    >
       <Image
         src="https://picsum.photos/800/200"
         objectFit="cover"
@@ -42,21 +53,29 @@ export function MyDetail() {
         fallback={HeaderFallBackComponent}
       />
       <Box>
-        <Box paddingX={5} marginTop="-8%">
+        <HStack paddingX={4} marginTop="-12%" justifyContent="space-between">
           <UserIcon name={currentUser.name} size="20%" />
-        </Box>
+          <Button
+            colorScheme="twitter"
+            size="sm"
+            rounded="full"
+            alignSelf="end"
+            onClick={disclosure.onOpen}
+          >
+            プロフィールを編集
+          </Button>
+        </HStack>
       </Box>
-      <HStack justifyContent="space-between" padding="10">
-        <Text fontSize="3xl" fontWeight="medium">
+      <HStack justifyContent="space-between" px={4} py={3}>
+        <Text fontSize="xl" fontWeight="semibold">
           {currentUser.name}
         </Text>
-        <Button colorScheme="twitter" rounded="full" alignSelf="end">
-          プロフィールを入力
-        </Button>
       </HStack>
-      <Text paddingX={10} paddingY={-10} fontSize="2xl" fontWeight="medium">
+      <Text paddingX={4} paddingY={1} fontSize="sm" fontWeight="medium">
         {currentUser.profile}
       </Text>
+      <Posts userId={currentUser.id} />
+      <UpdateProfileModal disclosure={disclosure} />
     </Stack>
   );
 }
