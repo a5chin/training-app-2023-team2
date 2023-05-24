@@ -2,8 +2,14 @@ import {
   Box,
   BoxProps,
   Flex,
+  Grid,
+  GridItem,
   HStack,
   Icon,
+  Input,
+  InputGroup,
+  InputGroupProps,
+  InputLeftElement,
   Menu,
   MenuButton,
   MenuItem,
@@ -11,17 +17,18 @@ import {
   Stack,
   Text,
   useColorMode,
-  useColorModeValue,
 } from '@chakra-ui/react';
 import { AiFillHome, AiOutlineUser } from 'react-icons/ai';
 import { MdOutlineDarkMode, MdOutlineLightMode } from 'react-icons/md';
 import { GiHummingbird } from 'react-icons/gi';
 import * as React from 'react';
 import { Link, createSearchParams, useLocation } from 'react-router-dom';
+import { Search2Icon } from '@chakra-ui/icons';
 import { useAuth } from '@/lib/auth';
 import { UserIcon } from '@/components/Avatar/BoringAvatar';
 import { TweetButton } from '../Elements/TweetButton';
 import { truncateWithEllipsis } from '@/utils/strings';
+import { Recommendation } from '@/features/posts/components/Recommendation';
 
 function AccountMenu({ ...props }: BoxProps) {
   const { currentUser } = useAuth();
@@ -38,7 +45,7 @@ function AccountMenu({ ...props }: BoxProps) {
               border={2}
               borderColor="black"
             />
-            <Text fontSize={{ base: '0', md: '3xl' }} fontWeight="medium">
+            <Text fontSize={{ base: '0', md: 'md' }} fontWeight="semibold">
               {currentUser
                 ? truncateWithEllipsis(currentUser.name, 13)
                 : 'Not Logged in'}
@@ -104,47 +111,76 @@ type MainHeaderProps = BoxProps;
 
 function MainHeader({ ...rest }: MainHeaderProps) {
   const { toggleColorMode, colorMode } = useColorMode();
-
+  const location = useLocation();
   return (
     <Flex
       as="header"
       direction="column"
       paddingX={4}
-      bg={useColorModeValue('gray.50', 'gray.900')}
+      py={4}
+      bg="inherit"
       minH="full"
       {...rest}
     >
       <Stack>
-        <Icon boxSize={8} as={GiHummingbird} />
-        <Box>
+        <Stack gap={5} px={3} pb={4}>
+          <Icon boxSize={8} as={GiHummingbird} />
           <HStack as={Link} to="/" spacing={4}>
-            <Icon boxSize={8} as={AiFillHome} />
-            <Text fontSize={{ base: '0', md: '3xl' }} fontWeight="medium">
-              Home
+            <Icon boxSize={6} as={AiFillHome} />
+            <Text
+              fontSize={{ base: '0', md: 'xl' }}
+              fontWeight={
+                location.pathname === '/posts' ? 'semibold' : 'medium'
+              }
+            >
+              ホーム
             </Text>
           </HStack>
-          <HStack as={Link} to="/" spacing={4}>
-            <Icon boxSize={8} as={AiOutlineUser} />
-            <Text fontSize={{ base: '0', md: '3xl' }} fontWeight="medium">
-              Profile
+          <HStack as={Link} to="/users/me" spacing={4}>
+            <Icon boxSize={6} as={AiOutlineUser} />
+            <Text
+              fontSize={{ base: '0', md: 'xl' }}
+              fontWeight={
+                location.pathname === '/users/me' ? 'semibold' : 'medium'
+              }
+            >
+              プロフィール
             </Text>
           </HStack>
           <HStack onClick={toggleColorMode} spacing={4}>
             <Icon
-              boxSize={8}
+              boxSize={6}
               as={
                 colorMode === 'light' ? MdOutlineDarkMode : MdOutlineLightMode
               }
             />
-            <Text fontSize={{ base: '0', md: '3xl' }} fontWeight="medium">
-              {colorMode === 'light' ? 'To DarkMode' : 'To LightMode'}
+            <Text fontSize={{ base: '0', md: 'xl' }} fontWeight="medium">
+              カラーテーマ
             </Text>
           </HStack>
-        </Box>
+        </Stack>
         <TweetButton />
       </Stack>
-      <AccountMenu marginTop="auto" />
+      <AccountMenu marginTop="auto" paddingX={4} />
     </Flex>
+  );
+}
+
+function SearchInput({ ...attributes }: InputGroupProps) {
+  const { colorMode } = useColorMode();
+  return (
+    <InputGroup w="full" size="lg" {...attributes}>
+      <InputLeftElement pointerEvents="none">
+        <Search2Icon color="gray.300" />
+      </InputLeftElement>
+      <Input
+        type="text"
+        placeholder="キーワード検索"
+        rounded={100}
+        bg={colorMode === 'dark' ? 'gray.700' : 'gray.100'}
+        variant="filled"
+      />
+    </InputGroup>
   );
 }
 
@@ -157,10 +193,26 @@ export function MainLayout({ children }: MainLayoutProps) {
 
   return (
     <Box minW="100vw" minH="100vh">
-      <MainHeader width={headerWidth} pos="fixed" />
-      <Box as="main" h="full" paddingLeft={headerWidth}>
-        {children}
-      </Box>
+      <Grid templateColumns="repeat(12, 1fr)" gap={6} maxW="1290px" mx="auto">
+        <GridItem w={headerWidth}>
+          <MainHeader width={headerWidth} pos="fixed" />
+        </GridItem>
+        <GridItem colSpan={6.7}>
+          <Box as="main" h="full" w="600px">
+            {children}
+          </Box>
+        </GridItem>
+        <GridItem w="350px">
+          <Stack py={2} pos="fixed">
+            <Stack h="70px">
+              <SearchInput pos="sticky" w="350px" />
+            </Stack>
+            <Stack pos="sticky">
+              <Recommendation />
+            </Stack>
+          </Stack>
+        </GridItem>
+      </Grid>
     </Box>
   );
 }

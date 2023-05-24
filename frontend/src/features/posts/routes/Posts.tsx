@@ -8,13 +8,13 @@ import {
   useBoolean,
   Stack,
   Heading,
+  useColorMode,
 } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import { usePosts } from '../hooks/usePosts';
 import { Post } from '../components/Post';
-import { Ranking } from '../components/Ranking';
-import { Recommendation } from '../components/Recommendation';
 import { Post as PostType } from '@/features/posts/types';
 import { UserIcon } from '@/components/Avatar/BoringAvatar';
 import { useAuth } from '@/lib/auth';
@@ -33,6 +33,7 @@ export function Posts() {
     reset,
     formState: { isDirty, isValid },
   } = useForm<TweetFormInput>();
+  const { colorMode } = useColorMode();
   const toast = useToast();
   const [loading, { on: onLoading, off: offLoading }] = useBoolean(false);
   const { currentUser } = useAuth();
@@ -98,22 +99,18 @@ export function Posts() {
         flexGrow={2}
         direction="column"
         fontSize="md"
-        borderColor="gray.100"
+        minH="100vh"
+        borderColor={colorMode === 'dark' ? 'gray.700' : 'gray.100'}
         borderStartWidth="1px"
         borderEndWidth="1px"
       >
         {currentUser ? (
           <form onSubmit={handleSubmit(handlePost)}>
-            <HStack
-              alignItems="start"
-              px="16px"
-              pt="10px"
-              borderColor="gray.100"
-              borderBottomWidth="1px"
-              py={4}
-            >
+            <HStack alignItems="start" px="16px" pt="10px" py={4}>
               <Stack>
-                {currentUser && <UserIcon name={currentUser.name} />}
+                <Link to="/users/me/profile">
+                  {currentUser && <UserIcon name={currentUser.name} />}
+                </Link>
               </Stack>
               <Stack flex="auto">
                 <FormControl>
@@ -159,11 +156,6 @@ export function Posts() {
                 />
               )
           )}
-      </Flex>
-      {/* Sub information */}
-      <Flex flexGrow={1} direction="column">
-        <Ranking />
-        <Recommendation />
       </Flex>
     </Flex>
   );
