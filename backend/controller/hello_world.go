@@ -16,6 +16,7 @@ func NewHelloWorldController(u HelloWorldUseCase) *HelloWorldController {
 }
 
 // GetHelloWorld godoc
+//
 //	@Summary		get helloWorld message
 //	@Description	get helloWorld message
 //	@Tags			HelloWorld

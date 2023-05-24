@@ -13,8 +13,8 @@ func NewPostUseCase(repo PostRepo) *PostUseCase {
 	return &PostUseCase{repo}
 }
 
-func (u PostUseCase) GetPosts(ctx context.Context, loginUserID *string, limit, offset *int) ([]*entity.Post, error) {
-	return u.PostRepo.GetPosts(ctx, nil, loginUserID, limit, offset)
+func (u PostUseCase) GetPosts(ctx context.Context, loginUserID *string, limit, offset *int, userID *string) ([]*entity.Post, error) {
+	return u.PostRepo.GetPosts(ctx, nil, loginUserID, limit, offset, userID)
 }
 
 func (u PostUseCase) GetPostByID(ctx context.Context, loginUserID *string, pid string) (*entity.Post, error) {
@@ -34,5 +34,5 @@ func (u PostUseCase) CreateReply(ctx context.Context, parentID, uid, body string
 }
 
 func (u PostUseCase) GetReplies(ctx context.Context, loginUserID *string, pid string, limit, offset *int) ([]*entity.Post, error) {
-	return u.PostRepo.GetPosts(ctx, &pid, loginUserID, limit, offset)
+	return u.PostRepo.GetPosts(ctx, &pid, loginUserID, limit, offset, nil)
 }

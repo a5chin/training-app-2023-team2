@@ -10,6 +10,8 @@ export type Methods = {
           limit?: string | undefined;
           /** offset */
           offset?: string | undefined;
+          /** userId */
+          userId?: string | undefined;
         }
       | undefined;
 

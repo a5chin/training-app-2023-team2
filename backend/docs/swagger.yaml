@@ -104,6 +104,10 @@ paths:
         in: query
         name: offset
         type: string
+      - description: userId
+        in: query
+        name: userId
+        type: string
       produces:
       - application/json
       responses:
