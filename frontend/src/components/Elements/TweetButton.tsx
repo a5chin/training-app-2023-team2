@@ -48,6 +48,7 @@ export function TweetButton() {
       ) : (
         <Button
           colorScheme="twitter"
+          textColor="white"
           fontSize="xl"
           fontWeight="bold"
           width="full"
