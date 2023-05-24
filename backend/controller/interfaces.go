@@ -26,6 +26,7 @@ type FavoriteUseCase interface {
 }
 
 type UserUseCase interface {
+	GetUsers(ctx context.Context) ([]*entity.User, error)
 	GetUserByID(ctx context.Context, userID string) (*entity.User, error)
 	UpdateProfile(ctx context.Context, userID string, profile string) error
 	SignInUser(ctx context.Context, email, password string) (*entity.User, string, error)

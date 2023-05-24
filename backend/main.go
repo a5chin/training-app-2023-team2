@@ -66,6 +66,7 @@ func main() {
 	postRouter.POST("/:postId/favorites/", handleResponse(favoriteController.CreateFavorite))
 	postRouter.DELETE("/:postId/favorites/", handleResponse(favoriteController.DeleteFavorite))
 
+	api.GET("/users/", handleResponse(userController.GetUsers))
 	api.GET("/users/me/", handleResponse(userController.GetMe))
 	api.GET("/users/:userId", handleResponse(userController.GetUser))
 	authGroup := api.Group("/")

@@ -21,6 +21,19 @@ func NewUserPersistence(tokenDriver *driver.TokenDriver) *UserPersistence {
 	return &UserPersistence{tokenDriver}
 }
 
+func (p UserPersistence) GetUsers(ctx context.Context) ([]*entity.User, error) {
+	var records []*model.User
+	db, _ := ctx.Value(driver.TxKey).(*gorm.DB)
+	if err := db.Find(&records).Error; err != nil {
+		return nil, err
+	}
+	var users []*entity.User
+	for _, record := range records {
+		users = append(users, record.ToEntity())
+	}
+	return users, nil
+}
+
 func (p UserPersistence) GetUserByID(ctx context.Context, userID string) (*entity.User, error) {
 	var user *model.User
 	db, _ := ctx.Value(driver.TxKey).(*gorm.DB)

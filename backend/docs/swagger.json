@@ -517,6 +517,28 @@
                 }
             }
         },
+        "/users": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "全ユーザー取得API",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/entity.User"
+                        }
+                    }
+                }
+            }
+        },
         "/users/me": {
             "get": {
                 "consumes": [
