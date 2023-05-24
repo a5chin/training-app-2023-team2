@@ -18,8 +18,6 @@ import { CustomInfoButton } from '../components/CustomInfoButton';
 import { CustomBackButton } from '../components/CustomBackButton';
 import { CustomCommentButton } from '../components/CustomCommentButton';
 import { CustomGoodButton } from '../components/CustomGoodButton';
-import { Ranking } from '../components/Ranking';
-import { Recommendation } from '../components/Recommendation';
 import { Replies } from '@/features/posts/components/Replies';
 import { UserIcon } from '@/components/Avatar/BoringAvatar';
 import { ReplyModal } from '@/features/posts/components/ReplyModal';
@@ -76,7 +74,14 @@ export function PostDetail() {
 
   return (
     <div>
-      <Flex direction="row" w="full">
+      <Flex
+        direction="row"
+        w="full"
+        borderColor={colorMode === 'dark' ? 'gray.700' : 'gray.100'}
+        borderStartWidth="1px"
+        borderEndWidth="1px"
+        h="100vh"
+      >
         <Flex flexGrow={2} direction="column" fontSize="md">
           <Box py={2}>
             {post ? (
@@ -159,10 +164,6 @@ export function PostDetail() {
               <Text>該当の投稿はありません</Text>
             )}
           </Box>
-        </Flex>
-        <Flex flexGrow={1} direction="column">
-          <Ranking />
-          <Recommendation />
         </Flex>
       </Flex>
     </div>
