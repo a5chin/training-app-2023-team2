@@ -9,27 +9,32 @@ import {
   useColorMode,
 } from '@chakra-ui/react';
 import Axios from 'axios';
+import { useState, useEffect } from 'react';
 import { User } from '@/features/users';
 import { UserIcon } from '@/components/Avatar/BoringAvatar';
+import { useAuth } from '@/lib/auth';
 
-// const Users: User[] = [
-//   { id: 'aaaa', name: 'iam' },
-//   { id: 'test', name: 'test' },
-//   { id: 'aaaa', name: 'iam' },
-// ];
-
-// const { currentUser } = useAuth();
+const dummy: User[] = [
+  { id: 'aaaa', name: 'iam' },
+  { id: 'test', name: 'test' },
+  { id: 'aaaa', name: 'iam' },
+];
 
 const axios = Axios.create();
 
-const Users: User[] = await axios
-  .get(`http://localhost:8888/01H0F7PC287Q3C2XH9C575F9ZW`, {})
-  .then((res) => res.data);
-
-console.log();
-
 export function Recommendation({ ...rest }: BoxProps) {
   const { colorMode } = useColorMode();
+  const { currentUser } = useAuth();
+
+  const [users, setUsers] = useState<User[]>(dummy);
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8888/${currentUser?.id}`, {})
+      .then((res) => setUsers(res.data));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <Box
       {...rest}
@@ -41,8 +46,8 @@ export function Recommendation({ ...rest }: BoxProps) {
     >
       <Heading size="md">おすすめユーザー</Heading>
       <Stack py={5} gap={4}>
-        {Users &&
-          Users.map((user) => (
+        {users &&
+          users.map((user) => (
             <HStack gap={1}>
               <Stack>{user && <UserIcon name={user.name} />}</Stack>
               <Text fontWeight="semibold">{user.name}</Text>
