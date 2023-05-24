@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from transformers import AutoTokenizer, AutoModel
 import random
 import requests
@@ -7,6 +8,18 @@ import json
 app = FastAPI()
 # tokenizer = AutoTokenizer.from_pretrained("line-corporation/line-distilbert-base-japanese", trust_remote_code=True)
 # model = AutoModel.from_pretrained("line-corporation/line-distilbert-base-japanese")
+
+origins = [
+    'http://localhost:3000',
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=['*'],
+    allow_headers=['*']
+)
 
 app.user_info = None
 app.profile = None

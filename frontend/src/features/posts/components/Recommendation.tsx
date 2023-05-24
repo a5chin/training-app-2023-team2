@@ -8,14 +8,21 @@ import {
   Text,
   useColorMode,
 } from '@chakra-ui/react';
+import Axios from 'axios';
 import { User } from '@/features/users';
 import { UserIcon } from '@/components/Avatar/BoringAvatar';
 
-const Users: User[] = [
-  { id: 'aaaa', name: 'iam' },
-  { id: 'test', name: 'test' },
-  { id: 'aaaa', name: 'iam' },
-];
+// const Users: User[] = [
+//   { id: 'aaaa', name: 'iam' },
+//   { id: 'test', name: 'test' },
+//   { id: 'aaaa', name: 'iam' },
+// ];
+
+const axios = Axios.create();
+
+const Users: User[] = await axios
+  .get('http://localhost:8888/hoge', {})
+  .then((res) => res.data.data);
 
 export function Recommendation({ ...rest }: BoxProps) {
   const { colorMode } = useColorMode();
