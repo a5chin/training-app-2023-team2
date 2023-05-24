@@ -1,12 +1,10 @@
 import { Box, Stack, Image, Button, HStack, Text } from '@chakra-ui/react';
 import { UserIcon } from '@/components/Avatar/BoringAvatar';
-import { User } from '@/features/auth';
+import { useAuth } from '@/lib/auth';
 
-type MyDetailProps = {
-  currentUser: User | null;
-};
+export function MyDetail() {
+  const { currentUser } = useAuth();
 
-export function MyDetail({ currentUser }: MyDetailProps) {
   return (
     <Stack>
       <Image
