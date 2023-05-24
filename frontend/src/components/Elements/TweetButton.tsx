@@ -48,7 +48,6 @@ export function TweetButton() {
       ) : (
         <Button
           colorScheme="twitter"
-          textColor="white"
           fontSize="xl"
           fontWeight="bold"
           width="full"
@@ -112,7 +111,6 @@ export function TweetButton() {
             <ModalFooter>
               <Button
                 colorScheme="twitter"
-                textColor="white"
                 type="submit"
                 size="md"
                 rounded={50}
