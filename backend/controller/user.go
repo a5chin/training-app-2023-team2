@@ -34,6 +34,40 @@ func (c UserController) GetMe(ctx *gin.Context) (interface{}, error) {
 	return c.UserUseCase.GetUserFromToken(ctx, token)
 }
 
+// GetUser godoc
+//
+//	@Summary	ユーザー取得API
+//	@Description
+//	@Tags		User
+//	@Accept		json
+//
+//	@Param		userId	path	string	true	"ユーザーID"
+//
+//	@Produce	json
+//	@Success	200	{object}	entity.User	"OK"
+//	@Failure	401	{object}	entity.ErrorResponse
+//	@Failure	404	{object}	entity.ErrorResponse
+//	@Router		/users/{userId} [get]
+func (c UserController) GetUser(ctx *gin.Context) (interface{}, error) {
+	return nil, nil
+}
+
+// GetUser godoc
+//
+//	@Summary	プロフィール更新API
+//	@Description
+//	@Tags		User
+//	@Accept		json
+//
+//	@Produce	json
+//	@Success	200				"OK"
+//	@Failure	401	{object}	entity.ErrorResponse
+//	@Failure	404	{object}	entity.ErrorResponse
+//	@Router		/users/me/profile [put]
+func (c UserController) UpdateProfile(ctx *gin.Context) (interface{}, error) {
+	return nil, nil
+}
+
 type SignUpRequest struct {
 	Name     string `json:"name"`
 	Email    string `json:"email"`
