@@ -114,6 +114,7 @@ export function ReplyModal({ disclosure, post }: Props) {
                         orientation="vertical"
                         size="lg"
                         colorScheme="twitter"
+                        border="1px"
                       />
                     </Center>
                   </Stack>
