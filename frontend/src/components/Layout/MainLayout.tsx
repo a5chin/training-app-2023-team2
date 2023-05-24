@@ -148,13 +148,13 @@ function MainHeader({ ...rest }: MainHeaderProps) {
               }
             />
             <Text fontSize={{ base: '0', md: 'xl' }} fontWeight="medium">
-              {colorMode === 'light' ? 'To DarkMode' : 'To LightMode'}
+              カラーテーマ
             </Text>
           </HStack>
         </Stack>
         <TweetButton />
       </Stack>
-      <AccountMenu marginTop="auto" />
+      <AccountMenu marginTop="auto" paddingX={4} />
     </Flex>
   );
 }
