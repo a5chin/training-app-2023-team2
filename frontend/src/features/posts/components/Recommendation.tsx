@@ -24,7 +24,9 @@ const axios = Axios.create();
 
 const Users: User[] = await axios
   .get(`http://localhost:8888/01H0F7PC287Q3C2XH9C575F9ZW`, {})
-  .then((res) => res.data.data);
+  .then((res) => res.data);
+
+console.log();
 
 export function Recommendation({ ...rest }: BoxProps) {
   const { colorMode } = useColorMode();
@@ -39,12 +41,13 @@ export function Recommendation({ ...rest }: BoxProps) {
     >
       <Heading size="md">おすすめユーザー</Heading>
       <Stack py={5} gap={4}>
-        {Users.map((user) => (
-          <HStack gap={1}>
-            <Stack>{user && <UserIcon name={user.name} />}</Stack>
-            <Text fontWeight="semibold">{user.name}</Text>
-          </HStack>
-        ))}
+        {Users &&
+          Users.map((user) => (
+            <HStack gap={1}>
+              <Stack>{user && <UserIcon name={user.name} />}</Stack>
+              <Text fontWeight="semibold">{user.name}</Text>
+            </HStack>
+          ))}
         <Link href="/" fontSize="sm" color="blue.500">
           この返信を表示
         </Link>

@@ -22,50 +22,37 @@ app.add_middleware(
     allow_headers=['*']
 )
 
-app.user_info = None
-app.profile = None
-app.last_hidden_state = None
+app.user_info = {}
+app.vec = {}
 app.sample_size = 3
+app.dummy = [{"id":"01H0F7PC287Q3C2XH9C575F9ZW", "name":"taro"}, {"id":"01H0F7PC2AXHE7DRHPKV8Y4SZC", "name":"hanako"}]
 
-def update_vec():
-    res = requests.get("http://backend:9000/api/v1/users")
-    values = json.loads(res.text)
+def emb(sentences):
+    return model(**tokenizer(sentences, return_tensors="pt", padding='max_length', max_length=16)).last_hidden_state[:, 0]
 
-    print(values)
-    user_info = [{"id": v["id"], "name": v["name"]} for v in values]
-    profiles = [v["profile"] for v in values]
-    last_hidden_state = model(**tokenizer(profiles, return_tensors="pt", padding='max_length', max_length=16)).last_hidden_state[:, 0]
-    # last_hidden_state=None
+@app.get("/register/{post_id}")
+def register(post_id):
+    res = requests.get(f"http://backend:9000/api/v1/users/{post_id}")
+    value = json.loads(res.text)
 
-    return user_info, profiles, last_hidden_state
-
-# app.user_info, app.profile, app.last_hidden_state = update_vec()
-
-@app.get("/update")
-def update():
-    # try:
-    app.user_info, app.profile, app.last_hidden_state = update_vec()
+    app.user_info[value["id"]] = {"id": value["id"], "name": value["name"]}
+    app.vec[value["id"]] = emb(value["profile"])
     return {"status": "success"}
-    # except:
-    #     return  {"status": "error"}
     
 @app.get("/{post_id}")
 def get_recommend(post_id):
-    res = requests.get("http://backend:9000/api/v1/users/" + post_id + "/")
-    values = json.loads(res.text)
-    print(values)
-    target_vec = model(**tokenizer(values["profile"], return_tensors="pt", padding='max_length', max_length=16)).last_hidden_state[:, 0]
-    score = F.cosine_similarity(torch.tile(target_vec, (len(app.user_info), 1)), app.last_hidden_state)
+    if post_id in app.vec.keys():
+        target_vec = app.vec[post_id]
+        score = F.cosine_similarity(torch.tile(target_vec, (len(app.user_info), 1)), torch.stack([v[0] for v in app.vec.values()]))
 
-    response = []
-
-    for i in torch.argsort(score)[-4:-1]:
-        response.append(app.user_info[i])
-
-    if app.user_info!=None:
-        return {"data": response}
+        keys = list(app.vec.keys())
+        if app.user_info!=None:
+            print(torch.argsort(score)[-(app.sample_size+1):-1])
+            return [app.user_info[keys[i]] for i in torch.argsort(score)[-(app.sample_size+1):-1]]
+        else:
+            return app.dummy
     else:
-        return {"data": "error"}
+        return app.dummy
     
 @app.get("/")
 def read_root():
