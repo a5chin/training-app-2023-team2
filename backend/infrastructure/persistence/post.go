@@ -104,7 +104,7 @@ func (p PostPersistence) GetPostByID(
 		return nil, err
 	}
 	var repliesCount int64
-	if err := db.Model(&model.Post{}).Where("parent_id =?", record.ID).Count(&repliesCount).Error; err != nil {
+	if err := db.Model(&model.Post{}).Where("parent_id = ?", record.ID).Count(&repliesCount).Error; err != nil {
 		return nil, err
 	}
 	post := record.ToEntity(loginUserID)
