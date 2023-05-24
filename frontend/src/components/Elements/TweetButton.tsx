@@ -61,7 +61,7 @@ export function TweetButton() {
           textAlign="center"
           onClick={onOpen}
         >
-          Tweet
+          ツイートする
         </Button>
       )}
       <Modal isOpen={isOpen} onClose={onClose}>

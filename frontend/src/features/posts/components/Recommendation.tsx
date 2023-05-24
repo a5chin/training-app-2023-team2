@@ -17,7 +17,7 @@ import { useAuth } from '@/lib/auth';
 const dummy: User[] = [
   { id: 'aaaa', name: 'iam' },
   { id: 'test', name: 'test' },
-  { id: 'aaaa', name: 'iam' },
+  { id: 'aava', name: 'iam' },
 ];
 
 const axios = Axios.create();
@@ -48,7 +48,7 @@ export function Recommendation({ ...rest }: BoxProps) {
       <Stack py={5} gap={4}>
         {users &&
           users.map((user) => (
-            <HStack gap={1}>
+            <HStack gap={1} key={user.id}>
               <Stack>{user && <UserIcon name={user.name} />}</Stack>
               <Text fontWeight="semibold">{user.name}</Text>
             </HStack>

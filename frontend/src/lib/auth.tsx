@@ -13,12 +13,14 @@ import {
 } from '@/aspida/@types';
 import { ErrorResponseType } from '@/types';
 import { createCtxWithoutDefaultValue } from './createCtxWithoutDefaultValue';
+import { aspidaClient } from '@/lib/aspida';
 
 type IAuthContext = {
   signin: (data: SigninDTO) => Promise<void>;
   signup: (data: SignupDTO) => Promise<void>;
   signout: () => void;
   currentUser: User | null;
+  updateProfile: (profile: string) => Promise<void>;
 };
 
 const useAuthContext = (): IAuthContext => {
@@ -78,7 +80,18 @@ const useAuthContext = (): IAuthContext => {
     }
   };
 
-  return { signin, signup, signout, currentUser: user };
+  const updateProfile = async (profile: string) => {
+    const userClient = aspidaClient.users.me.profile;
+    await userClient.put({
+      body: {
+        profile,
+      },
+    });
+    const userData = await fetchMe();
+    setUser(userData);
+  };
+
+  return { signin, signup, signout, updateProfile, currentUser: user };
 };
 
 const [useAuth, AuthContextProvider] =

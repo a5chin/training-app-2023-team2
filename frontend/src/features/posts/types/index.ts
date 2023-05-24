@@ -52,7 +52,7 @@ export class Post {
     this.isMyFavorite = entity.is_my_favorite ? entity.is_my_favorite : false;
     this.favoritesCount = entity.favorites_count ? entity.favorites_count : 0;
     this.parent = entity.parent ? new Post(entity.parent) : undefined;
-    this.repliesCount = entity.favorites_count ? entity.favorites_count : 0;
+    this.repliesCount = entity.replies_count ? entity.replies_count : 0;
   }
 }
 
