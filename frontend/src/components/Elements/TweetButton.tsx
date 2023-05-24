@@ -45,8 +45,7 @@ export function TweetButton() {
         />
       ) : (
         <Button
-          bg="blue.400"
-          textColor="white"
+          colorScheme="twitter"
           fontSize="xl"
           fontWeight="bold"
           width="full"
@@ -103,7 +102,13 @@ export function TweetButton() {
             </ModalBody>
 
             <ModalFooter>
-              <Button colorScheme="blue" size="sm" mr={1} type="submit">
+              <Button
+                size="md"
+                colorScheme="twitter"
+                type="submit"
+                rounded={50}
+                px={6}
+              >
                 投稿する
               </Button>
             </ModalFooter>
