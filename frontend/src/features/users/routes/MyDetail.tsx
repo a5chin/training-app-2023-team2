@@ -1,6 +1,6 @@
 import { Box, Stack, Image, Button, HStack, Text } from '@chakra-ui/react';
 import { UserIcon } from '@/components/Avatar/BoringAvatar';
-import { User } from '../types';
+import { User } from '@/features/auth';
 
 type MyDetailProps = {
   currentUser: User | null;
@@ -31,6 +31,9 @@ export function MyDetail({ currentUser }: MyDetailProps) {
           プロフィールを入力
         </Button>
       </HStack>
+      <Text paddingX={10} paddingY={-10} fontSize="2xl" fontWeight="medium">
+        {currentUser?.profile}
+      </Text>
     </Stack>
   );
 }

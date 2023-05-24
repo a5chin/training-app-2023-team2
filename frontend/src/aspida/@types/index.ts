@@ -29,6 +29,7 @@ export type Entity_Post = {
   id?: string | undefined;
   is_my_favorite?: boolean | undefined;
   parent?: Entity_Post | undefined;
+  replies_count?: number | undefined;
   user?: Entity_User | undefined;
 };
 
@@ -36,4 +37,5 @@ export type Entity_User = {
   email?: string | undefined;
   id?: string | undefined;
   name?: string | undefined;
+  profile?: string | undefined;
 };
