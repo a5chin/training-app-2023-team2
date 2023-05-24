@@ -60,7 +60,7 @@ export function Replies({ post }: { post: PostType }) {
   const handleDeleteReply = useCallback(
     async (selectedPost: PostType) => {
       try {
-        if (selectedPost.isMyFavorite) {
+        if (selectedPost) {
           await deleteReply(selectedPost.id);
         }
         await mutate();
