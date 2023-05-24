@@ -2,6 +2,7 @@ import {
   Button,
   IconButton,
   Modal,
+  HStack,
   Textarea,
   useBreakpointValue,
   useDisclosure,
@@ -34,15 +35,16 @@ export function TweetButton() {
   const { colorMode } = useColorMode();
 
   return (
-    <div>
+    <HStack>
       {isLessThanMd ? (
         <IconButton
           aspectRatio="1/1"
           size="md"
           icon={<BiPen />}
-          bg="blue.400"
+          colorScheme="twitter"
           aria-label="Tweet button"
           rounded="full"
+          mx={4}
           onClick={onOpen}
         />
       ) : (
@@ -50,11 +52,12 @@ export function TweetButton() {
           colorScheme="twitter"
           fontSize="xl"
           fontWeight="bold"
-          width="full"
+          width="90%"
           variant="solid"
           boxShadow="md"
           rounded="full"
           paddingY={6}
+          m="auto"
           textAlign="center"
           onClick={onOpen}
         >
@@ -122,6 +125,6 @@ export function TweetButton() {
           </form>
         </ModalContent>
       </Modal>
-    </div>
+    </HStack>
   );
 }

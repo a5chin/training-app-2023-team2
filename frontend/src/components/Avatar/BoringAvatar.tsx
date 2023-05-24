@@ -9,7 +9,7 @@ export function UserIcon({
     <Icon
       name={name}
       variant="beam"
-      colors={['#FF0092', '#FFCA1B', '#B6FF00', '#228DFF', '#BA01FF']}
+      colors={['#272932', '#1D9BF0', '#E9D2F4', '#F05D5E']}
       as={Avatar}
       {...iconProps}
     />
