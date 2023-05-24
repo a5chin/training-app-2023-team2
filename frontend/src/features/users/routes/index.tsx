@@ -6,7 +6,7 @@ export function UsersRoutes() {
   return (
     <Routes>
       <Route path=":id" element={<UserDetail />} />
-      <Route path="me/profile" element={<MyDetail />} />
+      <Route path="me" element={<MyDetail />} />
     </Routes>
   );
 }
