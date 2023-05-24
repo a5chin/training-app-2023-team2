@@ -4,3 +4,4 @@ tmp/
 backend/myapp
 .DS_Store
 .idea
+__pycache__
