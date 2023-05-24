@@ -66,9 +66,10 @@ func main() {
 	postRouter.POST("/:postId/favorites/", handleResponse(favoriteController.CreateFavorite))
 	postRouter.DELETE("/:postId/favorites/", handleResponse(favoriteController.DeleteFavorite))
 
+	api.GET("/users/", handleResponse(userController.GetUsers))
 	api.GET("/users/me/", handleResponse(userController.GetMe))
 	api.GET("/users/:userId", handleResponse(userController.GetUser))
-	api.Use(middleware.Authentication(userRepo)).PUT("/users/me/profile", handleResponse(userController.UpdateProfile))
+	api.PUT("/users/me/profile", handleResponse(userController.UpdateProfile))
 	api.POST("/sign_up/", handleResponse(userController.SignUp))
 	api.POST("/sign_in/", handleResponse(userController.SignIn))
 	api.POST("/sign_out/", handleResponse(userController.SignOut))

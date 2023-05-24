@@ -54,6 +54,23 @@ func (c UserController) GetUser(ctx *gin.Context) (interface{}, error) {
 	return c.UserUseCase.GetUserByID(ctx, userID)
 }
 
+type GetUsersResponse struct {
+	Users []*entity.User `json:"users"`
+}
+
+// GetUsers godoc
+//
+//	@Summary	全ユーザー取得API
+//	@Description
+//	@Tags		User
+//	@Accept		json
+//	@Produce	json
+//	@Success	200	{object}	entity.User	"OK"
+//	@Router		/users [get]
+func (c UserController) GetUsers(ctx *gin.Context) (interface{}, error) {
+	return c.UserUseCase.GetUsers(ctx)
+}
+
 type UpdateProfileRequest struct {
 	Profile string `form:"profile"`
 }

@@ -400,6 +400,20 @@ paths:
       summary: ユーザー登録API
       tags:
       - User
+  /users:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.User'
+      summary: 全ユーザー取得API
+      tags:
+      - User
   /users/{userId}:
     get:
       consumes:

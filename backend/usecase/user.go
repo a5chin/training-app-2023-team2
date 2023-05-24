@@ -13,6 +13,10 @@ func NewUserUseCase(repo UserRepo) *UserUseCase {
 	return &UserUseCase{repo}
 }
 
+func (u UserUseCase) GetUsers(ctx context.Context) ([]*entity.User, error) {
+	return u.UserRepo.GetUsers(ctx)
+}
+
 func (u UserUseCase) GetUserByID(ctx context.Context, userID string) (*entity.User, error) {
 	return u.UserRepo.GetUserByID(ctx, userID)
 }
