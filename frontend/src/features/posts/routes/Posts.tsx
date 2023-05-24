@@ -99,6 +99,7 @@ export function Posts() {
         flexGrow={2}
         direction="column"
         fontSize="md"
+        minH="100vh"
         borderColor={colorMode === 'dark' ? 'gray.700' : 'gray.100'}
         borderStartWidth="1px"
         borderEndWidth="1px"
