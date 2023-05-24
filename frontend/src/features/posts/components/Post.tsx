@@ -73,7 +73,7 @@ export function Post({ post, handleDeleteTweet, handleClickLike }: PostProps) {
                     replyModalDisclosure.onOpen();
                   }}
                 />
-                <Text fontSize="sm">N</Text>
+                <Text fontSize="sm">{post.repliesCount}</Text>
               </HStack>
               <HStack>
                 <CustomGoodButton
