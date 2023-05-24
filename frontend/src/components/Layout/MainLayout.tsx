@@ -136,7 +136,7 @@ function MainHeader({ ...rest }: MainHeaderProps) {
               ホーム
             </Text>
           </HStack>
-          <HStack as={Link} to="/" spacing={4}>
+          <HStack as={Link} to="/users/me" spacing={4}>
             <Icon boxSize={6} as={AiOutlineUser} />
             <Text
               fontSize={{ base: '0', md: 'xl' }}
