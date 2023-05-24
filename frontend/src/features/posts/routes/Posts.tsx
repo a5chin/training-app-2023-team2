@@ -108,7 +108,7 @@ export function Posts() {
           <form onSubmit={handleSubmit(handlePost)}>
             <HStack alignItems="start" px="16px" pt="10px" py={4}>
               <Stack>
-                <Link to="/users/me/profile">
+                <Link to="/users/me">
                   {currentUser && <UserIcon name={currentUser.name} />}
                 </Link>
               </Stack>
