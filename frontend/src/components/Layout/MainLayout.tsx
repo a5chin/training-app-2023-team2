@@ -38,7 +38,7 @@ function AccountMenu({ ...props }: BoxProps) {
               border={2}
               borderColor="black"
             />
-            <Text fontSize={{ base: '0', md: '3xl' }} fontWeight="medium">
+            <Text fontSize={{ base: '0', md: 'md' }} fontWeight="semibold">
               {currentUser
                 ? truncateWithEllipsis(currentUser.name, 13)
                 : 'Not Logged in'}
@@ -104,48 +104,54 @@ type MainHeaderProps = BoxProps;
 
 function MainHeader({ ...rest }: MainHeaderProps) {
   const { toggleColorMode, colorMode } = useColorMode();
-
+  const location = useLocation();
   return (
     <Flex
       as="header"
       direction="column"
       paddingX={4}
+      py={4}
       bg={useColorModeValue('gray.50', 'gray.900')}
       minH="full"
       {...rest}
     >
       <Stack>
-        <Icon boxSize={8} as={GiHummingbird} />
-        <Box>
+        <Stack gap={3} px={3} pb={4}>
+          <Icon boxSize={8} as={GiHummingbird} />
           <HStack as={Link} to="/" spacing={4}>
-            <Icon boxSize={8} as={AiFillHome} />
-            <Text fontSize={{ base: '0', md: '3xl' }} fontWeight="medium">
-              Home
+            <Icon boxSize={6} as={AiFillHome} />
+            <Text
+              fontSize={{ base: '0', md: 'xl' }}
+              fontWeight={
+                location.pathname === '/posts' ? 'semibold' : 'medium'
+              }
+            >
+              ホーム
             </Text>
           </HStack>
           <HStack as={Link} to="/" spacing={4}>
-            <Icon boxSize={8} as={AiOutlineUser} />
+            <Icon boxSize={6} as={AiOutlineUser} />
             <Text
-              as={Link}
-              to="/users/me/profile"
-              fontSize={{ base: '0', md: '3xl' }}
-              fontWeight="medium"
+              fontSize={{ base: '0', md: 'xl' }}
+              fontWeight={
+                location.pathname === '/users/me' ? 'semibold' : 'medium'
+              }
             >
-              Profile
+              プロフィール
             </Text>
           </HStack>
           <HStack onClick={toggleColorMode} spacing={4}>
             <Icon
-              boxSize={8}
+              boxSize={6}
               as={
                 colorMode === 'light' ? MdOutlineDarkMode : MdOutlineLightMode
               }
             />
-            <Text fontSize={{ base: '0', md: '3xl' }} fontWeight="medium">
+            <Text fontSize={{ base: '0', md: 'xl' }} fontWeight="medium">
               {colorMode === 'light' ? 'To DarkMode' : 'To LightMode'}
             </Text>
           </HStack>
-        </Box>
+        </Stack>
         <TweetButton />
       </Stack>
       <AccountMenu marginTop="auto" />
