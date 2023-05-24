@@ -59,6 +59,8 @@ definitions:
         type: string
       name:
         type: string
+      profile:
+        type: string
     type: object
 info:
   contact: {}
@@ -398,6 +400,34 @@ paths:
       summary: ユーザー登録API
       tags:
       - User
+  /users/{userId}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: ユーザーID
+        in: path
+        name: userId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.User'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/entity.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/entity.ErrorResponse'
+      summary: ユーザー取得API
+      tags:
+      - User
   /users/me:
     get:
       consumes:
@@ -418,6 +448,26 @@ paths:
           schema:
             $ref: '#/definitions/entity.ErrorResponse'
       summary: ログインユーザー取得API
+      tags:
+      - User
+  /users/me/profile:
+    put:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/entity.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/entity.ErrorResponse'
+      summary: プロフィール更新API
       tags:
       - User
 swagger: "2.0"
