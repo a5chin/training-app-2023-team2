@@ -2,6 +2,7 @@ import { useRoutes, RouteObject, Outlet, Navigate } from 'react-router-dom';
 
 import { PostsRoutes } from '@/features/posts';
 import { AuthRoutes } from '@/features/auth';
+import { UsersRoutes } from '@/features/users';
 import { MainLayout } from '@/components/Layout/MainLayout';
 
 function App() {
@@ -23,6 +24,7 @@ export function AppRoutes() {
       },
       { path: '/posts/*', element: <PostsRoutes /> },
       { path: '/auth/*', element: <AuthRoutes /> },
+      { path: '/users/*', element: <UsersRoutes /> },
     ],
   };
   const element = useRoutes([routes]);

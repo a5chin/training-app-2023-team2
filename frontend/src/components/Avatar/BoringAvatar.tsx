@@ -1,7 +1,10 @@
 import { Icon, IconProps } from '@chakra-ui/react';
-import Avatar from 'boring-avatars';
+import Avatar, { AvatarProps } from 'boring-avatars';
 
-export function UserIcon({ name, ...iconProps }: { name: string } & IconProps) {
+export function UserIcon({
+  name,
+  ...iconProps
+}: { name: string } & IconProps & AvatarProps) {
   return (
     <Icon
       name={name}
