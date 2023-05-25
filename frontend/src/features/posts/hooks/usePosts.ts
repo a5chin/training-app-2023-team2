@@ -14,10 +14,15 @@ type UsePostsResponse = {
   deleteFavorite: (postId: string) => void;
 };
 
-export const usePosts = (): UsePostsResponse => {
+export const usePosts = (userId?: string | undefined): UsePostsResponse => {
   const { data, error, isLoading, mutate } = useAspidaSWR(
     aspidaClient.posts,
-    'get'
+    'get',
+    {
+      query: {
+        userId,
+      },
+    }
   );
 
   const postTweet = async (content: string) => {

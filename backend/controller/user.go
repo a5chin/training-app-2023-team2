@@ -75,7 +75,7 @@ type UpdateProfileRequest struct {
 	Profile string `form:"profile"`
 }
 
-// GetUser godoc
+// UpdateProfile godoc
 //
 //	@Summary	プロフィール更新API
 //	@Description

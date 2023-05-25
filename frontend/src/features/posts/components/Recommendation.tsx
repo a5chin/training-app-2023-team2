@@ -14,7 +14,7 @@ import { UserIcon } from '@/components/Avatar/BoringAvatar';
 const Users: User[] = [
   { id: 'aaaa', name: 'iam' },
   { id: 'test', name: 'test' },
-  { id: 'aaaa', name: 'iam' },
+  { id: 'aava', name: 'iam' },
 ];
 
 export function Recommendation({ ...rest }: BoxProps) {
@@ -31,7 +31,7 @@ export function Recommendation({ ...rest }: BoxProps) {
       <Heading size="md">おすすめユーザー</Heading>
       <Stack py={5} gap={4}>
         {Users.map((user) => (
-          <HStack gap={1}>
+          <HStack gap={1} key={user.id}>
             <Stack>{user && <UserIcon name={user.name} />}</Stack>
             <Text fontWeight="semibold">{user.name}</Text>
           </HStack>

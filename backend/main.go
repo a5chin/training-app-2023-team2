@@ -72,7 +72,7 @@ func main() {
 	authGroup := api.Group("/")
 	{
 		authGroup.Use(middleware.Authentication(userRepo))
-		authGroup.PUT("/users/me/profile", handleResponse(userController.UpdateProfile))
+		authGroup.PUT("/users/me/profile/", handleResponse(userController.UpdateProfile))
 	}
 	api.POST("/sign_up/", handleResponse(userController.SignUp))
 	api.POST("/sign_in/", handleResponse(userController.SignIn))

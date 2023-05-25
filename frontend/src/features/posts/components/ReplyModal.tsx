@@ -92,7 +92,7 @@ export function ReplyModal({ disclosure, post }: Props) {
         <ModalOverlay />
         <ModalContent>
           <form onSubmit={handleSubmit(handleReply)}>
-            <ModalHeader fontSize="25px" color="white" ml={0}>
+            <ModalHeader fontSize="25px" color="white" ml={0} px={4}>
               <HStack justifyContent="start">
                 <IconButton
                   icon={<CloseIcon />}
@@ -114,6 +114,7 @@ export function ReplyModal({ disclosure, post }: Props) {
                         orientation="vertical"
                         size="lg"
                         colorScheme="twitter"
+                        border="1px"
                       />
                     </Center>
                   </Stack>

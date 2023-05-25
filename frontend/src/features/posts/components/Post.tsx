@@ -34,7 +34,8 @@ export function Post({ post, handleDeleteTweet, handleClickLike }: PostProps) {
     <Stack _hover={{ bg: colorMode === 'dark' ? 'blackAlpha.400' : 'gray.50' }}>
       <Divider />
       <Box
-        p={3}
+        px={3}
+        py={1}
         width="100%"
         onClick={() => navigate(`/posts/${post.id}`)}
         pos="relative"
