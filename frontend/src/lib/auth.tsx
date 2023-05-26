@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { isAxiosError } from 'axios';
+import Axios, { isAxiosError } from 'axios';
 import {
   User,
   signup as callSignupApi,
@@ -14,6 +14,8 @@ import {
 import { ErrorResponseType } from '@/types';
 import { createCtxWithoutDefaultValue } from './createCtxWithoutDefaultValue';
 import { aspidaClient } from '@/lib/aspida';
+
+const axios = Axios.create();
 
 type IAuthContext = {
   signin: (data: SigninDTO) => Promise<void>;
@@ -88,6 +90,12 @@ const useAuthContext = (): IAuthContext => {
       },
     });
     const userData = await fetchMe();
+    axios.put(`http://localhost:8888/${userData.id}`, {
+      id: userData.id,
+      email: userData.email,
+      name: userData.name,
+      profile: userData.profile,
+    });
     setUser(userData);
   };
 

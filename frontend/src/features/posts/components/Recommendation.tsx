@@ -8,17 +8,34 @@ import {
   Text,
   useColorMode,
 } from '@chakra-ui/react';
+import Axios from 'axios';
+import { useState, useEffect } from 'react';
 import { User } from '@/features/users';
 import { UserIcon } from '@/components/Avatar/BoringAvatar';
+import { useAuth } from '@/lib/auth';
 
-const Users: User[] = [
+const dummy: User[] = [
   { id: 'aaaa', name: 'iam' },
   { id: 'test', name: 'test' },
   { id: 'aava', name: 'iam' },
 ];
 
+const axios = Axios.create();
+
 export function Recommendation({ ...rest }: BoxProps) {
   const { colorMode } = useColorMode();
+  const { currentUser } = useAuth();
+
+  const [users, setUsers] = useState<User[]>(dummy);
+
+  useEffect(() => {
+    console.log(currentUser);
+    axios
+      .get(`http://localhost:8888/${currentUser?.id}`, {})
+      .then((res) => setUsers(res.data));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentUser]);
+
   return (
     <Box
       {...rest}
@@ -30,12 +47,13 @@ export function Recommendation({ ...rest }: BoxProps) {
     >
       <Heading size="md">おすすめユーザー</Heading>
       <Stack py={5} gap={4}>
-        {Users.map((user) => (
-          <HStack gap={1} key={user.id}>
-            <Stack>{user && <UserIcon name={user.name} />}</Stack>
-            <Text fontWeight="semibold">{user.name}</Text>
-          </HStack>
-        ))}
+        {users &&
+          users.reverse().map((user) => (
+            <HStack gap={1} key={user.id}>
+              <Stack>{user && <UserIcon name={user.name} />}</Stack>
+              <Text fontWeight="semibold">{user.name}</Text>
+            </HStack>
+          ))}
         <Link href="/" fontSize="sm" color="blue.500">
           この返信を表示
         </Link>
